@@ -4,7 +4,7 @@
 ![minSdk](https://badgen.net/static/minSdk/24/yellow)
 
 <div align="center">
-    <img src="./app/src/main/ic_launcher-playstore.png" width="128" height="128" style="display: block; margin: 0 auto"/>
+    <img src="ic_launcher-playstore.png" width="128" height="128" style="display: block; margin: 0 auto"/>
     <h1>Tetramine</h1>
     <h3>The mobile modern version of tetris</h3>
 </div>
