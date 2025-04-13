@@ -31,12 +31,12 @@ class AboutGame : Fragment() {
             val authorString = getString(R.string.author) + "\ngithub.com/JustDeax"
             authorText.text = authorString
 
-            val sourcecodeString = getString(R.string.source_code) + "\ngithub.com/JustDeax/Tetramine"
-            sourcecodeText.text = sourcecodeString
+            val projectString = getString(R.string.source_code) + "\ngithub.com/JustDeax/TetramineInfo"
+            projectText.text = projectString
 
             version.setOnClickListener { openLink("https://github.com/JustDeax/Tetramine/releases") }
             author.setOnClickListener { openLink("https://github.com/JustDeax") }
-            sourcecode.setOnClickListener { openLink("https://github.com/JustDeax/Tetramine") }
+            project.setOnClickListener { openLink("https://github.com/JustDeax/TetramineInfo") }
         }
     }
 

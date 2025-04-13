@@ -43,14 +43,14 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/sourcecode"
+            android:id="@+id/project"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             style="@style/CardButton">
 
             <TextView
-                android:id="@+id/sourcecode_text"
+                android:id="@+id/project_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
