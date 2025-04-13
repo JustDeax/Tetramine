@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TetramineGameViewModel(rows: Int, cols: Int): ViewModel() {
-    private val tetramine = Tetramine(rows, cols)
+class TetramineGameViewModel(rows: Int, cols: Int, action: (String) -> Unit): ViewModel() {
+    private val tetramine = Tetramine(rows, cols, action)
     private var startedSpeed = 800L
     private var dropSpeed = startedSpeed
     private var gameJob: Job? = null
@@ -36,7 +36,7 @@ class TetramineGameViewModel(rows: Int, cols: Int): ViewModel() {
                 while (!tetramine.isGameOver) {
                     delay(dropSpeed)
                     withContext(Dispatchers.Main) {
-                        tetramine.dropPiece()
+                        tetramine.softDrop()
                         _board.value = tetramine.getBoardWithPiece()
                     }
                 }
@@ -72,7 +72,11 @@ class TetramineGameViewModel(rows: Int, cols: Int): ViewModel() {
         }
     }
 
-    //fun rotateLeft() {}
+    fun rotateLeft() {
+        performAction {
+            tetramine.rotateLeft()
+        }
+    }
 
     fun rotateRight() {
         performAction {
@@ -80,9 +84,15 @@ class TetramineGameViewModel(rows: Int, cols: Int): ViewModel() {
         }
     }
 
-    fun dropPiece() {
+    fun hardDrop() {
         performAction {
-            tetramine.dropPiece()
+            tetramine.hardDrop()
+        }
+    }
+
+    fun softDrop() {
+        performAction {
+            tetramine.softDrop()
             tetramine.score += one
         }
     }

@@ -1,6 +1,7 @@
 package com.justdeax.tetramine.util
 
 const val one = 1
+const val two = 2
 const val combo = 50
 const val single = 100
 const val double = 300

@@ -2,10 +2,15 @@ package com.justdeax.tetramine.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupWindow
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -16,10 +21,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.justdeax.tetramine.PreferenceManager.changeFirstLaunch
-import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
+import com.justdeax.tetramine.PreferenceManager.getFirstLaunch
+import com.justdeax.tetramine.PreferenceManager.setFirstLaunch
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityGameBinding
+import com.justdeax.tetramine.databinding.CustomBannerBinding
 import com.justdeax.tetramine.databinding.DialogGameBinding
 import com.justdeax.tetramine.game.TetramineGameFactory
 import com.justdeax.tetramine.game.TetramineGameViewModel
@@ -42,7 +48,7 @@ class GameActivity : AppCompatActivity() {
     private val rows = 20
     private val cols = 10
     private val game: TetramineGameViewModel by viewModels {
-        TetramineGameFactory(rows, cols)
+        TetramineGameFactory(rows, cols, ::makeBanner)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,11 +92,11 @@ class GameActivity : AppCompatActivity() {
             game.resumeGame()
         }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() { showPauseDialog() }
+            override fun handleOnBackPressed() = showPauseDialog()
         })
-        if (isFirstLaunch()) {
+        if (getFirstLaunch()) {
             showHelpDialog()
-            changeFirstLaunch(false)
+            setFirstLaunch(false)
         }
     }
 
@@ -125,7 +131,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun initGameDialog() {
-        dialogGameBinding = DialogGameBinding.inflate(LayoutInflater.from(this))
+        dialogGameBinding = DialogGameBinding.inflate(layoutInflater)
         dialogGame = MaterialAlertDialogBuilder(this)
             .setView(dialogGameBinding?.root)
             .setOnDismissListener { game.resumeGame() }
@@ -155,7 +161,6 @@ class GameActivity : AppCompatActivity() {
         val gifView = view.findViewById<ImageView>(R.id.gif_view)
 
         Glide.with(this)
-            .asGif()
             .load(R.drawable.help_with_controllers)
             .into(gifView)
 
@@ -165,45 +170,81 @@ class GameActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun makeBanner(text: String) {
+        val bannerBinding = CustomBannerBinding.inflate(layoutInflater)
+        bannerBinding.textView.text = text
+
+        val popup = PopupWindow(
+            bannerBinding.root,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            isOutsideTouchable = true
+            isFocusable = false
+            elevation = 10f
+        }
+
+        popup.showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 300)
+        Handler(Looper.getMainLooper()).postDelayed({
+            popup.dismiss()
+        }, 2000)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun View.setControls() {
         val xSensitivity = 0.55
         val ySensitivity = 0.40
-        val halfCols = cols / 2
-        val halfRows = rows / 2
+
         var lastTouchX = 0f
         var lastTouchY = 0f
-        this.setOnTouchListener { _, event ->
+        var xMotion = 0
+        var yMotion = 0
+        var motionTime = 0L
+
+        setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     lastTouchX = event.x
                     lastTouchY = event.y
+                    motionTime = System.currentTimeMillis()
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val diffX = event.x - lastTouchX
                     val diffY = event.y - lastTouchY
-                    val thresholdX = this.width / halfCols * xSensitivity
-                    val thresholdY = this.height / halfRows * ySensitivity
+                    val thresholdX = width / (cols / 2.0) * xSensitivity
+                    val thresholdY = height / (rows / 2.0) * ySensitivity
 
                     if (abs(diffX) > thresholdX && abs(diffY) < thresholdY) {
-                        if (diffX > 3)
+                        if (diffX > 3) {
                             game.moveRight()
-                        else if (diffX < 3)
+                            xMotion++
+                        } else if (diffX < -3) {
                             game.moveLeft()
+                            xMotion++
+                        }
                         lastTouchX = event.x
                     } else if (diffY > thresholdY) {
-                        game.dropPiece()
+                        if (game.currentPiece.row > 0)
+                            game.softDrop()
+                        yMotion++
                         lastTouchY = event.y
                     }
-                    this.invalidate()
                 }
                 MotionEvent.ACTION_UP -> {
-                    val diffX = abs(event.x - lastTouchX)
-                    val diffY = abs(event.y - lastTouchY)
-                    if (diffX < 3 && diffY < 3)
+                    val diffTime = System.currentTimeMillis() - motionTime
+                    if (
+                        xMotion == 0 && yMotion > 2 &&
+                        diffTime in 20L until 200L &&
+                        game.currentPiece.row > 3
+                    ) {
+                        game.hardDrop()
+                    } else if (xMotion == 0 && yMotion == 0) {
                         game.rotateRight()
-                    lastTouchX = -1f
-                    lastTouchY = -1f
+                    }
+                    lastTouchX = 0f
+                    lastTouchY = 0f
+                    xMotion = 0
+                    yMotion = 0
                 }
             }
             true

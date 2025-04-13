@@ -35,7 +35,9 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
-            tools:text="Lines:000   \nScore:000000" />
+            android:textSize="18dp"
+            tools:text="Lines:000   \nScore:000000"
+            tools:ignore="SpUsage" />
 
         <com.justdeax.tetramine.game.view.PreviewView
             android:id="@+id/preview"

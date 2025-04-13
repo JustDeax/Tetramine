@@ -2,15 +2,18 @@ package com.justdeax.tetramine
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors
+import com.justdeax.tetramine.PreferenceManager.getThemeDynamic
+import com.justdeax.tetramine.PreferenceManager.getThemeMode
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        val (theme, dynamic) = 'S' to true
+        val theme = getThemeMode()
+        val dynamic = getThemeDynamic()
         AppCompatDelegate.setDefaultNightMode(
             when (theme) {
-                'L' -> AppCompatDelegate.MODE_NIGHT_NO
-                'D' -> AppCompatDelegate.MODE_NIGHT_YES
+                1 -> AppCompatDelegate.MODE_NIGHT_NO
+                2 -> AppCompatDelegate.MODE_NIGHT_YES
                 else -> AppCompatDelegate.MODE_NIGHT_YES
             }
         )

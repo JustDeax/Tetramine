@@ -1,17 +1,26 @@
 package com.justdeax.tetramine.game
 
 class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) {
-    fun rotate(): Tetromino {
-        val newShape = Array(shape[0].size) { IntArray(shape.size) }
+
+    fun rotateRight() = Tetromino(rotateMatrix(clockwise = true), row, col)
+
+    fun rotateLeft() = Tetromino(rotateMatrix(clockwise = false), row, col)
+
+    fun copy() = Tetromino(shape.map { it.clone() }.toTypedArray(), row, col)
+
+    private fun rotateMatrix(clockwise: Boolean): Array<IntArray> {
+        val rows = shape.size
+        val cols = shape[0].size
+        val rotated = Array(cols) { IntArray(rows) }
+
         for (i in shape.indices)
             for (j in shape[i].indices)
-                newShape[j][shape.size - 1 - i] = shape[i][j]
-        return Tetromino(newShape, row, col)
-    }
+                if (clockwise)
+                    rotated[j][rows - i - 1] = shape[i][j]
+                else
+                    rotated[cols - j - 1][i] = shape[i][j]
 
-    fun copy(): Tetromino {
-        val newShape = shape.map { it.clone() }.toTypedArray()
-        return Tetromino(newShape, row, col)
+        return rotated
     }
 
     companion object {

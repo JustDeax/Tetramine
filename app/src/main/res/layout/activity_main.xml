@@ -23,7 +23,6 @@
             android:layout_height="90dp"
             android:layout_margin="4dp"
             android:contentDescription="@string/app_name"
-            app:tint="?attr/colorPrimary"
             app:srcCompat="@drawable/ic_launcher_monochrome_nopadding" />
 
         <TextView

@@ -1,6 +1,10 @@
 package com.justdeax.tetramine.game
 
-class Tetramine(private val rows: Int, private val cols: Int) {
+class Tetramine(
+    private val rows: Int,
+    private val cols: Int,
+    private val message: (String) -> Unit
+) {
     private var board = Array(rows) { IntArray(cols) }
     var currentPiece = Tetromino.emptyPiece() ; private set
     var previousPiece = Tetromino.randomPiece() ; private set
@@ -29,23 +33,36 @@ class Tetramine(private val rows: Int, private val cols: Int) {
         return board
     }
 
-    fun dropPiece() {
-        if (!movePiece(1, 0)) {
-            applyPieceToBoard(board, currentPiece)
-            clearLines()
-            spawnPiece()
-        }
+    fun softDrop() {
+        if (!movePiece(1, 0))
+            baseDrop()
+    }
+
+    fun hardDrop() {
+        val ghost = ghostPiece()
+        val distance = ghost.row - currentPiece.row
+        currentPiece.row = ghost.row
+        score += distance * com.justdeax.tetramine.util.two
+        baseDrop()
     }
 
     fun moveLeft() = movePiece(0, -1)
     fun moveRight() = movePiece(0, 1)
-    //fun rotateLeft() {}
-    fun rotateRight() = rotatePiece(currentPiece.rotate())
+    fun rotateLeft() = rotatePiece(currentPiece.rotateLeft())
+    fun rotateRight() = rotatePiece(currentPiece.rotateRight())
+
+    private fun baseDrop() {
+        applyPieceToBoard(board, currentPiece)
+        clearLines()
+        spawnPiece()
+    }
 
     private fun movePiece(dRow: Int, dCol: Int): Boolean {
-        if (isValidMove(currentPiece, currentPiece.row + dRow, currentPiece.col + dCol)) {
-            currentPiece.row += dRow
-            currentPiece.col += dCol
+        val newRow = currentPiece.row + dRow
+        val newCol = currentPiece.col + dCol
+        if (isValidMove(currentPiece, newRow, newCol)) {
+            currentPiece.row = newRow
+            currentPiece.col = newCol
             return true
         }
         return false
@@ -55,12 +72,11 @@ class Tetramine(private val rows: Int, private val cols: Int) {
         if (isValidMove(rotated, currentPiece.row, currentPiece.col)) {
             currentPiece = rotated
         } else {
-            val validKick = listOf(1,-1).firstOrNull {
+            listOf(1,-1).firstOrNull {
                 isValidMove(rotated, currentPiece.row, currentPiece.col + it)
-            }
-            if (validKick != null) {
+            }?.let {
                 currentPiece = rotated
-                currentPiece.col += validKick
+                currentPiece.col += it
             }
         }
     }
@@ -74,28 +90,33 @@ class Tetramine(private val rows: Int, private val cols: Int) {
     }
 
     private fun clearLines() {
-        board = board.filter { row -> row.any { it == 0 } }.toTypedArray()
-        val clearedLines = rows - board.size
-        while (board.size < rows)
-            board = arrayOf(IntArray(cols)) + board
+        val newBoard = board.filter { row -> row.any { it == 0 } }.toTypedArray()
+        val cleared = rows - newBoard.size
+        board = Array(cleared) { IntArray(cols) } + newBoard
 
-        if (clearedLines > 0) {
-            comboCount += 1
-            score += com.justdeax.tetramine.util.combo * comboCount
-
-            when (clearedLines) {
+        if (cleared > 0) {
+            lines += cleared
+            comboCount++
+            score += comboCount * com.justdeax.tetramine.util.combo
+            when (comboCount) {
+                3 -> message("COMBO X3")
+                5 -> message("COMBO X5")
+                10 -> message("COMBO X10")
+            }
+            when (cleared) {
                 1 -> score += com.justdeax.tetramine.util.single
                 2 -> score += com.justdeax.tetramine.util.double
                 3 -> score += com.justdeax.tetramine.util.triple
-                4 -> score += com.justdeax.tetramine.util.tetramine
+                4 -> { score += com.justdeax.tetramine.util.tetramine
+                       message("TETRAMINE") }
             }
-            if (board.all { row -> row.all { it == 0 } })
+            if (board.all { row -> row.all { it == 0 } }) {
                 score += com.justdeax.tetramine.util.perfectClear
+                message("PERFECT CLEAR")
+            }
         } else {
             comboCount = -1
         }
-
-        lines += clearedLines
     }
 
     private fun spawnPiece() {
