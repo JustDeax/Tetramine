@@ -20,7 +20,8 @@
 Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 
-### This project is not open source at this time
+`This project is not open source at this time`
+
 My position: Im not ready to put my code of this game for the time being
 
 You can also send bugs, wishes, improvements via “issues”
