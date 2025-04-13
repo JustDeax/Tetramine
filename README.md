@@ -21,10 +21,8 @@ Classic arcade puzzle game where you have to stack falling tetromino — 4-block
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 
 `This project is not open source at this time`
-
-My position: Im not ready to put my code of this game for the time being
-
-You can also send bugs, wishes, improvements via “issues”
+- My position: Im not ready to put my code of this game for the time being
+- You can also send bugs, wishes, improvements via “issues”
 
 ### Feature
 - [ ] Modern Material Design 3
