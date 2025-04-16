@@ -1,39 +1,40 @@
 package com.justdeax.tetramine.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.PopupWindow
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.justdeax.tetramine.PreferenceManager.getFirstLaunch
-import com.justdeax.tetramine.PreferenceManager.setFirstLaunch
+import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
+import com.justdeax.tetramine.PreferenceManager.cellSpacing
+import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityGameBinding
 import com.justdeax.tetramine.databinding.CustomBannerBinding
 import com.justdeax.tetramine.databinding.DialogGameBinding
+import com.justdeax.tetramine.databinding.DialogHelpBinding
 import com.justdeax.tetramine.game.TetramineGameFactory
 import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
 import com.justdeax.tetramine.util.applySystemInsets
+import com.justdeax.tetramine.util.createOnBackCallback
 import com.justdeax.tetramine.util.findNumber
 import com.justdeax.tetramine.util.padArray2x4
-import com.justdeax.tetramine.util.setStatistics
+import com.justdeax.tetramine.util.getStatistics
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -48,7 +49,7 @@ class GameActivity : AppCompatActivity() {
     private val rows = 20
     private val cols = 10
     private val game: TetramineGameViewModel by viewModels {
-        TetramineGameFactory(rows, cols, ::makeBanner)
+        TetramineGameFactory(rows, cols, ::showBanner)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,7 @@ class GameActivity : AppCompatActivity() {
         colors = intArrayOf(
             getColor(R.color.cyan), //I
             getColor(R.color.yellow), //O
-            getColor(R.color.magenta), //T
+            getColor(R.color.purple), //T
             getColor(R.color.orange), //L
             getColor(R.color.blue), //J
             getColor(R.color.green), //S
@@ -74,58 +75,53 @@ class GameActivity : AppCompatActivity() {
 
         binding.apply {
             main.applySystemInsets()
-            board.setColors(boardColor + colors)
-            preview.setColors(previewColor + colors)
+            board.setStyle(boardColor + colors, cellSpacing.toFloat(), cellCornerRadius.toFloat())
+            preview.setStyle(previewColor + colors, cellSpacing.toFloat(), cellCornerRadius.toFloat())
             board.setControls()
-            pause.setOnClickListener { showPauseDialog() }
+            pause.setOnClickListener { showGameDialog() }
 
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     game.board.collectLatest { newBoard ->
                         board.updateBoard(newBoard)
                         preview.updateBoard(padArray2x4(game.previousPiece.shape))
-                        statistics.text = setStatistics(game.lines, game.score)
-                        if (game.isGameOver) showGameOver()
+                        statistics.text = getStatistics(game.lines, game.score)
+                        if (game.isGameOver) showGameDialog()
                     }
                 }
             }
             game.resumeGame()
         }
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() = showPauseDialog()
+        onBackPressedDispatcher.addCallback(this, createOnBackCallback {
+            showGameDialog()
         })
-        if (getFirstLaunch()) {
+        if (isFirstLaunch) {
             showHelpDialog()
-            setFirstLaunch(false)
+            isFirstLaunch = false
         }
     }
 
-    private fun showPauseDialog() {
-        game.stopGame()
+    private fun showGameDialog() {
+        if (!game.isGameOver)
+            game.stopGame()
         if (dialogGameBinding == null || dialogGame == null)
             initGameDialog()
         dialogGameBinding?.apply {
-            val tetrominoShape = findNumber(game.currentPiece.shape) - 1
-            preview.setColors(previewColor + colors)
-            preview.updateBoard(
-                padArray2x4(Tetromino.TETROMINO_SHAPES[tetrominoShape])
-            )
-            statistics.text = setStatistics(game.lines, game.score)
-            dialogGame?.show()
-        }
-    }
-
-    private fun showGameOver() {
-        if (dialogGameBinding == null || dialogGame == null)
-            initGameDialog()
-        dialogGameBinding?.apply {
-            val gameOverText = "GAME OVER"
-            gameOver.text = gameOverText
-            resume.text = getString(R.string.view_game)
-            preview.visibility = View.GONE
-            gameOver.visibility = View.VISIBLE
-            statistics.text = setStatistics(game.lines, game.score)
-            dialogGame?.setOnDismissListener { dialogGame = null }
+            if (game.isGameOver) {
+                preview.visibility = View.GONE
+                gameOver.visibility = View.VISIBLE
+                resume.text = getString(R.string.view_game)
+                statistics.text = getStatistics(game.lines, game.score)
+                dialogGame?.setOnDismissListener { dialogGame = null }
+            } else {
+                preview.visibility = View.VISIBLE
+                gameOver.visibility = View.GONE
+                preview.updateBoard(
+                    padArray2x4(Tetromino.TETROMINO_SHAPES[findNumber(game.currentPiece.shape) - 1])
+                )
+                statistics.text = getStatistics(game.lines, game.score)
+                dialogGame?.setOnDismissListener { game.resumeGame() }
+            }
             dialogGame?.show()
         }
     }
@@ -134,10 +130,10 @@ class GameActivity : AppCompatActivity() {
         dialogGameBinding = DialogGameBinding.inflate(layoutInflater)
         dialogGame = MaterialAlertDialogBuilder(this)
             .setView(dialogGameBinding?.root)
-            .setOnDismissListener { game.resumeGame() }
             .create()
 
         dialogGameBinding?.apply {
+            preview.setStyle(previewColor + colors, cellSpacing.toFloat(), cellCornerRadius.toFloat())
             resume.setOnClickListener {
                 dialogGame?.dismiss()
             }
@@ -156,21 +152,19 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showHelpDialog() {
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.dialog_help, null)
-        val gifView = view.findViewById<ImageView>(R.id.gif_view)
+        val dialogHelpBinding = DialogHelpBinding.inflate(layoutInflater)
 
         Glide.with(this)
             .load(R.drawable.help_with_controllers)
-            .into(gifView)
+            .into(dialogHelpBinding.gifView)
 
         MaterialAlertDialogBuilder(this)
-            .setView(view)
+            .setView(dialogHelpBinding.root)
             .setPositiveButton("ОК", null)
             .show()
     }
 
-    private fun makeBanner(text: String) {
+    private fun showBanner(text: String) {
         val bannerBinding = CustomBannerBinding.inflate(layoutInflater)
         bannerBinding.textView.text = text
 
@@ -179,21 +173,21 @@ class GameActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         ).apply {
-            isOutsideTouchable = true
+            isOutsideTouchable = false
             isFocusable = false
-            elevation = 10f
+            setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 300)
         }
-
-        popup.showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 300)
-        Handler(Looper.getMainLooper()).postDelayed({
-            popup.dismiss()
-        }, 2000)
+        lifecycleScope.launch {
+            delay(3300)
+            if (popup.isShowing) popup.dismiss()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun View.setControls() {
-        val xSensitivity = 0.55
-        val ySensitivity = 0.40
+        val xSensitivity = 1
+        val ySensitivity = 0.8
 
         var lastTouchX = 0f
         var lastTouchY = 0f
@@ -211,36 +205,32 @@ class GameActivity : AppCompatActivity() {
                 MotionEvent.ACTION_MOVE -> {
                     val diffX = event.x - lastTouchX
                     val diffY = event.y - lastTouchY
-                    val thresholdX = width / (cols / 2.0) * xSensitivity
-                    val thresholdY = height / (rows / 2.0) * ySensitivity
+                    val thresholdX = width / cols * xSensitivity
+                    val thresholdY = height / rows * ySensitivity
 
                     if (abs(diffX) > thresholdX && abs(diffY) < thresholdY) {
-                        if (diffX > 3) {
+                        if (diffX > 0) {
                             game.moveRight()
                             xMotion++
-                        } else if (diffX < -3) {
+                        } else {
                             game.moveLeft()
                             xMotion++
                         }
                         lastTouchX = event.x
                     } else if (diffY > thresholdY) {
-                        if (game.currentPiece.row > 0)
+                        if (game.currentPiece.row > 0) {
                             game.softDrop()
-                        yMotion++
+                            yMotion++
+                        }
                         lastTouchY = event.y
                     }
                 }
                 MotionEvent.ACTION_UP -> {
                     val diffTime = System.currentTimeMillis() - motionTime
-                    if (
-                        xMotion == 0 && yMotion > 2 &&
-                        diffTime in 20L until 200L &&
-                        game.currentPiece.row > 3
-                    ) {
+                    if (xMotion == 0 && yMotion > 2 && diffTime < 150L && game.currentPiece.row > 3)
                         game.hardDrop()
-                    } else if (xMotion == 0 && yMotion == 0) {
+                    else if (xMotion == 0 && yMotion == 0)
                         game.rotateRight()
-                    }
                     lastTouchX = 0f
                     lastTouchY = 0f
                     xMotion = 0
@@ -252,7 +242,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        showPauseDialog()
+        showGameDialog()
         super.onStop()
     }
 }

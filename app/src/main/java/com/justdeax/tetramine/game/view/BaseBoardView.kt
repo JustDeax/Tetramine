@@ -13,8 +13,9 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
     protected abstract var board: Array<IntArray>
 
     private var colors = intArrayOf()
-    private val cellSpacing = context.dpToPx(2f)
-    private val cornerRadius = context.dpToPx(8f)
+    private var cellSpacing = 0f
+    private var cellCornerRadius = 0f
+
     private val rect = RectF()
     private val paint = Paint().apply {
         style = Paint.Style.FILL
@@ -24,17 +25,16 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
         val height = MeasureSpec.getSize(heightMeasureSpec)
-        val ratio = rows.toFloat() / cols
-        val targetHeight = width * ratio
+        val ratio = rows.toFloat() / cols.toFloat()
         val finalWidth: Int
         val finalHeight: Int
 
-        if (targetHeight > height) {
+        if ((width * ratio) > height) {
             finalHeight = height
             finalWidth = (height / ratio).toInt()
         } else {
             finalWidth = width
-            finalHeight = targetHeight.toInt()
+            finalHeight = (width * ratio).toInt()
         }
         setMeasuredDimension(finalWidth, finalHeight)
     }
@@ -52,14 +52,16 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
                     val right = left + cellSize
                     val bottom = top + cellSize
                     rect.set(left, top, right, bottom)
-                    canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
+                    canvas.drawRoundRect(rect, cellCornerRadius, cellCornerRadius, paint)
                 }
             }
         }
     }
 
-    fun setColors(newColors: IntArray) {
-        colors = newColors
+    fun setStyle(colors: IntArray, cellSpacing: Float, cellCornerRadius: Float) {
+        this.colors = colors
+        this.cellSpacing = context.dpToPx(cellSpacing)
+        this.cellCornerRadius = context.dpToPx(cellCornerRadius)
         invalidate()
     }
 

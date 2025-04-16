@@ -6,20 +6,28 @@ class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) 
 
     fun rotateLeft() = Tetromino(rotateMatrix(clockwise = false), row, col)
 
-    fun copy() = Tetromino(shape.map { it.clone() }.toTypedArray(), row, col)
+    fun copy() = Tetromino(
+        shape.map { row ->
+            row.map { cell ->
+                if (cell == 0) 0 else 8
+            }.toIntArray()
+        }.toTypedArray(),
+        row, col
+    )
 
     private fun rotateMatrix(clockwise: Boolean): Array<IntArray> {
         val rows = shape.size
         val cols = shape[0].size
         val rotated = Array(cols) { IntArray(rows) }
 
-        for (i in shape.indices)
-            for (j in shape[i].indices)
-                if (clockwise)
+        if (clockwise)
+            for (i in shape.indices)
+                for (j in shape[i].indices)
                     rotated[j][rows - i - 1] = shape[i][j]
-                else
+        else
+            for (i in shape.indices)
+                for (j in shape[i].indices)
                     rotated[cols - j - 1][i] = shape[i][j]
-
         return rotated
     }
 
@@ -61,7 +69,7 @@ class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) 
             ),
         )
 
-        fun randomPiece() = Tetromino(TETROMINO_SHAPES.random())
-        fun emptyPiece() = Tetromino(arrayOf(intArrayOf()))
+        val randomPiece get() = Tetromino(TETROMINO_SHAPES.random())
+        val emptyPiece get() = Tetromino(arrayOf(intArrayOf()))
     }
 }

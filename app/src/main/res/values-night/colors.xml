@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="empty">#000000</color>
-    <color name="cyan">#DEDECE</color> <!-- Bone -->
-    <color name="yellow">#FFD500</color> <!-- Cyber Yellow -->
-    <color name="magenta">#9F2B68</color> <!-- Amaranth -->
-    <color name="orange">#FF971C</color> <!-- Beer -->
-    <color name="blue">#0341AE</color> <!-- Cobalt Blue -->
-    <color name="green">#4B9039</color> <!-- May Green -->
-    <color name="red">#FF3213</color> <!-- RYB Red -->
-    <color name="ghost">#E4A0A0A0</color>
     <color name="invisible">#00FFFFFF</color>
+    <color name="empty">#000000</color>
+    <color name="cyan">#12C7C7</color> <!--18DDDD-->
+    <color name="yellow">#E5C217</color> <!--FCDA1F-->
+    <color name="purple">#92245C</color> <!--A9286B-->
+    <color name="orange">#D26A00</color> <!--EA7800-->
+    <color name="blue">#1457C2</color> <!--0f65e8-->
+    <color name="green">#1F8616</color> <!--239B19-->
+    <color name="red">#DB0C0C</color> <!--FF0000-->
+    <color name="ghost">#E4A0A0A0</color>
 
 </resources>

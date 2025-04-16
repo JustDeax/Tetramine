@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,14 +25,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textAlignment="center"
-                    android:text="@string/classic_mode" />
+                    android:text="@string/classic_mode"
+                    style="@style/ChooseModeTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                     android:textAlignment="center"
                     android:minLines="2"
                     android:text="@string/classic_mode_desc" />
@@ -56,9 +54,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textAlignment="center"
-                    android:text="@string/practice_mode" />
+                    android:text="@string/practice_mode"
+                    style="@style/ChooseModeTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -86,9 +83,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textAlignment="center"
-                    android:text="@string/sprint_mode" />
+                    android:text="@string/sprint_mode"
+                    style="@style/ChooseModeTitle" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -116,9 +112,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textAlignment="center"
-                    android:text="@string/modern_mode" />
+                    android:text="@string/modern_mode"
+                    style="@style/ChooseModeTitle" />
 
                 <TextView
                     android:layout_width="match_parent"

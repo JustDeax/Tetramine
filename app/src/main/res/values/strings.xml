@@ -62,6 +62,7 @@ Movement sensitivity can be set separately for left/right and down movement in t
     <string name="about_1">This is the mobile modern version of tetris</string>
     <string name="about_2">
 """Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
+
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 """</string>
     <string name="author">Author:</string>

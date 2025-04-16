@@ -15,8 +15,7 @@ class AboutGame : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutGameBinding.inflate(inflater, container, false)
         return binding.root
@@ -31,12 +30,12 @@ class AboutGame : Fragment() {
             val authorString = getString(R.string.author) + "\ngithub.com/JustDeax"
             authorText.text = authorString
 
-            val projectString = getString(R.string.source_code) + "\ngithub.com/JustDeax/TetramineInfo"
+            val projectString = getString(R.string.source_code) + "\ngithub.com/JustDeax/TetramineGame"
             projectText.text = projectString
 
             version.setOnClickListener { openLink("https://github.com/JustDeax/Tetramine/releases") }
             author.setOnClickListener { openLink("https://github.com/JustDeax") }
-            project.setOnClickListener { openLink("https://github.com/JustDeax/TetramineInfo") }
+            project.setOnClickListener { openLink("https://github.com/JustDeax/TetramineGame") }
         }
     }
 

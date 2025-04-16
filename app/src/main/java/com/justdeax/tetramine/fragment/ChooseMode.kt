@@ -15,8 +15,7 @@ class ChooseMode : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChooseModeBinding.inflate(inflater, container, false)
         return binding.root
@@ -25,9 +24,8 @@ class ChooseMode : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            val game = Intent(activity, GameActivity::class.java)
             classic.setOnClickListener {
-                startActivity(game)
+                startGame()
             }
             practice.setOnClickListener {
                 notAvailable(requireContext(), getString(R.string.practice_mode))
@@ -39,6 +37,11 @@ class ChooseMode : Fragment() {
                 notAvailable(requireContext(), getString(R.string.modern_mode))
             }
         }
+    }
+
+    private fun startGame() {
+        val game = Intent(activity, GameActivity::class.java)
+        startActivity(game)
     }
 
     override fun onDestroyView() {

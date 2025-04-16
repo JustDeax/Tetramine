@@ -5,7 +5,7 @@
     <style name="Theme.Static" parent="Theme.Material3.DayNight.NoActionBar" />
     <style name="Theme.Tetramine" parent="Theme.Static" />
 
-    <style name="CardBoard" parent="Widget.MaterialComponents.CardView">
+    <style name="MainCardView" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_margin">8dp</item>
         <item name="contentPadding">20dp</item>
         <item name="strokeWidth">0.35dp</item>
@@ -22,21 +22,20 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
-    <style name="MonospacedTitle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">monospace</item>
+    <style name="MonospacedTitle">
+        <item name="android:fontFamily">@font/roboto_mono_semibold</item>
         <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">34sp</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="LargeDisplay" parent="TextAppearance.AppCompat.Title">
+    <style name="LargeDisplay" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">28sp</item>
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="StatisticsTitle" parent="TextAppearance.AppCompat.Title">
+    <style name="StatisticsTitle" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">32sp</item>
         <item name="android:layout_margin">8dp</item>
         <item name="android:singleLine">true</item>
@@ -47,10 +46,21 @@
         <item name="android:textAlignment">textEnd</item>
     </style>
 
-    <style name="GameStatisticsText">
-        <item name="android:fontFamily">monospace</item>
-        <item name="android:textStyle">bold</item>
+    <style name="GameStatisticsText"> //TODO
+        <item name="android:fontFamily">@font/roboto_mono_regular</item>
         <item name="android:layout_gravity">start|center_vertical</item>
+    </style>
+
+    <style name="DialogGameButton">
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
+    <style name="ChooseModeTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
 </resources>

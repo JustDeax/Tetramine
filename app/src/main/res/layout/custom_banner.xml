@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        style="@style/MainCardView">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="22dp"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text="TETRAMINE" />
+            android:paddingHorizontal="30dp"
+            android:textSize="22sp"
+            tools:text="TETRAMINE"
+            style="@style/MonospacedTitle" />
 
     </com.google.android.material.card.MaterialCardView>
 
