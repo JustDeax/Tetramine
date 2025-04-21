@@ -21,6 +21,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
 import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
+import com.justdeax.tetramine.PreferenceManager.xSensitivity
+import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityGameBinding
 import com.justdeax.tetramine.databinding.CustomBannerBinding
@@ -75,9 +77,9 @@ class GameActivity : AppCompatActivity() {
 
         binding.apply {
             main.applySystemInsets()
-            board.setStyle(boardColor + colors, cellSpacing.toFloat(), cellCornerRadius.toFloat())
-            preview.setStyle(previewColor + colors, cellSpacing.toFloat(), cellCornerRadius.toFloat())
-            board.setControls()
+            board.setStyle(boardColor + colors, cellSpacing, cellCornerRadius)
+            preview.setStyle(previewColor + colors, cellSpacing, cellCornerRadius)
+            board.setControls(xSensitivity, ySensitivity)
             pause.setOnClickListener { showGameDialog() }
 
             lifecycleScope.launch {
@@ -93,7 +95,10 @@ class GameActivity : AppCompatActivity() {
             game.resumeGame()
         }
         onBackPressedDispatcher.addCallback(this, createOnBackCallback {
-            showGameDialog()
+            if (dialogGame?.isShowing == true)
+                finish()
+            else
+                showGameDialog()
         })
         if (isFirstLaunch) {
             showHelpDialog()
@@ -104,7 +109,7 @@ class GameActivity : AppCompatActivity() {
     private fun showGameDialog() {
         if (!game.isGameOver)
             game.stopGame()
-        if (dialogGameBinding == null || dialogGame == null)
+        if (dialogGame == null)
             initGameDialog()
         dialogGameBinding?.apply {
             if (game.isGameOver) {
@@ -114,8 +119,6 @@ class GameActivity : AppCompatActivity() {
                 statistics.text = getStatistics(game.lines, game.score)
                 dialogGame?.setOnDismissListener { dialogGame = null }
             } else {
-                preview.visibility = View.VISIBLE
-                gameOver.visibility = View.GONE
                 preview.updateBoard(
                     padArray2x4(Tetromino.TETROMINO_SHAPES[findNumber(game.currentPiece.shape) - 1])
                 )
@@ -133,7 +136,7 @@ class GameActivity : AppCompatActivity() {
             .create()
 
         dialogGameBinding?.apply {
-            preview.setStyle(previewColor + colors, cellSpacing.toFloat(), cellCornerRadius.toFloat())
+            preview.setStyle(previewColor + colors, cellSpacing, cellCornerRadius)
             resume.setOnClickListener {
                 dialogGame?.dismiss()
             }
@@ -166,8 +169,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun showBanner(text: String) {
         val bannerBinding = CustomBannerBinding.inflate(layoutInflater)
-        bannerBinding.textView.text = text
-
+        val textView = bannerBinding.textView
         val popup = PopupWindow(
             bannerBinding.root,
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -179,22 +181,28 @@ class GameActivity : AppCompatActivity() {
             showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 300)
         }
         lifecycleScope.launch {
-            delay(3300)
-            if (popup.isShowing) popup.dismiss()
+            if (game.lines > 40) {
+                repeat(text.length) { i ->
+                    textView.text = text.substring(0, i + 1)
+                    delay(50)
+                }
+                delay(1500)
+                repeat(text.length) { i ->
+                    textView.text = text.substring(i + 1)
+                    delay(50)
+                }
+            } else delay(1500)
+            popup.dismiss()
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun View.setControls() {
-        val xSensitivity = 1
-        val ySensitivity = 0.8
-
+    private fun View.setControls(xSensitivity: Float, ySensitivity: Float) {
         var lastTouchX = 0f
         var lastTouchY = 0f
         var xMotion = 0
         var yMotion = 0
         var motionTime = 0L
-
+        @SuppressLint("ClickableViewAccessibility")
         setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {

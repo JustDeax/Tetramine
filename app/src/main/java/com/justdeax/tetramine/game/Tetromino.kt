@@ -2,10 +2,6 @@ package com.justdeax.tetramine.game
 
 class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) {
 
-    fun rotateRight() = Tetromino(rotateMatrix(clockwise = true), row, col)
-
-    fun rotateLeft() = Tetromino(rotateMatrix(clockwise = false), row, col)
-
     fun copy() = Tetromino(
         shape.map { row ->
             row.map { cell ->
@@ -14,6 +10,10 @@ class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) 
         }.toTypedArray(),
         row, col
     )
+
+    fun rotateRight() = Tetromino(rotateMatrix(clockwise = true), row, col)
+
+    fun rotateLeft() = Tetromino(rotateMatrix(clockwise = false), row, col)
 
     private fun rotateMatrix(clockwise: Boolean): Array<IntArray> {
         val rows = shape.size
@@ -68,8 +68,5 @@ class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) 
                 intArrayOf(0, 0, 0),
             ),
         )
-
-        val randomPiece get() = Tetromino(TETROMINO_SHAPES.random())
-        val emptyPiece get() = Tetromino(arrayOf(intArrayOf()))
     }
 }

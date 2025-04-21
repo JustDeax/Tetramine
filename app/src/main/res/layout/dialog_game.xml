@@ -22,7 +22,7 @@
         android:textSize="45sp"
         android:text="GAME OVER"
         tools:visibility="visible"
-        style="@style/MonospacedTitle" />
+        style="@style/MonospaceTitle" />
 
     <TextView
         android:id="@+id/statistics"
@@ -33,7 +33,7 @@
         android:layout_marginBottom="20dp"
         android:textSize="22sp"
         tools:text="Lines:000 \nScore:0000000 \nLevel:0"
-        style="@style/GameStatisticsText" />
+        style="@style/StatisticsText" />
 
     <Button
         android:id="@+id/resume"
@@ -50,7 +50,6 @@
         style="@style/DialogGameButton" />
 
     <LinearLayout
-        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -61,9 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/exit"
-            android:padding="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/DialogGameOutlineButton" />
 
         <Button
             android:id="@+id/restart"
@@ -71,9 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/restart"
-            android:padding="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/DialogGameOutlineButton" />
 
     </LinearLayout>
 

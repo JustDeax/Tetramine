@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
-        style="@style/MainCardView">
+        app:contentPadding="16dp"
+        style="@style/CardMain">
 
         <TextView
             android:id="@+id/textView"
@@ -18,7 +19,7 @@
             android:paddingHorizontal="30dp"
             android:textSize="22sp"
             tools:text="TETRAMINE"
-            style="@style/MonospacedTitle" />
+            style="@style/MonospaceTitle" />
 
     </com.google.android.material.card.MaterialCardView>
 

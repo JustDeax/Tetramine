@@ -22,9 +22,8 @@
                 android:id="@+id/version_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="21sp"
-                tools:text="@string/version"/>
+                tools:text="@string/version"
+                style="@style/AboutGameText" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -39,9 +38,8 @@
                 android:id="@+id/author_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="21sp"
-                tools:text="@string/author" />
+                tools:text="@string/author"
+                style="@style/AboutGameText" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -56,9 +54,8 @@
                 android:id="@+id/project_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textSize="21sp"
-                tools:text="@string/source_code" />
+                tools:text="@string/source_code"
+                style="@style/AboutGameText" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -67,9 +64,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
             android:text="@string/about_2"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-            android:textSize="21sp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            style="@style/AboutGameText" />
 
     </LinearLayout>
 

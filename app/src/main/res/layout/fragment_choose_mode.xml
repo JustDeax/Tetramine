@@ -31,10 +31,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                    android:textAlignment="center"
-                    android:minLines="2"
-                    android:text="@string/classic_mode_desc" />
+                    android:text="@string/classic_mode_desc"
+                    style="@style/ChooseModeDescription" />
 
             </LinearLayout>
 
@@ -60,10 +58,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
-                    android:textAlignment="center"
-                    android:minLines="2"
-                    android:text="@string/practice_mode_desc" />
+                    android:text="@string/practice_mode_desc"
+                    style="@style/ChooseModeDescription" />
 
             </LinearLayout>
 
@@ -89,10 +85,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
-                    android:textAlignment="center"
-                    android:minLines="2"
-                    android:text="@string/sprint_mode_desc" />
+                    android:text="@string/sprint_mode_desc"
+                    style="@style/ChooseModeDescription" />
 
             </LinearLayout>
 
@@ -118,10 +112,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
-                    android:textAlignment="center"
-                    android:minLines="2"
-                    android:text="@string/modern_mode_desc" />
+                    android:text="@string/modern_mode_desc"
+                    style="@style/ChooseModeDescription" />
 
             </LinearLayout>
 

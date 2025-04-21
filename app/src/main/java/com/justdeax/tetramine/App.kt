@@ -8,16 +8,14 @@ import com.justdeax.tetramine.PreferenceManager.themeMode
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        val theme = themeMode
-        val dynamic = isThemeDynamic
         AppCompatDelegate.setDefaultNightMode(
-            when (theme) {
+            when (themeMode) {
                 1 -> AppCompatDelegate.MODE_NIGHT_NO
                 2 -> AppCompatDelegate.MODE_NIGHT_YES
                 else -> AppCompatDelegate.MODE_NIGHT_YES
             }
         )
-        if (dynamic) {
+        if (isThemeDynamic) {
             DynamicColors.applyToActivitiesIfAvailable(this)
             setTheme(R.style.Theme_Dynamic)
         } else {

@@ -5,7 +5,7 @@
     <style name="Theme.Static" parent="Theme.Material3.DayNight.NoActionBar" />
     <style name="Theme.Tetramine" parent="Theme.Static" />
 
-    <style name="MainCardView" parent="Widget.MaterialComponents.CardView">
+    <style name="CardMain" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_margin">8dp</item>
         <item name="contentPadding">20dp</item>
         <item name="strokeWidth">0.35dp</item>
@@ -22,7 +22,7 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
-    <style name="MonospacedTitle">
+    <style name="MonospaceTitle">
         <item name="android:fontFamily">@font/roboto_mono_semibold</item>
         <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:textAlignment">center</item>
@@ -30,7 +30,7 @@
         <item name="android:textSize">34sp</item>
     </style>
 
-    <style name="LargeDisplay" parent="TextAppearance.Material3.TitleMedium">
+    <style name="MainTitle" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">28sp</item>
         <item name="android:textAlignment">center</item>
     </style>
@@ -46,21 +46,39 @@
         <item name="android:textAlignment">textEnd</item>
     </style>
 
-    <style name="GameStatisticsText"> //TODO
+    <style name="StatisticsText">
         <item name="android:fontFamily">@font/roboto_mono_regular</item>
         <item name="android:layout_gravity">start|center_vertical</item>
     </style>
 
-    <style name="DialogGameButton">
+    <style name="DialogGameButton" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:padding">12dp</item>
         <item name="maxLines">1</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
-    <style name="ChooseModeTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <style name="DialogGameOutlineButton" parent="DialogGameButton">
+        <item name="android:background">@color/invisible</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="AboutGameText" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ChooseModeTitle" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="ChooseModeDescription" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:minLines">2</item>
+        <item name="android:maxLines">2</item>
     </style>
 
 </resources>

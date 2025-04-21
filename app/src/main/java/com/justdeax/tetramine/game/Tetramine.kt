@@ -6,8 +6,9 @@ class Tetramine(
     private val showBanner: (String) -> Unit
 ) {
     private var board = Array(rows) { IntArray(cols) }
-    var currentPiece = Tetromino.emptyPiece ; private set
-    var previousPiece = Tetromino.randomPiece ; private set
+    private var bag = makeBag()
+    var currentPiece = emptyPiece() ; private set
+    var previousPiece = nextPiece() ; private set
     var isGameOver = false ; private set
     var lines = 0 ; private set
     var score = 0
@@ -17,8 +18,9 @@ class Tetramine(
 
     fun resetGame() {
         board = Array(rows) { IntArray(cols) }
-        currentPiece = Tetromino.emptyPiece
-        previousPiece = Tetromino.randomPiece
+        bag = makeBag()
+        currentPiece = emptyPiece()
+        previousPiece = nextPiece()
         isGameOver = false
         lines = 0
         score = 0
@@ -143,7 +145,7 @@ class Tetramine(
 
     private fun spawnPiece() {
         currentPiece = previousPiece
-        previousPiece = Tetromino.randomPiece
+        previousPiece = nextPiece()
         currentPiece.row = 0
         currentPiece.col = cols / 2 - (currentPiece.shape[0].size / 2)
         if (!isValidMove(currentPiece, currentPiece.row, currentPiece.col))
@@ -156,6 +158,16 @@ class Tetramine(
             ghost.row++
         return ghost
     }
+
+    private fun emptyPiece() = Tetromino(arrayOf(intArrayOf()))
+
+    private fun nextPiece(): Tetromino {
+        if (bag.isEmpty())
+            bag = makeBag()
+        return Tetromino(bag.removeAt(0))
+    }
+
+    private fun makeBag() = Tetromino.TETROMINO_SHAPES.toMutableList().apply { shuffle() }
 
     private fun isValidMove(piece: Tetromino, newRow: Int, newCol: Int): Boolean {
         return forEachCell(piece) { i, j ->
