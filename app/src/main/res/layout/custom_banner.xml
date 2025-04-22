@@ -7,16 +7,17 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:cardCornerRadius="16dp"
-        app:contentPadding="16dp"
+        app:contentPadding="0dp"
         style="@style/CardMain">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingHorizontal="22dp"
             android:textSize="22sp"
             tools:text="TETRAMINE"
             style="@style/MonospaceTitle" />

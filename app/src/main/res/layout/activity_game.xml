@@ -21,12 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:minWidth="0dp"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
-            android:text="@string/zero"
             app:cornerRadius="18dp"
-            app:icon="@drawable/round_pause_24" />
+            app:icon="@drawable/round_pause_24"
+            style="@style/PauseButton" />
 
         <TextView
             android:id="@+id/statistics"

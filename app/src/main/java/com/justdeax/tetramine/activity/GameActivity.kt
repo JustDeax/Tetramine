@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -33,8 +34,7 @@ import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
 import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.createOnBackCallback
-import com.justdeax.tetramine.util.findNumber
-import com.justdeax.tetramine.util.padArray2x4
+import com.justdeax.tetramine.util.tetrominoType
 import com.justdeax.tetramine.util.getStatistics
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -86,7 +86,7 @@ class GameActivity : AppCompatActivity() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     game.board.collectLatest { newBoard ->
                         board.updateBoard(newBoard)
-                        preview.updateBoard(padArray2x4(game.previousPiece.shape))
+                        preview.updateBoard(game.previousPiece.shape)
                         statistics.text = getStatistics(game.lines, game.score)
                         if (game.isGameOver) showGameDialog()
                     }
@@ -95,10 +95,7 @@ class GameActivity : AppCompatActivity() {
             game.resumeGame()
         }
         onBackPressedDispatcher.addCallback(this, createOnBackCallback {
-            if (dialogGame?.isShowing == true)
-                finish()
-            else
-                showGameDialog()
+            showGameDialog()
         })
         if (isFirstLaunch) {
             showHelpDialog()
@@ -120,7 +117,7 @@ class GameActivity : AppCompatActivity() {
                 dialogGame?.setOnDismissListener { dialogGame = null }
             } else {
                 preview.updateBoard(
-                    padArray2x4(Tetromino.TETROMINO_SHAPES[findNumber(game.currentPiece.shape) - 1])
+                    Tetromino.TETROMINO_SHAPES[tetrominoType(game.currentPiece.shape) - 1]
                 )
                 statistics.text = getStatistics(game.lines, game.score)
                 dialogGame?.setOnDismissListener { game.resumeGame() }
@@ -152,6 +149,14 @@ class GameActivity : AppCompatActivity() {
                 game.startGame()
             }
         }
+        dialogGame?.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                finish()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun showHelpDialog() {
@@ -177,21 +182,17 @@ class GameActivity : AppCompatActivity() {
         ).apply {
             isOutsideTouchable = false
             isFocusable = false
+            animationStyle = com.google.android.material.R.style.Animation_AppCompat_DropDownUp
             setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-            showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 300)
+            showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
         }
+
         lifecycleScope.launch {
-            if (game.lines > 40) {
-                repeat(text.length) { i ->
-                    textView.text = text.substring(0, i + 1)
-                    delay(50)
-                }
-                delay(1500)
-                repeat(text.length) { i ->
-                    textView.text = text.substring(i + 1)
-                    delay(50)
-                }
-            } else delay(1500)
+            repeat(text.length) { i ->
+                textView.text = text.substring(0, i + 1)
+                delay(25)
+            }
+            delay(1448)
             popup.dismiss()
         }
     }

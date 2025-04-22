@@ -44,8 +44,10 @@ Die Empfindlichkeit der Bewegungen kann in den Einstellungen separat für Links/
     <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>
     <string name="about_2">
 """Klassisches Arcade-Puzzlespiel, bei dem du fallende Tetrominos – Figuren aus 4 Blöcken – stapelst, um vollständige Reihen zu bilden und Punkte zu erzielen.
+
 Die ursprüngliche Mechanik bleibt erhalten, mit flüssiger Steuerung und modernem, minimalistischem Design.
 """</string>
     <string name="author">Autor:</string>
     <string name="source_code">Quellcode:</string>
+
 </resources>

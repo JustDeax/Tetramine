@@ -44,8 +44,10 @@ La sensibilidad del movimiento se puede ajustar por separado para izquierda/dere
     <string name="about_1">Esta es la versión móvil moderna de Tetris</string>
     <string name="about_2">
 """Juego clásico de puzzle tipo arcade donde debes apilar tetrominós — piezas de 4 bloques — para formar líneas completas y sumar puntos.
+
 Se mantiene la mecánica original, con controles suaves y un diseño moderno y minimalista.
 """</string>
     <string name="author">Autor:</string>
     <string name="source_code">Código fuente:</string>
+
 </resources>
