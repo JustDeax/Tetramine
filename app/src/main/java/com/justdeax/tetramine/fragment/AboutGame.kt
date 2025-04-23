@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.fragment
+
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle

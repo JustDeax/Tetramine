@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.fragment
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentSettingsBinding
 import com.justdeax.tetramine.util.notAvailable
 
-class Settings: Fragment() {
+class Settings : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 

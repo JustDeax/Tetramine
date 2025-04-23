@@ -7,10 +7,10 @@ class Tetramine(
 ) {
     private var board = Array(rows) { IntArray(cols) }
     private var bag = makeBag()
-    var currentPiece = emptyPiece() ; private set
-    var previousPiece = nextPiece() ; private set
-    var isGameOver = false ; private set
-    var lines = 0 ; private set
+    var currentPiece = emptyPiece(); private set
+    var previousPiece = nextPiece(); private set
+    var isGameOver = false; private set
+    var lines = 0; private set
     var score = 0
     var comboCount = -1
 

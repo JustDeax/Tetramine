@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.activity
+
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.graphics.Color

@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.activity
+
 import android.animation.ValueAnimator
 import android.content.pm.ActivityInfo
 import android.os.Bundle

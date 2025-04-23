@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.game
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 

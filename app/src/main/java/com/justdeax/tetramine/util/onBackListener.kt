@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.util
+
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 

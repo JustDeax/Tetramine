@@ -33,36 +33,43 @@ class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) 
 
     companion object {
         val TETROMINO_SHAPES = listOf(
-            arrayOf( // I
+            arrayOf(
+                // I
                 intArrayOf(0, 0, 0, 0),
                 intArrayOf(1, 1, 1, 1),
                 intArrayOf(0, 0, 0, 0),
             ),
-            arrayOf( // O
+            arrayOf(
+                // O
                 intArrayOf(2, 2),
                 intArrayOf(2, 2),
             ),
-            arrayOf( // T
+            arrayOf(
+                // T
                 intArrayOf(0, 3, 0),
                 intArrayOf(3, 3, 3),
                 intArrayOf(0, 0, 0),
             ),
-            arrayOf( // L
+            arrayOf(
+                // L
                 intArrayOf(4, 0, 0),
                 intArrayOf(4, 4, 4),
                 intArrayOf(0, 0, 0),
             ),
-            arrayOf( // J
+            arrayOf(
+                // J
                 intArrayOf(0, 0, 5),
                 intArrayOf(5, 5, 5),
                 intArrayOf(0, 0, 0),
             ),
-            arrayOf( // S
+            arrayOf(
+                // S
                 intArrayOf(0, 6, 6),
                 intArrayOf(6, 6, 0),
                 intArrayOf(0, 0, 0),
             ),
-            arrayOf( // Z
+            arrayOf(
+                // Z
                 intArrayOf(7, 7, 0),
                 intArrayOf(0, 7, 7),
                 intArrayOf(0, 0, 0),

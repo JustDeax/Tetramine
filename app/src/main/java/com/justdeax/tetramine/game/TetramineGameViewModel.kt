@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.game
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.justdeax.tetramine.util.one
@@ -14,7 +15,7 @@ class TetramineGameViewModel(
     rows: Int,
     cols: Int,
     showBanner: (String) -> Unit
-): ViewModel() {
+) : ViewModel() {
     private val tetramine = Tetramine(rows, cols, showBanner)
     private var startedSpeed = 500L
     private var dropSpeed = startedSpeed

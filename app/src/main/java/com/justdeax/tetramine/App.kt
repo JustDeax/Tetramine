@@ -1,4 +1,5 @@
 package com.justdeax.tetramine
+
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.color.DynamicColors

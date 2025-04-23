@@ -1,4 +1,5 @@
 package com.justdeax.tetramine.util
+
 import android.content.Context
 import java.util.Locale
 
