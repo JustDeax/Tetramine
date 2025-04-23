@@ -23,14 +23,14 @@ class AboutGame : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val versionString = getString(R.string.version) + "\nCheck Updates"
+        val authorString = getString(R.string.author) + "\ngithub.com/JustDeax"
+        val projectString = getString(R.string.source_code) + "\ngithub.com/JustDeax/TetramineGame"
+
         binding.apply {
-            val versionString = getString(R.string.version) + "\nCheck Updates"
             versionText.text = versionString
-
-            val authorString = getString(R.string.author) + "\ngithub.com/JustDeax"
             authorText.text = authorString
-
-            val projectString = getString(R.string.source_code) + "\ngithub.com/JustDeax/TetramineGame"
             projectText.text = projectString
 
             version.setOnClickListener { openLink("https://github.com/JustDeax/Tetramine/releases") }

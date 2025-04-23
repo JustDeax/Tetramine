@@ -33,9 +33,9 @@ import com.justdeax.tetramine.game.TetramineGameFactory
 import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
 import com.justdeax.tetramine.util.applySystemInsets
-import com.justdeax.tetramine.util.createOnBackCallback
-import com.justdeax.tetramine.util.tetrominoType
+import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.getStatistics
+import com.justdeax.tetramine.util.onBackListener
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -45,9 +45,11 @@ class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private var dialogGameBinding: DialogGameBinding? = null
     private var dialogGame: AlertDialog? = null
+
     private var colors = intArrayOf()
     private var boardColor = intArrayOf()
     private var previewColor = intArrayOf()
+
     private val rows = 20
     private val cols = 10
     private val game: TetramineGameViewModel by viewModels {
@@ -85,8 +87,8 @@ class GameActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     game.board.collectLatest { newBoard ->
-                        board.updateBoard(newBoard)
-                        preview.updateBoard(game.previousPiece.shape)
+                        board.update(newBoard)
+                        preview.update(game.previousPiece.shape)
                         statistics.text = getStatistics(game.lines, game.score)
                         if (game.isGameOver) showGameDialog()
                     }
@@ -94,9 +96,8 @@ class GameActivity : AppCompatActivity() {
             }
             game.resumeGame()
         }
-        onBackPressedDispatcher.addCallback(this, createOnBackCallback {
-            showGameDialog()
-        })
+        onBackListener { showGameDialog() }
+
         if (isFirstLaunch) {
             showHelpDialog()
             isFirstLaunch = false
@@ -108,20 +109,21 @@ class GameActivity : AppCompatActivity() {
             game.stopGame()
         if (dialogGame == null)
             initGameDialog()
+
         dialogGameBinding?.apply {
             if (game.isGameOver) {
                 preview.visibility = View.GONE
                 gameOver.visibility = View.VISIBLE
                 resume.text = getString(R.string.view_game)
-                statistics.text = getStatistics(game.lines, game.score)
                 dialogGame?.setOnDismissListener { dialogGame = null }
             } else {
-                preview.updateBoard(
-                    Tetromino.TETROMINO_SHAPES[tetrominoType(game.currentPiece.shape) - 1]
+                preview.update(
+                    Tetromino.TETROMINO_SHAPES[getTetrominoType(game.currentPiece.shape) - 1]
                 )
-                statistics.text = getStatistics(game.lines, game.score)
                 dialogGame?.setOnDismissListener { game.resumeGame() }
             }
+
+            statistics.text = getStatistics(game.lines, game.score)
             dialogGame?.show()
         }
     }
@@ -149,6 +151,7 @@ class GameActivity : AppCompatActivity() {
                 game.startGame()
             }
         }
+
         dialogGame?.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
                 finish()
@@ -174,7 +177,6 @@ class GameActivity : AppCompatActivity() {
 
     private fun showBanner(text: String) {
         val bannerBinding = CustomBannerBinding.inflate(layoutInflater)
-        val textView = bannerBinding.textView
         val popup = PopupWindow(
             bannerBinding.root,
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -182,17 +184,17 @@ class GameActivity : AppCompatActivity() {
         ).apply {
             isOutsideTouchable = false
             isFocusable = false
-            animationStyle = com.google.android.material.R.style.Animation_AppCompat_DropDownUp
+            animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
             setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
             showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
         }
 
         lifecycleScope.launch {
             repeat(text.length) { i ->
-                textView.text = text.substring(0, i + 1)
+                bannerBinding.textView.text = text.substring(0, i + 1)
                 delay(25)
             }
-            delay(1448)
+            delay(1400)
             popup.dismiss()
         }
     }
@@ -203,6 +205,7 @@ class GameActivity : AppCompatActivity() {
         var xMotion = 0
         var yMotion = 0
         var motionTime = 0L
+
         @SuppressLint("ClickableViewAccessibility")
         setOnTouchListener { _, event ->
             when (event.action) {
@@ -240,6 +243,7 @@ class GameActivity : AppCompatActivity() {
                         game.hardDrop()
                     else if (xMotion == 0 && yMotion == 0)
                         game.rotateRight()
+
                     lastTouchX = 0f
                     lastTouchY = 0f
                     xMotion = 0

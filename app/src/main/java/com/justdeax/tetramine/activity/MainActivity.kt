@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
         val navController = findNavController(R.id.nav_host_fragment)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.mainMenu) {
                 animateHeightChange(binding.logoLayout, screenHeight / 3)
@@ -48,13 +50,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.statistics -> getString(R.string.statistics)
                 R.id.settings -> getString(R.string.settings)
                 R.id.aboutGame -> getString(R.string.about_1)
-                else -> "" //R.id.mainMenu
+                else -> ""
             }
         }
     }
 
     private fun animateHeightChange(view: View, newHeight: Int) {
         if (newHeight == 0) return
+
         val startHeight = view.height
         val animator = ValueAnimator.ofInt(startHeight, newHeight)
 

@@ -11,8 +11,8 @@ android {
         applicationId = "com.justdeax.tetramine"
         minSdk = 24
         targetSdk = 35
-        versionCode = 108
-        versionName = "0.8"
+        versionCode = 109
+        versionName = "0.9"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

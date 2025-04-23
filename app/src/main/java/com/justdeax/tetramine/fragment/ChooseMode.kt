@@ -23,9 +23,12 @@ class ChooseMode : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val game = Intent(activity, GameActivity::class.java)
+
         binding.apply {
             classic.setOnClickListener {
-                startGame()
+                startActivity(game)
             }
             practice.setOnClickListener {
                 notAvailable(requireContext(), getString(R.string.practice_mode))
@@ -37,11 +40,6 @@ class ChooseMode : Fragment() {
                 notAvailable(requireContext(), getString(R.string.modern_mode))
             }
         }
-    }
-
-    private fun startGame() {
-        val game = Intent(activity, GameActivity::class.java)
-        startActivity(game)
     }
 
     override fun onDestroyView() {

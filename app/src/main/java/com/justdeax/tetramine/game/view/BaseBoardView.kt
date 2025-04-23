@@ -46,11 +46,12 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
             for (col in 0 until cols) {
                 val value = board[row][col]
                 if (value in colors.indices) {
-                    paint.color = colors[value]
                     val left = col * (cellSize + cellSpacing)
                     val top = row * (cellSize + cellSpacing)
                     val right = left + cellSize
                     val bottom = top + cellSize
+
+                    paint.color = colors[value]
                     rect.set(left, top, right, bottom)
                     canvas.drawRoundRect(rect, cellCornerRadius, cellCornerRadius, paint)
                 }
@@ -58,15 +59,15 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
         }
     }
 
+    open fun update(newBoard: Array<IntArray>) {
+        board = newBoard
+        invalidate()
+    }
+
     fun setStyle(colors: IntArray, cellSpacing: Float, cellCornerRadius: Float) {
         this.colors = colors
         this.cellSpacing = context.dpToPx(cellSpacing)
         this.cellCornerRadius = context.dpToPx(cellCornerRadius)
-        invalidate()
-    }
-
-    open fun updateBoard(newBoard: Array<IntArray>) {
-        board = newBoard
         invalidate()
     }
 }

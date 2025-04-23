@@ -66,7 +66,7 @@ class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) 
                 intArrayOf(7, 7, 0),
                 intArrayOf(0, 7, 7),
                 intArrayOf(0, 0, 0),
-            ),
+            )
         )
     }
 }

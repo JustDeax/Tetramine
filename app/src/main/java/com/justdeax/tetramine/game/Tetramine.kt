@@ -123,6 +123,7 @@ class Tetramine(
             lines += cleared
             comboCount += 1
             score += comboCount * com.justdeax.tetramine.util.combo
+
             when (comboCount) {
                 3 -> showBanner("COMBO X3")
                 5 -> showBanner("COMBO X5")
@@ -134,7 +135,7 @@ class Tetramine(
                 3 -> score += com.justdeax.tetramine.util.triple
                 4 -> { score += com.justdeax.tetramine.util.tetramine; showBanner("TETRAMINE") }
             }
-            if (board.all { row -> row.all { it == 0 } }) {
+            if (board.last().all { it == 0 }) {
                 score += com.justdeax.tetramine.util.perfectClear
                 showBanner("PERFECT CLEAR")
             }

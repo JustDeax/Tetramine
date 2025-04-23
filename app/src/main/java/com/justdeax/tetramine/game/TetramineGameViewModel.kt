@@ -13,10 +13,10 @@ import kotlinx.coroutines.withContext
 class TetramineGameViewModel(
     rows: Int,
     cols: Int,
-    makeBanner: (String) -> Unit
+    showBanner: (String) -> Unit
 ): ViewModel() {
-    private val tetramine = Tetramine(rows, cols, makeBanner)
-    private var startedSpeed = 800L
+    private val tetramine = Tetramine(rows, cols, showBanner)
+    private var startedSpeed = 500L
     private var dropSpeed = startedSpeed
     private var gameJob: Job? = null
 
