@@ -54,7 +54,7 @@
                 android:id="@+id/project_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="@string/source_code"
+                tools:text="@string/project"
                 style="@style/AboutGameText" />
 
         </com.google.android.material.card.MaterialCardView>

@@ -89,7 +89,7 @@
                 android:id="@+id/combos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/combo"
+                android:text="@string/max_combo"
                 style="@style/StatisticsTitle" />
 
         </LinearLayout>

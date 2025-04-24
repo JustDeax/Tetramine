@@ -13,15 +13,8 @@
     <string name="exit">Exit</string>
     <string name="restart">Restart</string>
     <string name="help">Help with controllers</string>
-    <string name="help_text">
-"""To control a falling piece, just swipe your finger on the game board - the piece will move in the same direction as your finger. It is not necessary to touch the piece itself: moving on any part of the board will make it move in the direction your finger moves
 
-If you simply press the board (without swiping), the piece will rotate
-
-Movement sensitivity can be set separately for left/right and down movement in the game settings
-"""</string>
-
-    <string name="choose_mode">Choose mode</string>
+    <string name="choose_mode">Choose Mode</string>
     <string name="classic_mode">Classic Game</string>
     <string name="classic_mode_desc">Classic version of the game</string>
     <string name="practice_mode">Practice Experience</string>
@@ -36,28 +29,10 @@ Movement sensitivity can be set separately for left/right and down movement in t
     <string name="score">Score</string>
     <string name="lines">Lines</string>
     <string name="pieces">Pieces</string>
-    <string name="four_lines">Four Lines</string>
+    <string name="four_lines">4 Lines</string>
     <string name="t_spins">T Spins</string>
-    <string name="combo">Combo</string>
+    <string name="max_combo">Max combo</string>
     <string name="zero">0</string>
-
-<!--    <string name="theme">Theme</string>-->
-<!--    <string-array name="theme_array">-->
-<!--        <item>Dynamic theme</item>-->
-<!--        <item>Light</item>-->
-<!--        <item>Dark</item>-->
-<!--    </string-array>-->
-<!--    <string name="show_ghost">Show ghost piece</string>-->
-<!--    <string name="show_only_numbers">Show only number of score and lines</string>-->
-<!--    <string name="sounds">Sounds</string>-->
-<!--    <string name="music">Music</string>-->
-<!--    <string name="vibration">Vibration</string>-->
-<!--    <string name="control_type">Control Type</string>-->
-<!--    <string-array name="control_type_array">-->
-<!--        <item>Touch Gestures</item>-->
-<!--        <item>Screen Buttons</item>-->
-<!--    </string-array>-->
-<!--    <string name="bi_directional_rotation">2-direction rotation</string>-->
 
     <string name="about_1">This is the mobile modern version of tetris</string>
     <string name="about_2">
@@ -66,6 +41,6 @@ Movement sensitivity can be set separately for left/right and down movement in t
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 """</string>
     <string name="author">Author:</string>
-    <string name="source_code">Source code:</string>
+    <string name="project">Project:</string>
 
 </resources>

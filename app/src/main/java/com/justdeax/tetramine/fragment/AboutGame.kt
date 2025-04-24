@@ -27,7 +27,7 @@ class AboutGame : Fragment() {
 
         val versionString = getString(R.string.version) + "\nCheck Updates"
         val authorString = getString(R.string.author) + "\ngithub.com/JustDeax"
-        val projectString = getString(R.string.source_code) + "\ngithub.com/JustDeax/TetramineGame"
+        val projectString = getString(R.string.project) + "\ngithub.com/JustDeax/TetramineGame"
 
         binding.apply {
             versionText.text = versionString

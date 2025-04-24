@@ -9,45 +9,38 @@
     <string name="settings">Настройки и оформление</string>
     <string name="about">О игре</string>
 
-    <string name="view_game">Посмотреть игру</string>
+    <string name="view_game">Просмотреть игру</string>
     <string name="exit">Выход</string>
-    <string name="restart">Начать заново</string>
-    <string name="help">Помощь по управлению</string>
-    <string name="help_text">
-"""Чтобы управлять падающей фигурой, просто проводите пальцем по игровому полю — фигура будет двигаться в том же направлении. Не обязательно касаться самой фигуры: движение по любой части поля сдвинет её в нужную сторону.
-
-Если просто нажать на поле (без движения), фигура повернётся.
-
-Чувствительность управления можно настроить отдельно для движения влево/вправо и вниз в настройках игры.
-"""</string>
+    <string name="restart">Заново</string>
+    <string name="help">Справка по управлению</string>
 
     <string name="choose_mode">Выберите режим</string>
     <string name="classic_mode">Классическая Игра</string>
-    <string name="classic_mode_desc">Классическая версия тетриса</string>
+    <string name="classic_mode_desc">Классическая версия игры</string>
     <string name="practice_mode">Режим Практики</string>
-    <string name="practice_mode_desc">Потренируйтесь в нужном темпе или просто расслабьтесь</string>
+    <string name="practice_mode_desc">Отрабатывайте в заданном темпе или просто расслабьтесь</string>
     <string name="sprint_mode">Спринт 40 линий</string>
-    <string name="sprint_mode_desc">Насколько быстро вы очистите 40 линий?</string>
-    <string name="modern_mode">Современный с Заморозкой</string>
-    <string name="modern_mode_desc">Современная версия с рандомной скоростью, заморозками и взрывами</string>
+    <string name="sprint_mode_desc">Насколько быстро вы очистите 40 линий</string>
+    <string name="modern_mode">Современный с заморозкой</string>
+    <string name="modern_mode_desc">Современная игра со случайной скоростью, заморозками и взрывами</string>
 
     <string name="page_total">Всего</string>
     <string name="page_best">Лучший</string>
     <string name="score">Очки</string>
     <string name="lines">Линии</string>
     <string name="pieces">Фигуры</string>
-    <string name="four_lines">Четыре линии</string>
-    <string name="t_spins">T-вращения</string>
-    <string name="combo">Комбо</string>
+    <string name="four_lines">4 линии</string>
+    <string name="t_spins">Т-спины</string>
+    <string name="max_combo">Макс комбо</string>
     <string name="zero">0</string>
 
-    <string name="about_1">Это современная мобильная версия тетриса</string>
+    <string name="about_1">Это современная мобильная версия Тетриса</string>
     <string name="about_2">
-"""Классическая аркадная головоломка, где нужно укладывать падающие тетромино — фигуры из 4 блоков, создавать из них сплошные линии и играть на счет.
+"""Классическая аркадная головоломка, где нужно складывать падающие тетромино — фигуры из 4 блоков, создавать из них сплошные линии и играть на очки
 
-Здесь сохранены оригинальные механики, управление — плавное и удобное, а стиль — минималистичный и современный.
+Оригинальная механика сохранена, управление плавное, а дизайн — современный и минималистичный
 """</string>
     <string name="author">Автор:</string>
-    <string name="source_code">Исходный код:</string>
+    <string name="project">Проект:</string>
 
 </resources>
