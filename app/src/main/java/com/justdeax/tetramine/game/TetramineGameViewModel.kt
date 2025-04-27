@@ -2,7 +2,6 @@ package com.justdeax.tetramine.game
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.justdeax.tetramine.util.one
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -14,11 +13,12 @@ import kotlinx.coroutines.withContext
 class TetramineGameViewModel(
     rows: Int,
     cols: Int,
-    showBanner: (String) -> Unit
+    showAchievement: (String) -> Unit
 ) : ViewModel() {
-    private val tetramine = Tetramine(rows, cols, showBanner)
-    private var startedSpeed = 500L
-    private var dropSpeed = startedSpeed
+    private val tetramine = Tetramine(rows, cols, showAchievement)
+    private var staticSpeed = false
+    private var startedDropSpeed = 500L
+    private var dropSpeed = startedDropSpeed
     private var gameJob: Job? = null
 
     val currentPiece get() = tetramine.currentPiece
@@ -41,7 +41,7 @@ class TetramineGameViewModel(
                 while (!tetramine.isGameOver) {
                     delay(dropSpeed)
                     withContext(Dispatchers.Main) {
-                        tetramine.softDrop()
+                        tetramine.dropPiece()
                         _board.value = tetramine.getBoardWithPiece()
                     }
                 }
@@ -61,8 +61,14 @@ class TetramineGameViewModel(
         gameJob?.cancel()
         gameJob = null
         tetramine.resetGame()
-        dropSpeed = startedSpeed
+        dropSpeed = startedDropSpeed
         _board.value = tetramine.getBoardWithPiece()
+    }
+
+    fun enableStaticSpeed(speed: Long) {
+        startedDropSpeed = speed
+        dropSpeed = speed
+        staticSpeed = true
     }
 
     fun moveLeft() {
@@ -98,7 +104,6 @@ class TetramineGameViewModel(
     fun softDrop() {
         gameAction {
             tetramine.softDrop()
-            tetramine.score += one
         }
     }
 

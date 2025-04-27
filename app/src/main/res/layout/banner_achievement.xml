@@ -7,7 +7,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="50sp"
         app:cardCornerRadius="16dp"
         app:contentPadding="0dp"
         style="@style/CardMain">
@@ -19,6 +19,7 @@
             android:gravity="center"
             android:paddingHorizontal="22dp"
             android:textSize="22sp"
+            android:maxLines="1"
             tools:text="TETRAMINE"
             style="@style/MonospaceTitle" />
 

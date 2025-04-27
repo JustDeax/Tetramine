@@ -2,7 +2,6 @@ package com.justdeax.tetramine.activity
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.KeyEvent
@@ -14,11 +13,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
@@ -27,12 +24,13 @@ import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityGameBinding
-import com.justdeax.tetramine.databinding.CustomBannerBinding
+import com.justdeax.tetramine.databinding.BannerAchievementBinding
+import com.justdeax.tetramine.databinding.BannerGuideBinding
 import com.justdeax.tetramine.databinding.DialogGameBinding
-import com.justdeax.tetramine.databinding.DialogHelpBinding
 import com.justdeax.tetramine.game.TetramineGameFactory
 import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
+import com.justdeax.tetramine.util.GameType
 import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.getStatistics
@@ -54,7 +52,7 @@ class GameActivity : AppCompatActivity() {
     private val rows = 20
     private val cols = 10
     private val game: TetramineGameViewModel by viewModels {
-        TetramineGameFactory(rows, cols, ::showBanner)
+        TetramineGameFactory(rows, cols, ::showAchievement)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,14 +93,21 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            when (intent.getStringExtra(GameType.TYPE)) {
+                GameType.CLASSIC -> { }
+                GameType.PRACTICE -> { }
+                GameType.SPRINT -> { }
+                GameType.MODERN -> { }
+                GameType.GUIDE -> {
+                    main.post { showGuide() }
+                    game.enableStaticSpeed(1000)
+                }
+            }
+
             game.resumeGame()
         }
         onBackListener { showGameDialog() }
-
-        if (isFirstLaunch) {
-            showHelpDialog()
-            isFirstLaunch = false
-        }
     }
 
     private fun showGameDialog() {
@@ -140,8 +145,9 @@ class GameActivity : AppCompatActivity() {
             resume.setOnClickListener {
                 dialogGame?.dismiss()
             }
-            help.setOnClickListener {
-                showHelpDialog()
+            guide.setOnClickListener {
+                dialogGame?.dismiss()
+                showGuide()
             }
             exit.setOnClickListener {
                 dialogGame?.dismiss()
@@ -163,21 +169,8 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun showHelpDialog() {
-        val dialogHelpBinding = DialogHelpBinding.inflate(layoutInflater)
-
-        Glide.with(this)
-            .load(R.drawable.help_with_controllers)
-            .into(dialogHelpBinding.gifView)
-
-        MaterialAlertDialogBuilder(this)
-            .setView(dialogHelpBinding.root)
-            .setPositiveButton("ОК", null)
-            .show()
-    }
-
-    private fun showBanner(text: String) {
-        val bannerBinding = CustomBannerBinding.inflate(layoutInflater)
+    private fun showAchievement(text: String) {
+        val bannerBinding = BannerAchievementBinding.inflate(layoutInflater)
         val popup = PopupWindow(
             bannerBinding.root,
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -186,11 +179,10 @@ class GameActivity : AppCompatActivity() {
             isOutsideTouchable = false
             isFocusable = false
             animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
-            setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-            showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
         }
 
         lifecycleScope.launch {
+            popup.showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
             repeat(text.length) { i ->
                 bannerBinding.textView.text = text.substring(0, i + 1)
                 delay(25)
@@ -200,6 +192,93 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun showGuide() {
+        val bannerBinding = BannerGuideBinding.inflate(layoutInflater)
+        val popup = PopupWindow(
+            bannerBinding.root,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply {
+            isOutsideTouchable = false
+            isFocusable = false
+            animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
+        }
+
+        lifecycleScope.launch {
+            val view = bannerBinding.textView
+            val fullGuide = intent.getStringExtra(GameType.TYPE) == GameType.GUIDE
+            var skip = false
+            if (fullGuide) {
+                view.setOnClickListener { skip = true }
+                popup.showGuide {
+                    view.text = makeGuideText(R.string.about_1)
+                    skip = false
+                    while (!skip)
+                        delay(100)
+                }
+                popup.showGuide {
+                    view.text = makeGuideText(R.string.about_2)
+                    skip = false
+                    while (!skip)
+                        delay(100)
+                }
+            }
+            popup.showGuide {
+                view.text = getString(R.string.guide_1)
+                val currentPieceColState = game.currentPiece.col
+                while (abs(currentPieceColState - game.currentPiece.col) < 2)
+                    delay(100)
+
+                val newCurrentPieceColState = game.currentPiece.col
+                if (currentPieceColState - game.currentPiece.col >= 2)
+                    while (newCurrentPieceColState - game.currentPiece.col > -2)
+                        delay(100)
+                else
+                    while (newCurrentPieceColState - game.currentPiece.col < 2)
+                        delay(100)
+            }
+            popup.showGuide {
+                view.text = getString(R.string.guide_2)
+                val gameScoreState = game.score
+                while (game.score < gameScoreState + 5)
+                    delay(100)
+            }
+            popup.showGuide {
+                view.text = getString(R.string.guide_3)
+                val hardDropCountState = hardDropCount
+                while (hardDropCount <= hardDropCountState)
+                    delay(100)
+            }
+            popup.showGuide {
+                view.text = getString(R.string.guide_4)
+                val rotateCountState = rotateCount
+                while (rotateCount <= rotateCountState)
+                    delay(100)
+            }
+            if (fullGuide) {
+                isFirstLaunch = false
+                popup.showGuide {
+                    view.text = makeGuideText(R.string.guide_5)
+                    skip = false
+                    while (!skip)
+                        delay(100)
+                }
+            }
+        }
+    }
+
+    private suspend fun PopupWindow.showGuide(action: suspend () -> Unit) {
+        showAtLocation(binding.root, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
+        action()
+        delay(500)
+        dismiss()
+        delay(500)
+    }
+
+    private fun makeGuideText(textId: Int) = getString(textId) + "\n= OK ="
+
+    var hardDropCount = 0
+    var rotateCount = 0
     private fun View.setControls(xSensitivity: Float, ySensitivity: Float) {
         var lastTouchX = 0f
         var lastTouchY = 0f
@@ -240,10 +319,13 @@ class GameActivity : AppCompatActivity() {
                 }
                 MotionEvent.ACTION_UP -> {
                     val diffTime = System.currentTimeMillis() - motionTime
-                    if (xMotion == 0 && yMotion > 2 && diffTime < 150L && game.currentPiece.row > 3)
+                    if (xMotion == 0 && yMotion > 2 && diffTime < 150L && game.currentPiece.row > 3) {
                         game.hardDrop()
-                    else if (xMotion == 0 && yMotion == 0)
+                        hardDropCount++
+                    } else if (xMotion == 0 && yMotion == 0) {
                         game.rotateRight()
+                        rotateCount++
+                    }
 
                     lastTouchX = 0f
                     lastTouchY = 0f

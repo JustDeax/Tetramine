@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.activity.GameActivity
 import com.justdeax.tetramine.databinding.FragmentChooseModeBinding
+import com.justdeax.tetramine.util.GameType
 import com.justdeax.tetramine.util.notAvailable
 
 class ChooseMode : Fragment() {
@@ -29,15 +30,19 @@ class ChooseMode : Fragment() {
 
         binding.apply {
             classic.setOnClickListener {
+                game.putExtra(GameType.TYPE, GameType.CLASSIC)
                 startActivity(game)
             }
             practice.setOnClickListener {
+                game.putExtra(GameType.TYPE, GameType.PRACTICE)
                 notAvailable(requireContext(), getString(R.string.practice_mode))
             }
             sprint.setOnClickListener {
+                game.putExtra(GameType.TYPE, GameType.SPRINT)
                 notAvailable(requireContext(), getString(R.string.sprint_mode))
             }
             modern.setOnClickListener {
+                game.putExtra(GameType.TYPE, GameType.MODERN)
                 notAvailable(requireContext(), getString(R.string.modern_mode))
             }
         }

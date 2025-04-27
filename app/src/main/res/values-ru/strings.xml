@@ -12,7 +12,7 @@
     <string name="view_game">Просмотреть игру</string>
     <string name="exit">Выход</string>
     <string name="restart">Заново</string>
-    <string name="help">Справка по управлению</string>
+    <string name="guide">Справка по управлению</string>
 
     <string name="choose_mode">Выберите режим</string>
     <string name="classic_mode">Классическая Игра</string>

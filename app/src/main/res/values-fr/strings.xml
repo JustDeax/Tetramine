@@ -12,7 +12,7 @@
     <string name="view_game">Voir la partie</string>
     <string name="exit">Quitter</string>
     <string name="restart">Recommencer</string>
-    <string name="help">Aide aux contrôles</string>
+    <string name="guide">Aide aux contrôles</string>
 
     <string name="choose_mode">Choisir un mode</string>
     <string name="classic_mode">Mode Classique</string>

@@ -1,14 +1,17 @@
 package com.justdeax.tetramine.activity
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityMainBinding
+import com.justdeax.tetramine.util.GameType
 import com.justdeax.tetramine.util.applySystemInsets
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +32,12 @@ class MainActivity : AppCompatActivity() {
                 screenHeight = main.height
                 animateHeightChange(logoLayout, screenHeight / 3)
             }
+        }
+
+        if (isFirstLaunch) {
+            val game = Intent(this, GameActivity::class.java)
+            game.putExtra(GameType.TYPE, GameType.GUIDE)
+            startActivity(game)
         }
     }
 

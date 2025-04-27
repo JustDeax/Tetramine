@@ -1,18 +1,20 @@
 package com.justdeax.tetramine.game
 
+import com.justdeax.tetramine.util.AddScore
+
 class Tetramine(
     private val rows: Int,
     private val cols: Int,
-    private val showBanner: (String) -> Unit
+    private val showAchievement: (String) -> Unit
 ) {
     private var board = Array(rows) { IntArray(cols) }
     private var bag = makeBag()
+    private var comboCount = -1
     var currentPiece = emptyPiece(); private set
     var previousPiece = nextPiece(); private set
     var isGameOver = false; private set
     var lines = 0; private set
-    var score = 0
-    var comboCount = -1
+    var score = 0; private set
 
     init { spawnPiece() }
 
@@ -35,15 +37,20 @@ class Tetramine(
         return board
     }
 
-    fun softDrop() {
+    fun dropPiece() {
         if (!movePiece(1, 0))
             baseDrop()
+    }
+
+    fun softDrop() {
+        dropPiece()
+        score += AddScore.ONE
     }
 
     fun hardDrop() {
         val ghost = ghostPiece()
         val distance = ghost.row - currentPiece.row
-        score += distance * com.justdeax.tetramine.util.two
+        score += distance * AddScore.TWO
         currentPiece.row = ghost.row
         baseDrop()
     }
@@ -122,22 +129,22 @@ class Tetramine(
         if (cleared > 0) {
             lines += cleared
             comboCount += 1
-            score += comboCount * com.justdeax.tetramine.util.combo
+            score += comboCount * AddScore.COMBO
 
             when (comboCount) {
-                3 -> showBanner("COMBO X3")
-                5 -> showBanner("COMBO X5")
-                10 -> showBanner("COMBO X10")
+                3 -> showAchievement("COMBO X3")
+                5 -> showAchievement("COMBO X5")
+                10 -> showAchievement("COMBO X10")
             }
             when (cleared) {
-                1 -> score += com.justdeax.tetramine.util.single
-                2 -> score += com.justdeax.tetramine.util.double
-                3 -> score += com.justdeax.tetramine.util.triple
-                4 -> { score += com.justdeax.tetramine.util.tetramine; showBanner("TETRAMINE") }
+                1 -> score += AddScore.SINGLE
+                2 -> score += AddScore.DOUBLE
+                3 -> score += AddScore.TRIPLE
+                4 -> { score += AddScore.TETRAMINE; showAchievement("TETRAMINE") }
             }
             if (board.last().all { it == 0 }) {
-                score += com.justdeax.tetramine.util.perfectClear
-                showBanner("PERFECT CLEAR")
+                score += AddScore.PERFECT_CLEAR
+                showAchievement("PERFECT CLEAR")
             }
         } else {
             comboCount = -1
