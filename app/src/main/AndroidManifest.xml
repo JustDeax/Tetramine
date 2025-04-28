@@ -12,6 +12,7 @@
         android:localeConfig="@xml/locale_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tetramine"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="33">
 
         <activity

@@ -19,7 +19,7 @@
 """</string>
     <string name="guide_2" translatable="false">
 """Движение вниз
-Проведите пальцем вниз, чтобы фигура начала падать быстрее
+Проведите пальцем вниз — фигура начнет падать быстрее
 """</string>
     <string name="guide_3" translatable="false">
 """Быстрое падение
@@ -58,8 +58,7 @@
     <string name="about_2">
 """Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
 
-The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
-"""</string>
+The original mechanics are retained here, with smooth controls, but with a modern, minimalist design"""</string>
     <string name="author">Author:</string>
     <string name="project">Project:</string>
 
