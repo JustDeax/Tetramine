@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.justdeax.tetramine.databinding.FragmentAboutGameBinding
 import androidx.core.net.toUri
+import com.justdeax.tetramine.PreferenceManager.versionName
 import com.justdeax.tetramine.R
 
 class AboutGame : Fragment() {
@@ -25,9 +26,9 @@ class AboutGame : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val versionString = getString(R.string.version) + "\nCheck Updates"
+        val versionString = getString(R.string.version) + requireActivity().versionName + "\nCheck Updates"
         val authorString = getString(R.string.author) + "\ngithub.com/JustDeax"
-        val projectString = getString(R.string.project) + "\ngithub.com/JustDeax/TetramineGame"
+        val projectString = getString(R.string.project) + "\ngithub.com/JustDeax/Tetramine"
 
         binding.apply {
             versionText.text = versionString
@@ -36,7 +37,7 @@ class AboutGame : Fragment() {
 
             version.setOnClickListener { openLink("https://github.com/JustDeax/Tetramine/releases") }
             author.setOnClickListener { openLink("https://github.com/JustDeax") }
-            project.setOnClickListener { openLink("https://github.com/JustDeax/TetramineGame") }
+            project.setOnClickListener { openLink("https://github.com/JustDeax/Tetramine") }
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.justdeax.tetramine.PreferenceManager.versionName
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentMainMenuBinding
 import com.justdeax.tetramine.util.notAvailable
@@ -23,7 +24,12 @@ class MainMenu : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val versionText = getString(R.string.version) + requireActivity().versionName
+
         binding.apply {
+            version.text = versionText
+
             chooseMode.setOnClickListener {
                 findNavController().navigate(R.id.action_mainMenu_to_chooseGame)
             }

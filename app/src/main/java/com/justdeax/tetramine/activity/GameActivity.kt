@@ -7,8 +7,8 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -32,6 +32,7 @@ import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
 import com.justdeax.tetramine.util.GameType
 import com.justdeax.tetramine.util.applySystemInsets
+import com.justdeax.tetramine.util.createPopupWindow
 import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.getStatistics
 import com.justdeax.tetramine.util.onBackListener
@@ -198,78 +199,72 @@ class GameActivity : AppCompatActivity() {
             val view = popupBinding.textView
             var skip = false
 
+            popupBinding.root.setOnClickListener { skip = true }
+
             popup.apply {
                 if (fullGuide) {
-                    popupBinding.root.setOnClickListener { skip = true }
-                    showGuide {
-                        view.text = makeGuideText(R.string.about_1)
-                        skip = false
-                        while (!skip)
-                            delay(100)
-                    }
-                    showGuide {
-                        view.text = makeGuideText(R.string.about_2)
-                        skip = false
-                        while (!skip)
-                            delay(100)
-                    }
-                }
-                showGuide {
-                    view.text = getString(R.string.guide_1)
-                    val currentPieceColState = game.currentPiece.col
-                    while (abs(currentPieceColState - game.currentPiece.col) < 2)
-                        delay(100)
+                    skip = false
+                    fullGuideStep({!skip}, R.string.about_1, view)
 
-                    val newCurrentPieceColState = game.currentPiece.col
+                    skip = false
+                    fullGuideStep({!skip}, R.string.about_2, view)
+                }
+
+                val currentPieceColState = game.currentPiece.col
+                guideStep({
+                    abs(currentPieceColState - game.currentPiece.col) < 2
+                }, R.string.guide_1, view)
+
+                val newCurrentPieceColState = game.currentPiece.col
+                guideStep({
                     if (currentPieceColState - game.currentPiece.col >= 2)
-                        while (newCurrentPieceColState - game.currentPiece.col > -2)
-                            delay(100)
+                        newCurrentPieceColState - game.currentPiece.col > -2
                     else
-                        while (newCurrentPieceColState - game.currentPiece.col < 2)
-                            delay(100)
-                }
-                showGuide {
-                    view.text = getString(R.string.guide_2)
-                    val gameScoreState = game.score
-                    while (game.score < gameScoreState + 5)
-                        delay(100)
-                }
-                showGuide {
-                    view.text = getString(R.string.guide_3)
-                    val hardDropCountState = hardDropCount
-                    while (hardDropCount <= hardDropCountState)
-                        delay(100)
-                }
-                showGuide {
-                    view.text = getString(R.string.guide_4)
-                    val rotateCountState = rotateCount
-                    while (rotateCount <= rotateCountState)
-                        delay(100)
-                }
+                        newCurrentPieceColState - game.currentPiece.col < 2
+                }, R.string.guide_1, view)
+
+                val gameScoreState = game.score
+                guideStep({
+                    game.score < gameScoreState + 5
+                }, R.string.guide_2, view)
+
+                val hardDropCountState = hardDropCount
+                guideStep({
+                    hardDropCount <= hardDropCountState
+                }, R.string.guide_3, view)
+
+                val rotateCountState = rotateCount
+                guideStep({
+                    rotateCount <= rotateCountState
+                }, R.string.guide_4, view)
+
                 if (fullGuide) {
                     isFirstLaunch = false
-                    showGuide {
-                        view.text = makeGuideText(R.string.guide_5)
-                        skip = false
-                        while (!skip)
-                            delay(100)
-                    }
+                    skip = false
+                    fullGuideStep({!skip}, R.string.guide_5, view)
                 }
             }
         }
     }
 
-    private fun createPopupWindow(view: View) = PopupWindow(
-        view,
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT
-    ).apply {
-        isOutsideTouchable = false
-        isFocusable = false
-        animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
+    suspend fun PopupWindow.guideStep(condition: () -> Boolean, textRes: Int, textView: TextView) = showGuide(condition) {
+        textView.text = getString(textRes)
     }
 
-    private fun makeGuideText(textId: Int) = getString(textId) + "= OK ="
+    suspend fun PopupWindow.fullGuideStep(condition: () -> Boolean, textRes: Int, textView: TextView) = showGuide(condition) {
+        val string = getString(textRes) + "= OK ="
+        textView.text = string
+    }
+
+    private suspend fun PopupWindow.showGuide(conditions: () -> Boolean, action: () -> Unit) {
+        showAtLocation(binding.root, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
+        action()
+        while (conditions())
+            delay(100)
+        delay(500)
+        dismiss()
+        delay(500)
+    }
 
     private fun View.setControls(xSensitivity: Float, ySensitivity: Float) {
         var lastTouchX = 0f
@@ -326,14 +321,6 @@ class GameActivity : AppCompatActivity() {
             }
             true
         }
-    }
-
-    private suspend fun PopupWindow.showGuide(action: suspend () -> Unit) {
-        showAtLocation(binding.root, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
-        action()
-        delay(500)
-        dismiss()
-        delay(500)
     }
 
     override fun onStop() {

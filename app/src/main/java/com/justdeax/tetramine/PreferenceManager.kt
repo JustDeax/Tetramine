@@ -1,5 +1,6 @@
 package com.justdeax.tetramine
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 
@@ -48,4 +49,7 @@ object PreferenceManager {
             apply()
         }
     }
+
+    val Activity.versionName: String
+        get() = packageManager.getPackageInfo(packageName, 0).versionName!!
 }
