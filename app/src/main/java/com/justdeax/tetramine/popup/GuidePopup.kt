@@ -93,11 +93,7 @@ class GuidePopup(
         }
     }
 
-    private suspend fun showGuide(
-        conditions: () -> Boolean,
-        textRes: Int,
-        ok: Boolean = false
-    ) {
+    private suspend fun showGuide(conditions: () -> Boolean, textRes: Int, ok: Boolean = false) {
         popup.showAtLocation(anchorView, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
         binding.textView.text = if (ok)
             context.getString(textRes) + "\n= OK ="

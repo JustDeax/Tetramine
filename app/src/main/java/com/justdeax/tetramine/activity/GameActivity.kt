@@ -53,8 +53,6 @@ class GameActivity : AppCompatActivity() {
     private var colors = intArrayOf()
     private var boardColor = intArrayOf()
     private var previewColor = intArrayOf()
-    var hardDropCount = 0
-    var rotateCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,6 +171,9 @@ class GameActivity : AppCompatActivity() {
             fullGuide
         )
     }
+
+    var hardDropCount = 0
+    var rotateCount = 0
 
     private fun View.setControls(xSensitivity: Float, ySensitivity: Float) {
         var lastTouchX = 0f

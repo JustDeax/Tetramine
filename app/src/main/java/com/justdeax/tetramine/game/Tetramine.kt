@@ -21,12 +21,12 @@ class Tetramine(
     fun resetGame() {
         board = Array(rows) { IntArray(cols) }
         bag = makeBag()
+        comboCount = -1
         currentPiece = emptyPiece()
         previousPiece = nextPiece()
         isGameOver = false
         lines = 0
         score = 0
-        comboCount = -1
         spawnPiece()
     }
 
@@ -99,11 +99,10 @@ class Tetramine(
             }
         }
 
-        val current = currentPiece.copy()
         for ((rowOffset, colOffset) in kickOffsets) {
-            val newRow = current.row + rowOffset
-            val newCol = current.col + colOffset
-            if (isValidMove(current, newRow, newCol)) {
+            val newRow = currentPiece.row + rowOffset
+            val newCol = currentPiece.col + colOffset
+            if (isValidMove(currentPiece, newRow, newCol)) {
                 currentPiece.row = newRow
                 currentPiece.col = newCol
                 return
@@ -150,9 +149,9 @@ class Tetramine(
 
     private fun spawnPiece() {
         currentPiece = previousPiece
-        previousPiece = nextPiece()
         currentPiece.row = 0
         currentPiece.col = cols / 2 - (currentPiece.shape[0].size / 2)
+        previousPiece = nextPiece()
         if (!isValidMove(currentPiece, currentPiece.row, currentPiece.col))
             isGameOver = true
     }

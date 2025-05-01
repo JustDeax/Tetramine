@@ -65,6 +65,7 @@ class TetramineGameViewModel(
         _board.value = tetramine.getBoardWithPiece()
     }
 
+    @Suppress("unused")
     fun enableStaticSpeed(speed: Long) {
         startedDropSpeed = speed
         dropSpeed = speed
@@ -83,6 +84,7 @@ class TetramineGameViewModel(
         }
     }
 
+    @Suppress("unused")
     fun rotateLeft() {
         gameAction {
             tetramine.rotateLeft()

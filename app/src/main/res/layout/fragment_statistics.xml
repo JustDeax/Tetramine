@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/page_total"
-            android:textSize="22sp"
+            android:textSize="24sp"
             app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Left"
             style="@style/Widget.MaterialComponents.Chip.Choice" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/page_best"
-            android:textSize="22sp"
+            android:textSize="24sp"
             app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Right"
             style="@style/Widget.MaterialComponents.Chip.Choice" />
 
