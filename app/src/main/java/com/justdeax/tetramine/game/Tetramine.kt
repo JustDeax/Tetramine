@@ -1,6 +1,6 @@
 package com.justdeax.tetramine.game
 
-import com.justdeax.tetramine.util.constants.AddScore
+import com.justdeax.tetramine.util.constant.AddScore
 
 class Tetramine(
     private val rows: Int,

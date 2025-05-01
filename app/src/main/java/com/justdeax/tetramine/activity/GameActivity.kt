@@ -26,7 +26,7 @@ import com.justdeax.tetramine.game.Tetromino
 import com.justdeax.tetramine.popup.AchievementPopup
 import com.justdeax.tetramine.popup.GuidePopup
 import com.justdeax.tetramine.util.applySystemInsets
-import com.justdeax.tetramine.util.constants.GameType
+import com.justdeax.tetramine.util.constant.GameType
 import com.justdeax.tetramine.util.getStatistics
 import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.onBackListener

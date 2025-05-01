@@ -13,21 +13,26 @@
     <string name="exit">Exit</string>
     <string name="restart">Restart</string>
     <string name="guide">Controller Guide</string>
-    <string name="guide_1" translatable="false">
-"""Движение влево и вправо
-Проведите пальцем влево или вправо по экрану — фигура двинется в ту же сторону"""</string>
-    <string name="guide_2" translatable="false">
-"""Движение вниз
-Проведите пальцем вниз — фигура начнет падать быстрее"""</string>
-    <string name="guide_3" translatable="false">
-"""Быстрое падение
-Сделайте резкий свайп ровно вниз — фигура сразу упадёт на дно."""</string>
-    <string name="guide_4" translatable="false">
-"""Поворот фигуры
-Просто нажмите на экран, не двигая палец — фигура повернётся."""</string>
-    <string name="guide_5" translatable="false">
-"""Удачной игры!
-Также проверьте настройки темы, смена чувствительности управления, режимы и статистики"""</string>
+    <string name="guide_1">
+"""Move left and right
+Swipe left or right on the screen and the figure moves in the same direction"""
+</string>
+    <string name="guide_2">
+"""Downward movement
+Swipe your finger down - the figure will start to fall faster"""
+</string>
+    <string name="guide_3">
+"""Hard drop
+Make a sharp swipe straight down - the figure will immediately fall to the bottom"""
+</string>
+    <string name="guide_4">
+"""Rotate figure
+Simply tap the screen without moving your finger and the figure will rotate"""
+</string>
+    <string name="guide_5">
+"""Have a good game!
+Also check theme settings, control sensitivity change, modes and stats"""
+</string>
 
     <string name="choose_mode">Choose Mode</string>
     <string name="classic_mode">Classic Game</string>
@@ -53,7 +58,8 @@
     <string name="about_2">
 """Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
 
-The original mechanics are retained here, with smooth controls, but with a modern, minimalist design"""</string>
+The original mechanics are retained here, with smooth controls, but with a modern, minimalist design"""
+</string>
     <string name="author">Author:</string>
     <string name="project">Project:</string>
 
