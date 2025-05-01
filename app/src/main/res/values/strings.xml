@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Tetramine</string>
-    <string name="version">Version: </string>
+    <string name="version">Version:</string>
     <string name="not_available">not available</string>
 
     <string name="play">Play</string>
@@ -15,24 +15,19 @@
     <string name="guide">Controller Guide</string>
     <string name="guide_1" translatable="false">
 """Движение влево и вправо
-Проведите пальцем влево или вправо по экрану — фигура двинется в ту же сторону
-"""</string>
+Проведите пальцем влево или вправо по экрану — фигура двинется в ту же сторону"""</string>
     <string name="guide_2" translatable="false">
 """Движение вниз
-Проведите пальцем вниз — фигура начнет падать быстрее
-"""</string>
+Проведите пальцем вниз — фигура начнет падать быстрее"""</string>
     <string name="guide_3" translatable="false">
 """Быстрое падение
-Сделайте резкий свайп ровно вниз — фигура сразу упадёт на дно.
-"""</string>
+Сделайте резкий свайп ровно вниз — фигура сразу упадёт на дно."""</string>
     <string name="guide_4" translatable="false">
 """Поворот фигуры
-Просто нажмите на экран, не двигая палец — фигура повернётся.
-"""</string>
+Просто нажмите на экран, не двигая палец — фигура повернётся."""</string>
     <string name="guide_5" translatable="false">
 """Удачной игры!
-Также проверьте настройки темы, смена чувствительности управления, режимы и статистики
-"""</string>
+Также проверьте настройки темы, смена чувствительности управления, режимы и статистики"""</string>
 
     <string name="choose_mode">Choose Mode</string>
     <string name="classic_mode">Classic Game</string>

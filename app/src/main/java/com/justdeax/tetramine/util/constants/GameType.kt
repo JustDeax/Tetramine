@@ -1,4 +1,4 @@
-package com.justdeax.tetramine.util
+package com.justdeax.tetramine.util.constants
 
 object GameType {
     const val TYPE = "TYPE"

@@ -1,4 +1,4 @@
-package com.justdeax.tetramine.util
+package com.justdeax.tetramine.util.constants
 
 object AddScore {
     const val ONE = 1

@@ -1,6 +1,6 @@
 package com.justdeax.tetramine.game
 
-import com.justdeax.tetramine.util.AddScore
+import com.justdeax.tetramine.util.constants.AddScore
 
 class Tetramine(
     private val rows: Int,
@@ -79,19 +79,9 @@ class Tetramine(
 
     private fun rotatePiece(isRightRotated: Boolean) {
         val kickOffsets = if (isRightRotated) listOf(
-            0 to 0,
-            0 to 1,
-            0 to -1,
-            1 to 0,
-            1 to 1,
-            1 to -1
+            0 to 0, 0 to 1, 0 to -1, 1 to 0, 1 to 1, 1 to -1
         ) else listOf(
-            0 to 0,
-            0 to -1,
-            0 to 1,
-            1 to 0,
-            1 to -1,
-            1 to 1
+            0 to 0, 0 to -1, 0 to 1, 1 to 0, 1 to -1, 1 to 1
         )
 
         val rotated = if (isRightRotated)
@@ -126,29 +116,36 @@ class Tetramine(
         val cleared = rows - newBoard.size
         board = Array(cleared) { IntArray(cols) } + newBoard
 
-        if (cleared > 0) {
-            lines += cleared
-            comboCount += 1
-            score += comboCount * AddScore.COMBO
-
-            when (comboCount) {
-                3 -> showAchievement("COMBO X3")
-                5 -> showAchievement("COMBO X5")
-                10 -> showAchievement("COMBO X10")
-            }
-            when (cleared) {
-                1 -> score += AddScore.SINGLE
-                2 -> score += AddScore.DOUBLE
-                3 -> score += AddScore.TRIPLE
-                4 -> { score += AddScore.TETRAMINE; showAchievement("TETRAMINE") }
-            }
-            if (board.last().all { it == 0 }) {
-                score += AddScore.PERFECT_CLEAR
-                showAchievement("PERFECT CLEAR")
-            }
-        } else {
+        if (cleared == 0) {
             comboCount = -1
+            return
         }
+        lines += cleared
+        comboCount += 1
+
+        val combo = comboCount * AddScore.COMBO
+        val isPerfectClear = board.last().all { it == 0 }
+        val perfectClear = if (isPerfectClear) AddScore.PERFECT_CLEAR else 0
+        val clear = when (cleared) {
+            1 -> AddScore.SINGLE
+            2 -> AddScore.DOUBLE
+            3 -> AddScore.TRIPLE
+            4 -> AddScore.TETRAMINE
+            else -> 0
+        }
+        score += combo + clear + perfectClear
+
+        showAchievement(
+            buildString {
+                if (isPerfectClear) appendLine("PERFECT_CLEAR")
+                if (cleared == 4) appendLine("TETRAMINE")
+                when (comboCount) {
+                    3 -> appendLine("COMBO X3")
+                    5 -> appendLine("COMBO X5")
+                    7 -> appendLine("COMBO X7")
+                }
+            }
+        )
     }
 
     private fun spawnPiece() {

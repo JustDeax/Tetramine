@@ -1,4 +1,4 @@
-package com.justdeax.tetramine.game.view
+package com.justdeax.tetramine.view
 
 import android.content.Context
 import android.graphics.Canvas

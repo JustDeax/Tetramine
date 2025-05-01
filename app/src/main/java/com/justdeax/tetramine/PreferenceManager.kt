@@ -51,5 +51,5 @@ object PreferenceManager {
     }
 
     val Activity.versionName: String
-        get() = packageManager.getPackageInfo(packageName, 0).versionName!!
+        get() = " " + packageManager.getPackageInfo(packageName, 0).versionName!!
 }

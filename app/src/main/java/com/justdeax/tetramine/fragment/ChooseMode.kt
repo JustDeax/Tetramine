@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.activity.GameActivity
 import com.justdeax.tetramine.databinding.FragmentChooseModeBinding
-import com.justdeax.tetramine.util.GameType
+import com.justdeax.tetramine.util.constants.GameType
 import com.justdeax.tetramine.util.notAvailable
 
 class ChooseMode : Fragment() {

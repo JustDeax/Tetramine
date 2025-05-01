@@ -3,12 +3,8 @@ package com.justdeax.tetramine.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.Gravity
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -19,24 +15,21 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
-import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityGameBinding
 import com.justdeax.tetramine.databinding.DialogGameBinding
-import com.justdeax.tetramine.databinding.PopupAchievementBinding
-import com.justdeax.tetramine.databinding.PopupGuideBinding
 import com.justdeax.tetramine.game.TetramineGameFactory
 import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
-import com.justdeax.tetramine.util.GameType
+import com.justdeax.tetramine.popup.AchievementPopup
+import com.justdeax.tetramine.popup.GuidePopup
 import com.justdeax.tetramine.util.applySystemInsets
-import com.justdeax.tetramine.util.createPopupWindow
-import com.justdeax.tetramine.util.getTetrominoType
+import com.justdeax.tetramine.util.constants.GameType
 import com.justdeax.tetramine.util.getStatistics
+import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.onBackListener
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -45,18 +38,23 @@ class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private lateinit var dialogGameBinding: DialogGameBinding
     private lateinit var dialogGame: AlertDialog
+    private val rows = 20
+    private val cols = 10
+    private val game: TetramineGameViewModel by viewModels {
+        TetramineGameFactory(rows, cols) { text -> achievementPopup.show(text) }
+    }
+    private val guidePopup by lazy {
+        GuidePopup(binding.root, lifecycleScope, this, layoutInflater)
+    }
+    private val achievementPopup by lazy {
+        AchievementPopup(binding.root, lifecycleScope, layoutInflater)
+    }
 
     private var colors = intArrayOf()
     private var boardColor = intArrayOf()
     private var previewColor = intArrayOf()
-
     var hardDropCount = 0
     var rotateCount = 0
-    private val rows = 20
-    private val cols = 10
-    private val game: TetramineGameViewModel by viewModels {
-        TetramineGameFactory(rows, cols, ::showAchievement)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,13 +66,8 @@ class GameActivity : AppCompatActivity() {
         setupViews()
 
         when (intent.getStringExtra(GameType.TYPE)) {
-            GameType.CLASSIC -> { }
-            GameType.PRACTICE -> { }
-            GameType.SPRINT -> { }
-            GameType.MODERN -> { }
             GameType.GUIDE -> {
                 binding.main.post { showGuide(fullGuide = true) }
-                game.enableStaticSpeed(1000)
             }
         }
         lifecycleScope.launch {
@@ -130,10 +123,10 @@ class GameActivity : AppCompatActivity() {
                 preview.visibility = View.VISIBLE
                 gameOver.visibility = View.GONE
                 resume.text = getString(R.string.resume)
+                dialogGame.setOnDismissListener { game.resumeGame() }
                 preview.update(
                     Tetromino.TETROMINO_SHAPES[getTetrominoType(game.currentPiece.shape) - 1]
                 )
-                dialogGame.setOnDismissListener { game.resumeGame() }
             }
 
             statistics.text = getStatistics(game.lines, game.score)
@@ -165,105 +158,20 @@ class GameActivity : AppCompatActivity() {
                 game.startGame()
             }
         }
-
-        dialogGame.setOnKeyListener { _, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                finish()
-                true
-            } else {
-                false
-            }
-        }
-    }
-
-    private fun showAchievement(text: String) {
-        val popupBinding = PopupAchievementBinding.inflate(layoutInflater)
-        val popup = createPopupWindow(popupBinding.root)
-
-        lifecycleScope.launch {
-            popup.showAtLocation(binding.root, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
-            repeat(text.length) { i ->
-                popupBinding.textView.text = text.substring(0, i + 1)
-                delay(25)
-            }
-            delay(1400)
-            popup.dismiss()
-        }
+        dialogGame.setCanceledOnTouchOutside(false)
+        dialogGame.setOnCancelListener { finish() }
     }
 
     private fun showGuide(fullGuide: Boolean = false) {
-        val popupBinding = PopupGuideBinding.inflate(layoutInflater)
-        val popup = createPopupWindow(popupBinding.root)
-
-        lifecycleScope.launch {
-            val view = popupBinding.textView
-            var skip = false
-
-            popupBinding.root.setOnClickListener { skip = true }
-
-            popup.apply {
-                if (fullGuide) {
-                    skip = false
-                    fullGuideStep({!skip}, R.string.about_1, view)
-
-                    skip = false
-                    fullGuideStep({!skip}, R.string.about_2, view)
-                }
-
-                val currentPieceColState = game.currentPiece.col
-                guideStep({
-                    abs(currentPieceColState - game.currentPiece.col) < 2
-                }, R.string.guide_1, view)
-
-                val newCurrentPieceColState = game.currentPiece.col
-                guideStep({
-                    if (currentPieceColState - game.currentPiece.col >= 2)
-                        newCurrentPieceColState - game.currentPiece.col > -2
-                    else
-                        newCurrentPieceColState - game.currentPiece.col < 2
-                }, R.string.guide_1, view)
-
-                val gameScoreState = game.score
-                guideStep({
-                    game.score < gameScoreState + 5
-                }, R.string.guide_2, view)
-
-                val hardDropCountState = hardDropCount
-                guideStep({
-                    hardDropCount <= hardDropCountState
-                }, R.string.guide_3, view)
-
-                val rotateCountState = rotateCount
-                guideStep({
-                    rotateCount <= rotateCountState
-                }, R.string.guide_4, view)
-
-                if (fullGuide) {
-                    isFirstLaunch = false
-                    skip = false
-                    fullGuideStep({!skip}, R.string.guide_5, view)
-                }
-            }
-        }
-    }
-
-    suspend fun PopupWindow.guideStep(condition: () -> Boolean, textRes: Int, textView: TextView) = showGuide(condition) {
-        textView.text = getString(textRes)
-    }
-
-    suspend fun PopupWindow.fullGuideStep(condition: () -> Boolean, textRes: Int, textView: TextView) = showGuide(condition) {
-        val string = getString(textRes) + "= OK ="
-        textView.text = string
-    }
-
-    private suspend fun PopupWindow.showGuide(conditions: () -> Boolean, action: () -> Unit) {
-        showAtLocation(binding.root, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
-        action()
-        while (conditions())
-            delay(100)
-        delay(500)
-        dismiss()
-        delay(500)
+        if (game.isGameOver)
+            game.startGame()
+        guidePopup.show(
+            { game.currentPiece.col },
+            { game.score },
+            { hardDropCount },
+            { rotateCount },
+            fullGuide
+        )
     }
 
     private fun View.setControls(xSensitivity: Float, ySensitivity: Float) {
