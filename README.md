@@ -21,21 +21,24 @@ Classic arcade puzzle game where you have to stack falling tetromino — 4-block
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 
 ```
-This project is not open source at this time
-- My position: Im not ready to put my code of this game for the time being
-- You can also send bugs, wishes, improvements via “issues”
+This is a semi-open source project at the moment
+- My position: I'm not ready to post the whole code of this game at the moment.
+- You can also send bugs, wishes, improvements through “issues”.
 ```
 
 ### Feature
-- [ ] Modern Material Design 3
-- [ ] MVVM, ViewModel
-- [ ] Fast and responsive UI
-- [ ] Easy score system
-- [ ] Hard Drop and Soft Drop
-- [ ] Ghost piece
+- [ ] Modern Material Design 3 And ViewModel
 - [ ] Comfortable control setup
+- [ ] Fair distribution of "7-bag" figures
+- [ ] Hard drop and soft drop
+- [ ] Cool Rotation System (when rotating, the figure can be shifted to get into the right holes)
+- [ ] Advanced scoring system (not including t-spin yet)
+- [ ] Ghost figure
+- [ ] Powerful action notification (4 lines, combos and so on)
+- [ ] Dynamic Theme support
 
 ### TODO
 - [ ] Detailed statistics
-- [ ] Styling and themes
+- [ ] Full customization of controls and appearance
 - [ ] Multiple game modes
+- [ ] Rotate both ways
