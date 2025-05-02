@@ -1,0 +1,75 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <com.justdeax.tetramine.view.PreviewView
+        android:id="@+id/preview"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/game_over"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="45sp"
+        android:text="GAME OVER"
+        tools:visibility="visible"
+        style="@style/MonospaceTitle" />
+
+    <TextView
+        android:id="@+id/statistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="22sp"
+        tools:text="Lines:000 \nScore:0000000 \nLevel:0"
+        style="@style/StatisticsText" />
+
+    <Button
+        android:id="@+id/resume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/resume"
+        style="@style/DialogGameButton" />
+
+    <Button
+        android:id="@+id/guide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/guide"
+        style="@style/DialogGameButton" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/exit"
+            style="@style/DialogGameOutlineButton" />
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/restart"
+            style="@style/DialogGameOutlineButton" />
+
+    </LinearLayout>
+
+</LinearLayout>

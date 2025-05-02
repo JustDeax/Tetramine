@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Tetramine</string>
+    <string name="version">Versión:</string>
+    <string name="not_available">no disponible</string>
+
+    <string name="play">Jugar</string>
+    <string name="resume">Reanudar juego</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="settings">Configuración y apariencia</string>
+    <string name="about">Acerca de</string>
+
+    <string name="view_game">Ver juego</string>
+    <string name="exit">Salir</string>
+    <string name="restart">Reiniciar</string>
+    <string name="guide">Guía de controles</string>
+    <string name="guide_1">
+"""Mover a izquierda/derecha
+Desliza a un lado para mover la pieza en esa dirección"""
+</string>
+    <string name="guide_2">
+"""Movimiento hacia abajo
+Desliza hacia abajo y la pieza caerá más rápido"""
+</string>
+    <string name="guide_3">
+"""Caída instantánea
+Haz un deslizamiento fuerte hacia abajo y la pieza caerá al fondo"""
+</string>
+    <string name="guide_4">
+"""Girar pieza
+Toca la pantalla sin mover el dedo para rotar la pieza"""
+</string>
+    <string name="guide_5">
+"""¡Buena partida!
+Revisa también temas, sensibilidad, modos y estadísticas"""
+</string>
+
+    <string name="choose_mode">Elegir modo</string>
+    <string name="classic_mode">Juego clásico</string>
+    <string name="classic_mode_desc">Versión clásica del juego</string>
+    <string name="practice_mode">Modo práctica</string>
+    <string name="practice_mode_desc">Practica a cierto ritmo o relájate</string>
+    <string name="sprint_mode">Sprint 40 líneas</string>
+    <string name="sprint_mode_desc">¿Qué tan rápido puedes limpiar 40 líneas?</string>
+    <string name="modern_mode">Moderno con congelación</string>
+    <string name="modern_mode_desc">Juego moderno con velocidad aleatoria, congelaciones y explosiones</string>
+
+    <string name="page_total">Total</string>
+    <string name="page_best">Mejor</string>
+    <string name="score">Puntuación</string>
+    <string name="lines">Líneas</string>
+    <string name="pieces">Piezas</string>
+    <string name="four_lines">4 líneas</string>
+    <string name="t_spins">T-Spins</string>
+    <string name="max_combo">Combo máximo</string>
+    <string name="zero">0</string>
+
+    <string name="about_1">Esta es la versión móvil moderna de Tetris</string>
+    <string name="about_2">
+"""Juego de rompecabezas arcade clásico donde debes apilar tetrominós que caen — piezas de 4 bloques, crear líneas sólidas y jugar por puntuación
+
+Las mecánicas originales se mantienen aquí, con controles suaves, pero con un diseño moderno y minimalista"""
+</string>
+    <string name="author">Autor:</string>
+    <string name="project">Proyecto:</string>
+
+</resources>
