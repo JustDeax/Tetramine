@@ -39,14 +39,14 @@ class ChooseMode : Fragment() {
                 notAvailable(requireContext(), getString(R.string.sprint_mode))
             }
             modern.setOnClickListener {
-                startGame(GameType.MODERN)
+                //startGame(GameType.MODERN)
                 notAvailable(requireContext(), getString(R.string.modern_mode))
             }
         }
     }
 
     private fun startGame(type: String) {
-        val game = Intent(activity, GameActivity::class.java)
+        val game = Intent(requireActivity(), GameActivity::class.java)
         game.putExtra(GameType.TYPE, type)
         startActivity(game)
     }

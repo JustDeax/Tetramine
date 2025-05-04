@@ -5,16 +5,17 @@ import com.justdeax.tetramine.util.constant.AddScore
 class Tetramine(
     private val rows: Int,
     private val cols: Int,
-    private val showAchievement: (String) -> Unit
+    private val showAchievement: (String) -> Unit,
+    private val level: () -> Int,
 ) {
     private var board = Array(rows) { IntArray(cols) }
     private var bag = makeBag()
     private var comboCount = -1
-    var currentPiece = emptyPiece(); private set
-    var previousPiece = nextPiece(); private set
-    var isGameOver = false; private set
-    var lines = 0; private set
-    var score = 0; private set
+    var currentPiece = emptyPiece()
+    var previousPiece = nextPiece()
+    var isGameOver = false
+    var lines = 0
+    var score = 0
 
     init { spawnPiece() }
 
@@ -113,26 +114,24 @@ class Tetramine(
     private fun clearLines() {
         val newBoard = board.filter { row -> row.any { it == 0 } }.toTypedArray()
         val cleared = rows - newBoard.size
-        board = Array(cleared) { IntArray(cols) } + newBoard
-
         if (cleared == 0) {
             comboCount = -1
             return
         }
+        board = Array(cleared) { IntArray(cols) } + newBoard
         lines += cleared
-        comboCount += 1
+        comboCount++
 
-        val combo = comboCount * AddScore.COMBO
         val isPerfectClear = board.last().all { it == 0 }
-        val perfectClear = if (isPerfectClear) AddScore.PERFECT_CLEAR else 0
-        val clear = when (cleared) {
-            1 -> AddScore.SINGLE
-            2 -> AddScore.DOUBLE
-            3 -> AddScore.TRIPLE
-            4 -> AddScore.TETRAMINE
+        score += comboCount * AddScore.COMBO * level()
+        score += if (isPerfectClear) AddScore.PERFECT_CLEAR * level() else 0
+        score += when (cleared) {
+            1 -> AddScore.SINGLE * level()
+            2 -> AddScore.DOUBLE * level()
+            3 -> AddScore.TRIPLE * level()
+            4 -> AddScore.TETRAMINE * level()
             else -> 0
         }
-        score += combo + clear + perfectClear
 
         showAchievement(
             buildString {

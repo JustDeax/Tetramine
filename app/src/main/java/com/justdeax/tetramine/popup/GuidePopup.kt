@@ -38,6 +38,8 @@ class GuidePopup(
         gameScore: () -> Int,
         hardDropCount: () -> Int,
         rotateCount: () -> Int,
+        gameStop: () -> Unit,
+        gameResume: () -> Unit,
         fullGuide: Boolean
     ) {
         job?.cancel()
@@ -49,10 +51,12 @@ class GuidePopup(
         job = lifecycleScope.launch {
             try {
                 if (fullGuide) {
+                    gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_1, ok = true)
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_2, ok = true)
+                    gameResume()
                 }
 
                 var movedLeft = false
@@ -84,8 +88,10 @@ class GuidePopup(
                 context.isFirstLaunch = false
 
                 if (fullGuide) {
+                    gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.guide_5, ok = true)
+                    gameResume()
                 }
             } finally {
                 popup.dismiss()
@@ -96,7 +102,7 @@ class GuidePopup(
     private suspend fun showGuide(conditions: () -> Boolean, textRes: Int, ok: Boolean = false) {
         popup.showAtLocation(anchorView, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
         binding.textView.text = if (ok)
-            context.getString(textRes) + "\n= OK ="
+            context.getString(textRes) + "\n( OK )"
         else
             context.getString(textRes)
         while (!conditions())

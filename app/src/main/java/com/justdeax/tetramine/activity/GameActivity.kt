@@ -43,10 +43,10 @@ class GameActivity : AppCompatActivity() {
     private val game: TetramineGameViewModel by viewModels {
         TetramineGameFactory(rows, cols) { text -> achievementPopup.show(text) }
     }
-    private val guidePopup by lazy {
+    private val guidePopup: GuidePopup by lazy {
         GuidePopup(binding.root, lifecycleScope, this, layoutInflater)
     }
-    private val achievementPopup by lazy {
+    private val achievementPopup: AchievementPopup by lazy {
         AchievementPopup(binding.root, lifecycleScope, layoutInflater)
     }
 
@@ -64,18 +64,30 @@ class GameActivity : AppCompatActivity() {
         setupViews()
 
         when (intent.getStringExtra(GameType.TYPE)) {
+            GameType.PRACTICE -> {
+                game.setStaticSpeed(4)
+            }
             GameType.GUIDE -> {
                 binding.main.post { showGuide(fullGuide = true) }
             }
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                game.board.collectLatest { newBoard ->
-                    binding.board.update(newBoard)
-                    binding.preview.update(game.previousPiece.shape)
-                    binding.statistics.text = getStatistics(game.lines, game.score)
-                    if (game.isGameOver)
-                        showGameDialog()
+                launch {
+                    game.board.collectLatest { newBoard ->
+                        binding.board.update(newBoard)
+                        binding.preview.update(game.previousPiece.shape)
+                        binding.statistics.text = getStatistics(game.lines, game.score)
+                        if (game.isGameOver)
+                            showGameDialog()
+                    }
+                }
+                launch {
+                    game.level.collectLatest { newLevel ->
+                        binding.pause.text =
+                            if (newLevel == TetramineGameViewModel.levels.lastIndex) " Σ "
+                            else newLevel.toString()
+                    }
                 }
             }
         }
@@ -127,7 +139,7 @@ class GameActivity : AppCompatActivity() {
                 )
             }
 
-            statistics.text = getStatistics(game.lines, game.score)
+            statistics.text = getStatistics(game.lines, game.score, game.level.value)
             dialogGame.show()
         }
     }
@@ -168,6 +180,8 @@ class GameActivity : AppCompatActivity() {
             { game.score },
             { hardDropCount },
             { rotateCount },
+            { game.stopGame() },
+            { game.resumeGame() },
             fullGuide
         )
     }
@@ -232,8 +246,9 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
-        showGameDialog()
-        super.onStop()
+    override fun onPause() {
+        if (!isFinishing && !isDestroyed)
+            showGameDialog()
+        super.onPause()
     }
 }
