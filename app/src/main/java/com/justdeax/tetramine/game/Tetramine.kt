@@ -1,6 +1,8 @@
 package com.justdeax.tetramine.game
 
+import android.util.Log
 import com.justdeax.tetramine.util.constant.AddScore
+import com.justdeax.tetramine.util.getTetrominoType
 
 class Tetramine(
     private val rows: Int,
@@ -11,6 +13,8 @@ class Tetramine(
     private var board = Array(rows) { IntArray(cols) }
     private var bag = makeBag()
     private var comboCount = -1
+    private var lastMoveRotation = false
+    private var isBackToBack = false
     var currentPiece = emptyPiece()
     var previousPiece = nextPiece()
     var isGameOver = false
@@ -23,6 +27,8 @@ class Tetramine(
         board = Array(rows) { IntArray(cols) }
         bag = makeBag()
         comboCount = -1
+        lastMoveRotation = false
+        isBackToBack = false
         currentPiece = emptyPiece()
         previousPiece = nextPiece()
         isGameOver = false
@@ -63,7 +69,7 @@ class Tetramine(
 
     private fun baseDrop() {
         applyPieceToBoard(board, currentPiece)
-        clearLines()
+        clearLines(isTSpin(currentPiece))
         spawnPiece()
     }
 
@@ -73,6 +79,7 @@ class Tetramine(
         if (isValidMove(currentPiece, newRow, newCol)) {
             currentPiece.row = newRow
             currentPiece.col = newCol
+            lastMoveRotation = false
             return true
         }
         return false
@@ -96,54 +103,86 @@ class Tetramine(
                 currentPiece = rotated
                 currentPiece.row = newRow
                 currentPiece.col = newCol
-                return
-            }
-        }
-
-        for ((rowOffset, colOffset) in kickOffsets) {
-            val newRow = currentPiece.row + rowOffset
-            val newCol = currentPiece.col + colOffset
-            if (isValidMove(currentPiece, newRow, newCol)) {
-                currentPiece.row = newRow
-                currentPiece.col = newCol
+                lastMoveRotation = true
                 return
             }
         }
     }
 
-    private fun clearLines() {
+    private fun clearLines(isTSpin: Boolean) {
         val newBoard = board.filter { row -> row.any { it == 0 } }.toTypedArray()
         val cleared = rows - newBoard.size
         if (cleared == 0) {
             comboCount = -1
+            isBackToBack = false
             return
         }
         board = Array(cleared) { IntArray(cols) } + newBoard
         lines += cleared
         comboCount++
 
-        val isPerfectClear = board.last().all { it == 0 }
-        score += comboCount * AddScore.COMBO * level()
-        score += if (isPerfectClear) AddScore.PERFECT_CLEAR * level() else 0
-        score += when (cleared) {
-            1 -> AddScore.SINGLE * level()
-            2 -> AddScore.DOUBLE * level()
-            3 -> AddScore.TRIPLE * level()
-            4 -> AddScore.TETRAMINE * level()
+        val lvl = level()
+        val basePoints = when {
+            isTSpin && cleared == 1 -> AddScore.T_SPIN_SINGLE * lvl
+            isTSpin && cleared == 2 -> AddScore.T_SPIN_DOUBLE * lvl
+
+            cleared == 1 -> AddScore.SINGLE * lvl
+            cleared == 2 -> AddScore.DOUBLE * lvl
+            cleared == 3 -> AddScore.TRIPLE * lvl
+            cleared == 4 -> AddScore.TETRAMINE * lvl
+
             else -> 0
         }
 
-        showAchievement(
-            buildString {
-                if (isPerfectClear) appendLine("PERFECT_CLEAR")
-                if (cleared == 4) appendLine("TETRAMINE")
-                when (comboCount) {
-                    3 -> appendLine("COMBO X3")
-                    5 -> appendLine("COMBO X5")
-                    7 -> appendLine("COMBO X7")
+        val isPerfectClear = board.last().all { it == 0 }
+        val extraPoints = comboCount * AddScore.COMBO * lvl +
+            if (isPerfectClear) AddScore.PERFECT_CLEAR * lvl else 0
+
+        val isNewBackToBack = isTSpin || cleared == 4
+        val b2bPoints = if (isNewBackToBack && isBackToBack) basePoints / 2 else 0
+        isBackToBack = isNewBackToBack
+
+        score += basePoints + extraPoints + b2bPoints
+
+        if (lvl <= 10)
+            showAchievement(
+                buildString {
+                    if (b2bPoints > 0) appendLine("BACK TO BACK")
+                    else if (cleared == 4) appendLine("TETRAMINE")
+                    else if (isTSpin && cleared == 2) appendLine("T SPIN DOUBLE")
+
+                    if (isPerfectClear) appendLine("PERFECT_CLEAR")
+                    else when (comboCount) {
+                        3 -> appendLine("COMBO X3")
+                        5 -> appendLine("COMBO X5")
+                        7 -> appendLine("COMBO X7")
+                    }
                 }
-            }
+            )
+    }
+
+    private fun isTSpin(piece: Tetromino): Boolean {
+        Log.d("ULTRA", "T SPIN lastMoveRotation = $lastMoveRotation tetromino is T " + (getTetrominoType(piece.shape) == 3).toString())
+        if (!lastMoveRotation || getTetrominoType(piece.shape) != 3)
+            return false
+
+        val row = piece.row + 1
+        val col = piece.col + 1
+        val corners = listOf(
+            row - 1 to col - 1,
+            row - 1 to col + 1,
+            row + 1 to col - 1,
+            row + 1 to col + 1
         )
+
+        val blocked = corners.count { (r, c) ->
+            r !in 0 until rows || c !in 0 until cols || board[r][c] != 0
+        }
+        Log.d("ULTRA", currentPiece.shape.joinToString("\n") { it.joinToString() })
+        Log.d("ULTRA", corners.joinToString())
+        Log.d("ULTRA", "blocked corner $blocked")
+
+        return blocked == 3
     }
 
     private fun spawnPiece() {

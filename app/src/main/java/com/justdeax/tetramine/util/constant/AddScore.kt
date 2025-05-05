@@ -8,5 +8,7 @@ object AddScore {
     const val DOUBLE = 300
     const val TRIPLE = 500
     const val TETRAMINE = 800
-    const val PERFECT_CLEAR = 1800
+    const val T_SPIN_SINGLE = 800
+    const val T_SPIN_DOUBLE = 1200
+    const val PERFECT_CLEAR = 1400
 }

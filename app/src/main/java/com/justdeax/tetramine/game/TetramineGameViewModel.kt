@@ -15,10 +15,10 @@ class TetramineGameViewModel(
     cols: Int,
     showAchievement: (String) -> Unit
 ) : ViewModel() {
-    private val tetramine = Tetramine(rows, cols, showAchievement) { level.value }
+    private val tetramine = Tetramine(rows, cols, showAchievement) { level.value + 1 }
     private var dropSpeed = levels[0].speed
-    private var isLevelStatic = false
     private var gameJob: Job? = null
+    var isLevelStatic = false
 
     val currentPiece get() = tetramine.currentPiece
     val previousPiece get() = tetramine.previousPiece
@@ -74,9 +74,10 @@ class TetramineGameViewModel(
             changeLevel(0)
     }
 
-    fun setStaticSpeed(level: Int) {
-        isLevelStatic = true
-        changeLevel(level)
+    fun changeLevel(level: Int) {
+        require(level in levels.indices)
+        _level.value = level
+        dropSpeed = levels[level].speed
     }
 
     fun moveLeft() {
@@ -110,12 +111,6 @@ class TetramineGameViewModel(
         }
     }
 
-    private fun changeLevel(level: Int) {
-        require(level in levels.indices)
-        _level.value = level
-        dropSpeed = levels[level].speed
-    }
-
     override fun onCleared() {
         stopGame()
         super.onCleared()
@@ -147,29 +142,29 @@ class TetramineGameViewModel(
 //        )
 
         val levels = arrayOf(
-            Level(800L, 0),   // 0
-            Level(750L, 1),   // 1
-            Level(700L, 2),   // 2
-            Level(650L, 3),   // 3
-            Level(600L, 4),   // 4
-            Level(550L, 5),   // 5
-            Level(500L, 6),   // 6
-            Level(450L, 7),  // 7
-            Level(400L, 8),  // 8
-            Level(350L, 9),  // 9
-            Level(320L, 10),  // 10
-            Level(300L, 11),  // 11
-            Level(280L, 12),  // 12
-            Level(260L, 13),  // 13
-            Level(240L, 14),  // 14
-            Level(220L, 15),  // 15
-            Level(200L, 16),  // 16
-            Level(180L, 17),  // 17
-            Level(160L, 18),  // 18
-            Level(140L, 19),  // 19
-            Level(120L, 20),  // 20
+            800L to 0,   // 0
+            750L to 1,   // 1
+            700L to 2,   // 2
+            650L to 3,   // 3
+            600L to 4,   // 4
+            550L to 5,   // 5
+            500L to 6,   // 6
+            450L to 7,   // 7
+            400L to 8,   // 8
+            350L to 9,   // 9
+            320L to 10,  // 10
+            300L to 11,  // 11
+            280L to 12,  // 12
+            260L to 13,  // 13
+            240L to 14,  // 14
+            220L to 15,  // 15
+            200L to 16,  // 16
+            180L to 17,  // 17
+            160L to 18,  // 18
+            140L to 19,  // 19
+            120L to 20   // 20
         )
-
+        infix fun Long.to(that: Int) = Level(this, that)
         data class Level(val speed: Long, val lines: Int)
     }
 }

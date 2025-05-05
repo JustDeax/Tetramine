@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
-        setupViews()
+        setupViews(savedInstanceState == null)
 
         if (isFirstLaunch) {
             val game = Intent(this, GameActivity::class.java)
@@ -34,12 +34,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupViews() {
+    private fun setupViews(isNewInstance: Boolean) {
         binding.apply {
             main.applySystemInsets()
             main.post {
-                screenHeight = main.height
-                animateHeightChange(logoLayout, screenHeight / 3)
+                if (isNewInstance) {
+                    screenHeight = main.height
+                    animateHeightChange(logoLayout, screenHeight / 3)
+                }
             }
         }
     }

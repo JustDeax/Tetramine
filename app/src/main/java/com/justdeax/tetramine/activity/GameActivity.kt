@@ -65,7 +65,8 @@ class GameActivity : AppCompatActivity() {
 
         when (intent.getStringExtra(GameType.TYPE)) {
             GameType.PRACTICE -> {
-                game.setStaticSpeed(4)
+                game.isLevelStatic = false
+                game.changeLevel(3)
             }
             GameType.GUIDE -> {
                 binding.main.post { showGuide(fullGuide = true) }
@@ -87,6 +88,7 @@ class GameActivity : AppCompatActivity() {
                         binding.pause.text =
                             if (newLevel == TetramineGameViewModel.levels.lastIndex) " Σ "
                             else newLevel.toString()
+                        if (newLevel == 10) achievementPopup.show("< 10 LEVEL")
                     }
                 }
             }
