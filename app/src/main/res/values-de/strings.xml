@@ -51,7 +51,6 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
     <string name="pieces">Figuren</string>
     <string name="four_lines">4 Linien</string>
     <string name="t_spins">T-Spins</string>
-    <string name="max_combo">Max-Kombo</string>
     <string name="zero">0</string>
 
     <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>

@@ -51,7 +51,10 @@ Also check theme settings, control sensitivity change, modes and stats"""
     <string name="pieces">Pieces</string>
     <string name="four_lines">4 Lines</string>
     <string name="t_spins">T Spins</string>
-    <string name="max_combo">Max combo</string>
+    <string name="reset">Reset Statistics</string>
+    <string name="reset_desc">Are you sure you want to reset all the statistics?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <string name="zero">0</string>
 
     <string name="about_1">This is the mobile modern version of tetris</string>

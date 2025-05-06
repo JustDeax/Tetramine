@@ -13,8 +13,25 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.justdeax.tetramine.PreferenceManager.best4Lines
+import com.justdeax.tetramine.PreferenceManager.bestLines
+import com.justdeax.tetramine.PreferenceManager.bestPieces
+import com.justdeax.tetramine.PreferenceManager.bestScore
+import com.justdeax.tetramine.PreferenceManager.bestTSpins
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
+import com.justdeax.tetramine.PreferenceManager.gameData4Lines
+import com.justdeax.tetramine.PreferenceManager.gameDataLines
+import com.justdeax.tetramine.PreferenceManager.gameDataPieces
+import com.justdeax.tetramine.PreferenceManager.gameDataScore
+import com.justdeax.tetramine.PreferenceManager.gameDataTSpins
+import com.justdeax.tetramine.PreferenceManager.resetGameData
+import com.justdeax.tetramine.PreferenceManager.total4Lines
+import com.justdeax.tetramine.PreferenceManager.totalLines
+import com.justdeax.tetramine.PreferenceManager.totalPieces
+import com.justdeax.tetramine.PreferenceManager.totalScore
+import com.justdeax.tetramine.PreferenceManager.totalTSpins
+import com.justdeax.tetramine.PreferenceManager.useRotateLeft
 import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
@@ -62,11 +79,12 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
         setupViews()
+        resetGameData()
 
         when (intent.getStringExtra(GameType.TYPE)) {
             GameType.PRACTICE -> {
-                game.isLevelStatic = false
-                game.changeLevel(3)
+                game.isLevelStatic = true
+                game.changeLevel(5)
             }
             GameType.GUIDE -> {
                 binding.main.post { showGuide(fullGuide = true) }
@@ -114,7 +132,7 @@ class GameActivity : AppCompatActivity() {
             main.applySystemInsets()
             board.setStyle(boardColor + colors, cellSpacing, cellCornerRadius)
             preview.setStyle(previewColor + colors, cellSpacing, cellCornerRadius)
-            board.setControls(xSensitivity, ySensitivity)
+            board.setControls(xSensitivity, ySensitivity, useRotateLeft)
             pause.setOnClickListener { showGameDialog() }
         }
     }
@@ -130,17 +148,23 @@ class GameActivity : AppCompatActivity() {
                 preview.visibility = View.GONE
                 gameOver.visibility = View.VISIBLE
                 resume.text = getString(R.string.view_game)
-                dialogGame.setOnDismissListener { }
+                dialogGame.setOnDismissListener {
+                    saveStatistics()
+                }
             } else {
                 preview.visibility = View.VISIBLE
                 gameOver.visibility = View.GONE
                 resume.text = getString(R.string.resume)
-                dialogGame.setOnDismissListener { game.resumeGame() }
+                dialogGame.setOnDismissListener {
+                    saveStatistics()
+                    game.resumeGame()
+                }
                 preview.update(
                     Tetromino.TETROMINO_SHAPES[getTetrominoType(game.currentPiece.shape) - 1]
                 )
             }
 
+            saveStatistics()
             statistics.text = getStatistics(game.lines, game.score, game.level.value)
             dialogGame.show()
         }
@@ -191,9 +215,9 @@ class GameActivity : AppCompatActivity() {
     var hardDropCount = 0
     var rotateCount = 0
 
-    private fun View.setControls(xSensitivity: Float, ySensitivity: Float) {
-        var lastTouchX = 0f
-        var lastTouchY = 0f
+    private fun View.setControls(xSensitivity: Float, ySensitivity: Float, useRotateLeft: Boolean) {
+        var touchX = 0f
+        var touchY = 0f
         var xMotion = 0
         var yMotion = 0
         var motionTime = 0L
@@ -202,13 +226,13 @@ class GameActivity : AppCompatActivity() {
         setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    lastTouchX = event.x
-                    lastTouchY = event.y
+                    touchX = event.x
+                    touchY = event.y
                     motionTime = System.currentTimeMillis()
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val diffX = event.x - lastTouchX
-                    val diffY = event.y - lastTouchY
+                    val diffX = event.x - touchX
+                    val diffY = event.y - touchY
                     val thresholdX = width / cols * xSensitivity
                     val thresholdY = height / rows * ySensitivity
 
@@ -218,14 +242,14 @@ class GameActivity : AppCompatActivity() {
                         else
                             game.moveLeft()
                         xMotion++
-                        lastTouchY = event.y
-                        lastTouchX = event.x
+                        touchY = event.y
+                        touchX = event.x
                     } else if (diffY > thresholdY) {
                         if (game.currentPiece.row > 0) {
                             game.softDrop()
                             yMotion++
                         }
-                        lastTouchY = event.y
+                        touchY = event.y
                     }
                 }
                 MotionEvent.ACTION_UP -> {
@@ -234,12 +258,25 @@ class GameActivity : AppCompatActivity() {
                         game.hardDrop()
                         hardDropCount++
                     } else if (xMotion == 0 && yMotion == 0) {
-                        game.rotateRight()
                         rotateCount++
+
+                        if (useRotateLeft) {
+                            val pieceCol = game.currentPiece.col
+                            val pieceWidth = game.currentPiece.shape[0].size
+                            val centerCol =
+                                pieceCol + pieceWidth / 2 - if (pieceCol + pieceWidth == cols) 1 else 0
+
+                            val colTouched = touchX / width * cols
+
+                            if (colTouched < centerCol)
+                                game.rotateLeft()
+                            else
+                                game.rotateRight()
+                        } else {game.rotateRight()}
                     }
 
-                    lastTouchX = 0f
-                    lastTouchY = 0f
+                    touchX = 0f
+                    touchY = 0f
                     xMotion = 0
                     yMotion = 0
                 }
@@ -248,7 +285,39 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveStatistics() {
+        if (game.isLevelStatic) return
+
+        val score = game.score
+        val lines = game.lines
+        val pieces = game.pieces
+        val fourLines = game.fourLines
+        val tSpins = game.tSpins
+
+        if (score > bestScore) bestScore = score
+        if (lines > bestLines) bestLines = lines
+        if (pieces > bestPieces) bestPieces = pieces
+        if (fourLines > best4Lines) best4Lines = fourLines
+        if (tSpins > bestTSpins) bestTSpins = tSpins
+
+        totalScore += score - gameDataScore
+        gameDataScore = score
+
+        totalLines += lines - gameDataLines
+        gameDataLines = lines
+
+        totalPieces += pieces - gameDataPieces
+        gameDataPieces = pieces
+
+        total4Lines += fourLines - gameData4Lines
+        gameData4Lines = fourLines
+
+        totalTSpins += tSpins - gameDataTSpins
+        gameDataTSpins = tSpins
+    }
+
     override fun onPause() {
+        saveStatistics()
         if (!isFinishing && !isDestroyed)
             showGameDialog()
         super.onPause()

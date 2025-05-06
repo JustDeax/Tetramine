@@ -32,7 +32,6 @@ class ChooseMode : Fragment() {
             }
             practice.setOnClickListener {
                 startGame(GameType.PRACTICE)
-                notAvailable(requireContext(), getString(R.string.practice_mode))
             }
             sprint.setOnClickListener {
                 startGame(GameType.SPRINT)

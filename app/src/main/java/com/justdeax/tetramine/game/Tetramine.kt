@@ -1,6 +1,5 @@
 package com.justdeax.tetramine.game
 
-import android.util.Log
 import com.justdeax.tetramine.util.constant.AddScore
 import com.justdeax.tetramine.util.getTetrominoType
 
@@ -18,8 +17,12 @@ class Tetramine(
     var currentPiece = emptyPiece()
     var previousPiece = nextPiece()
     var isGameOver = false
-    var lines = 0
     var score = 0
+    var lines = 0
+
+    var pieces = 0
+    var fourLines = 0
+    var tSpins = 0
 
     init { spawnPiece() }
 
@@ -34,6 +37,9 @@ class Tetramine(
         isGameOver = false
         lines = 0
         score = 0
+        pieces = 0
+        fourLines = 0
+        tSpins = 0
         spawnPiece()
     }
 
@@ -123,13 +129,13 @@ class Tetramine(
 
         val lvl = level()
         val basePoints = when {
-            isTSpin && cleared == 1 -> AddScore.T_SPIN_SINGLE * lvl
-            isTSpin && cleared == 2 -> AddScore.T_SPIN_DOUBLE * lvl
+            isTSpin && cleared == 1 -> { tSpins++; AddScore.T_SPIN_SINGLE * lvl }
+            isTSpin && cleared == 2 -> { tSpins++; AddScore.T_SPIN_DOUBLE * lvl }
 
             cleared == 1 -> AddScore.SINGLE * lvl
             cleared == 2 -> AddScore.DOUBLE * lvl
             cleared == 3 -> AddScore.TRIPLE * lvl
-            cleared == 4 -> AddScore.TETRAMINE * lvl
+            cleared == 4 -> { fourLines++; AddScore.TETRAMINE * lvl }
 
             else -> 0
         }
@@ -151,7 +157,7 @@ class Tetramine(
                     else if (cleared == 4) appendLine("TETRAMINE")
                     else if (isTSpin && cleared == 2) appendLine("T SPIN DOUBLE")
 
-                    if (isPerfectClear) appendLine("PERFECT_CLEAR")
+                    if (isPerfectClear) appendLine("PERFECT CLEAR")
                     else when (comboCount) {
                         3 -> appendLine("COMBO X3")
                         5 -> appendLine("COMBO X5")
@@ -162,7 +168,6 @@ class Tetramine(
     }
 
     private fun isTSpin(piece: Tetromino): Boolean {
-        Log.d("ULTRA", "T SPIN lastMoveRotation = $lastMoveRotation tetromino is T " + (getTetrominoType(piece.shape) == 3).toString())
         if (!lastMoveRotation || getTetrominoType(piece.shape) != 3)
             return false
 
@@ -178,9 +183,6 @@ class Tetramine(
         val blocked = corners.count { (r, c) ->
             r !in 0 until rows || c !in 0 until cols || board[r][c] != 0
         }
-        Log.d("ULTRA", currentPiece.shape.joinToString("\n") { it.joinToString() })
-        Log.d("ULTRA", corners.joinToString())
-        Log.d("ULTRA", "blocked corner $blocked")
 
         return blocked == 3
     }
@@ -204,8 +206,10 @@ class Tetramine(
     private fun emptyPiece() = Tetromino(arrayOf(intArrayOf()))
 
     private fun nextPiece(): Tetromino {
-        if (bag.isEmpty())
+        if (bag.isEmpty()) {
             bag = makeBag()
+            pieces += Tetromino.TETROMINO_SHAPES.size
+        }
         return Tetromino(bag.removeAt(0))
     }
 

@@ -23,8 +23,12 @@ class TetramineGameViewModel(
     val currentPiece get() = tetramine.currentPiece
     val previousPiece get() = tetramine.previousPiece
     val isGameOver get() = tetramine.isGameOver
-    val lines get() = tetramine.lines
     val score get() = tetramine.score
+    val lines get() = tetramine.lines
+
+    val pieces get() = tetramine.pieces
+    val fourLines get() = tetramine.fourLines
+    val tSpins get() = tetramine.tSpins
 
     private val _board = MutableStateFlow(tetramine.getBoardWithPiece())
     val board = _board.asStateFlow()
@@ -162,7 +166,7 @@ class TetramineGameViewModel(
             180L to 17,  // 17
             160L to 18,  // 18
             140L to 19,  // 19
-            120L to 20   // 20
+            120L to 20,   // 20
         )
         infix fun Long.to(that: Int) = Level(this, that)
         data class Level(val speed: Long, val lines: Int)
