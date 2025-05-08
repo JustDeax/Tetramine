@@ -10,6 +10,8 @@ class PreviewView(context: Context, attrs: AttributeSet? = null) : BaseBoardView
     override var board = Array(rows) { IntArray(cols) }
 
     override fun update(newBoard: Array<IntArray>) {
+        if (getTetrominoType(board) == getTetrominoType(newBoard)) return
+
         val padded = Array(rows) { rowIndex ->
             val row = newBoard.getOrNull(rowIndex) ?: intArrayOf()
             val paddedRow = IntArray(cols)
@@ -17,7 +19,6 @@ class PreviewView(context: Context, attrs: AttributeSet? = null) : BaseBoardView
                 if (i < cols) paddedRow[cols - row.size + i] = row[i]
             paddedRow
         }
-        if (getTetrominoType(board) != getTetrominoType(padded))
-            super.update(padded)
+        super.update(padded)
     }
 }

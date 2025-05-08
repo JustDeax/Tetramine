@@ -51,6 +51,10 @@ Regardez aussi les thèmes, la sensibilité, les modes et les stats"""
     <string name="pieces">Pièces</string>
     <string name="four_lines">4 Lignes</string>
     <string name="t_spins">T-Spins</string>
+    <string name="reset">Réinitialiser les statistiques</string>
+    <string name="reset_desc">Êtes-vous sûr de vouloir réinitialiser toutes les statistiques ?</string>
+    <string name="confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
     <string name="zero">0</string>
 
     <string name="about_1">Ceci est la version mobile moderne de Tetris</string>

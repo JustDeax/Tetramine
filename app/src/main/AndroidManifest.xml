@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tetramine"
         android:enableOnBackInvokedCallback="true"
-        tools:targetApi="33">
+        tools:targetApi="35">
 
         <activity
             android:name=".activity.GameActivity"

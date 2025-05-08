@@ -13,6 +13,7 @@ import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityMainBinding
 import com.justdeax.tetramine.util.constant.GameType
 import com.justdeax.tetramine.util.applySystemInsets
+import com.justdeax.tetramine.util.constant.Delay
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -26,12 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
         setupViews(savedInstanceState == null)
-
-        if (isFirstLaunch) {
-            val game = Intent(this, GameActivity::class.java)
-            game.putExtra(GameType.TYPE, GameType.GUIDE)
-            startActivity(game)
-        }
+        checkOnFirstLaunch()
     }
 
     private fun setupViews(isNewInstance: Boolean) {
@@ -43,6 +39,14 @@ class MainActivity : AppCompatActivity() {
                     animateHeightChange(logoLayout, screenHeight / 3)
                 }
             }
+        }
+    }
+
+    private fun checkOnFirstLaunch() {
+        if (isFirstLaunch) {
+            val game = Intent(this, GameActivity::class.java)
+            game.putExtra(GameType.TYPE, GameType.GUIDE)
+            startActivity(game)
         }
     }
 
@@ -81,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             view.layoutParams.height = updatedHeight
             view.requestLayout()
         }
-        animator.duration = 250
+        animator.duration = Delay.SHORT
         animator.start()
     }
 

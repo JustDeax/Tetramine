@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.PopupGuideBinding
+import com.justdeax.tetramine.util.constant.Delay
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -51,7 +52,7 @@ class GuidePopup(
         job = lifecycleScope.launch {
             try {
                 if (fullGuide) {
-                    delay(250)
+                    delay(Delay.SHORT)
                     gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_1, ok = true)
@@ -87,8 +88,8 @@ class GuidePopup(
                 showGuide({ rotateCount() > rotateStart }, R.string.guide_4)
 
                 if (fullGuide) {
-                    gameStop()
                     context.isFirstLaunch = false
+                    gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.guide_5, ok = true)
                     gameResume()
@@ -102,14 +103,16 @@ class GuidePopup(
     private suspend fun showGuide(conditions: () -> Boolean, textRes: Int, ok: Boolean = false) {
         if (anchorView.isAttachedToWindow)
             popup.showAtLocation(anchorView, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
+
         binding.textView.text = if (ok)
             context.getString(textRes) + "\n( OK )"
         else
             context.getString(textRes)
+
         while (!conditions())
-            delay(100)
-        delay(100)
+            delay(Delay.MINI)
+        delay(Delay.MINI)
         popup.dismiss()
-        delay(500)
+        delay(Delay.MEDIUM)
     }
 }

@@ -121,54 +121,56 @@ class TetramineGameViewModel(
     }
 
     companion object {
-//        val levels = arrayOf(
-//            800 to 0,   // 0
-//            750 to 10,  // 1
-//            700 to 20,  // 2
-//            650 to 35,  // 3
-//            600 to 50,  // 4
-//            550 to 70,  // 5
-//            500 to 90,  // 6
-//            450 to 110, // 7
-//            400 to 130, // 8
-//            350 to 150, // 9
-//            320 to 175, // 10
-//            300 to 200, // 11
-//            280 to 230, // 12
-//            260 to 260, // 13
-//            240 to 295, // 14
-//            220 to 330, // 15
-//            200 to 370, // 16
-//            180 to 410, // 17
-//            160 to 455, // 18
-//            140 to 505, // 19
-//            120 to 555, // 20
-//        )
+        data class Level(val speed: Long, val lines: Int)
+
+        infix fun Long.to(that: Int) = Level(this, that)
 
         val levels = arrayOf(
             800L to 0,   // 0
-            750L to 1,   // 1
-            700L to 2,   // 2
-            650L to 3,   // 3
-            600L to 4,   // 4
-            550L to 5,   // 5
-            500L to 6,   // 6
-            450L to 7,   // 7
-            400L to 8,   // 8
-            350L to 9,   // 9
-            320L to 10,  // 10
-            300L to 11,  // 11
-            280L to 12,  // 12
-            260L to 13,  // 13
-            240L to 14,  // 14
-            220L to 15,  // 15
-            200L to 16,  // 16
-            180L to 17,  // 17
-            160L to 18,  // 18
-            140L to 19,  // 19
-            120L to 20,   // 20
+            750L to 10,  // 1
+            700L to 20,  // 2
+            650L to 35,  // 3
+            600L to 50,  // 4
+            550L to 70,  // 5
+            500L to 90,  // 6
+            450L to 110, // 7
+            400L to 130, // 8
+            350L to 150, // 9
+            320L to 175, // 10
+            300L to 200, // 11
+            280L to 230, // 12
+            260L to 260, // 13
+            240L to 295, // 14
+            220L to 330, // 15
+            200L to 370, // 16
+            180L to 410, // 17
+            160L to 455, // 18
+            140L to 505, // 19
+            120L to 555, // 20
         )
-        infix fun Long.to(that: Int) = Level(this, that)
-        data class Level(val speed: Long, val lines: Int)
     }
 }
+
+//        val levels = arrayOf(
+//            800L to 0,   // 0
+//            750L to 1,   // 1
+//            700L to 2,   // 2
+//            650L to 3,   // 3
+//            600L to 4,   // 4
+//            550L to 5,   // 5
+//            500L to 6,   // 6
+//            450L to 7,   // 7
+//            400L to 8,   // 8
+//            350L to 9,   // 9
+//            320L to 10,  // 10
+//            300L to 11,  // 11
+//            280L to 12,  // 12
+//            260L to 13,  // 13
+//            240L to 14,  // 14
+//            220L to 15,  // 15
+//            200L to 16,  // 16
+//            180L to 17,  // 17
+//            160L to 18,  // 18
+//            140L to 19,  // 19
+//            120L to 20,  // 20
+//        )

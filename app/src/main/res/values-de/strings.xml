@@ -51,6 +51,10 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
     <string name="pieces">Figuren</string>
     <string name="four_lines">4 Linien</string>
     <string name="t_spins">T-Spins</string>
+    <string name="reset">Statistiken zurücksetzen</string>
+    <string name="reset_desc">Sind Sie sicher, dass Sie alle Statistiken zurücksetzen möchten?</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="cancel">Abbrechen</string>
     <string name="zero">0</string>
 
     <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>

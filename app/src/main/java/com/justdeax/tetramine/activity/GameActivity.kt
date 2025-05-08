@@ -44,6 +44,7 @@ import com.justdeax.tetramine.popup.AchievementPopup
 import com.justdeax.tetramine.popup.GuidePopup
 import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.constant.GameType
+import com.justdeax.tetramine.util.constant.Text
 import com.justdeax.tetramine.util.getStatistics
 import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.onBackListener
@@ -79,40 +80,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
         setupViews()
-        resetGameData()
-
-        when (intent.getStringExtra(GameType.TYPE)) {
-            GameType.PRACTICE -> {
-                game.isLevelStatic = true
-                game.changeLevel(5)
-            }
-            GameType.GUIDE -> {
-                binding.main.post { showGuide(fullGuide = true) }
-            }
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    game.board.collectLatest { newBoard ->
-                        binding.board.update(newBoard)
-                        binding.preview.update(game.previousPiece.shape)
-                        binding.statistics.text = getStatistics(game.lines, game.score)
-                        if (game.isGameOver)
-                            showGameDialog()
-                    }
-                }
-                launch {
-                    game.level.collectLatest { newLevel ->
-                        binding.pause.text =
-                            if (newLevel == TetramineGameViewModel.levels.lastIndex) "Σ"
-                            else newLevel.toString()
-                        if (newLevel == 10)
-                            achievementPopup.show("10 LEVEL")
-                    }
-                }
-            }
-        }
-        game.resumeGame()
+        setupGame()
         onBackListener { showGameDialog() }
     }
 
@@ -138,6 +106,42 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupGame() {
+        resetGameData()
+        when (intent.getStringExtra(GameType.TYPE)) {
+            GameType.PRACTICE -> {
+                game.isLevelStatic = true
+                game.changeLevel(5)
+            }
+            GameType.GUIDE -> {
+                binding.main.post { showGuide(fullGuide = true) }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    game.board.collectLatest { newBoard ->
+                        binding.board.update(newBoard)
+                        binding.preview.update(game.previousPiece.shape)
+                        binding.statistics.text = getStatistics(game.lines, game.score)
+                        if (game.isGameOver)
+                            showGameDialog()
+                    }
+                }
+                launch {
+                    game.level.collectLatest { newLevel ->
+                        binding.pause.text =
+                            if (newLevel == TetramineGameViewModel.levels.lastIndex) Text.SIGMA
+                            else newLevel.toString()
+                        if (newLevel == 10)
+                            achievementPopup.show(Text.TEN_LEVEL)
+                    }
+                }
+            }
+        }
+        game.resumeGame()
+    }
+
     private fun showGameDialog() {
         if (!game.isGameOver)
             game.stopGame()
@@ -150,7 +154,7 @@ class GameActivity : AppCompatActivity() {
                 preview.visibility = View.GONE
                 gameOver.visibility = View.VISIBLE
                 resume.text = getString(R.string.view_game)
-                dialogGame.setOnDismissListener {}
+                dialogGame.setOnDismissListener { }
             } else {
                 preview.visibility = View.VISIBLE
                 gameOver.visibility = View.GONE
@@ -194,7 +198,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showGuide(fullGuide: Boolean = false) {
-        if (game.isGameOver || game.score > 200)
+        if (game.isGameOver || game.score < 200)
             game.startGame()
         guidePopup.show(
             { game.currentPiece.col },
@@ -262,13 +266,10 @@ class GameActivity : AppCompatActivity() {
                                 pieceCol + pieceWidth / 2 - if (pieceCol + pieceWidth == cols) 1 else 0
 
                             val colTouched = touchX / width * cols
-
-                            if (colTouched < centerCol) {
+                            if (colTouched < centerCol)
                                 game.rotateLeft()
-                                return@setOnTouchListener true
-                            }
-                        }
-                        game.rotateRight()
+                            else game.rotateRight()
+                        } else { game.rotateRight() }
                     }
 
                     touchX = 0f

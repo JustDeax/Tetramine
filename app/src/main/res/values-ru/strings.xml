@@ -51,6 +51,10 @@
     <string name="pieces">Фигуры</string>
     <string name="four_lines">4 линии</string>
     <string name="t_spins">Т-спины</string>
+    <string name="reset">Сбросить статистику</string>
+    <string name="reset_desc">Вы уверены, что хотите сбросить всю статистику?</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отмена</string>
     <string name="zero">0</string>
 
     <string name="about_1">Это современная мобильная версия Тетриса</string>

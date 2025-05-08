@@ -1,6 +1,7 @@
 package com.justdeax.tetramine.game
 
 import com.justdeax.tetramine.util.constant.AddScore
+import com.justdeax.tetramine.util.constant.Text
 import com.justdeax.tetramine.util.getTetrominoType
 
 class Tetramine(
@@ -169,15 +170,15 @@ class Tetramine(
         if (lvl <= 10)
             showAchievement(
                 buildString {
-                    if (b2bPoints > 0) appendLine("BACK TO BACK")
-                    else if (cleared == 4) appendLine("TETRAMINE")
-                    else if (isTSpin && cleared == 2) appendLine("T SPIN DOUBLE")
+                    if (b2bPoints > 0) appendLine(Text.B2B)
+                    else if (cleared == 4) appendLine(Text.TETRAMINE)
+                    else if (isTSpin && cleared == 2) appendLine(Text.T_SPIN_DOUBLE)
 
-                    if (isPerfectClear) appendLine("PERFECT CLEAR")
+                    if (isPerfectClear) appendLine(Text.PERFECT_CLEAR)
                     else when (comboCount) {
-                        3 -> appendLine("COMBO X3")
-                        5 -> appendLine("COMBO X5")
-                        7 -> appendLine("COMBO X7")
+                        3 -> appendLine(Text.COMBO_X + 3)
+                        5 -> appendLine(Text.COMBO_X + 5)
+                        7 -> appendLine(Text.COMBO_X + 7)
                     }
                 }
             )

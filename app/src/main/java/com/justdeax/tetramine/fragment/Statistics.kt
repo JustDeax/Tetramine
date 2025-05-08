@@ -22,6 +22,7 @@ import com.justdeax.tetramine.PreferenceManager.totalScore
 import com.justdeax.tetramine.PreferenceManager.totalTSpins
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentStatisticsBinding
+import com.justdeax.tetramine.util.constant.Delay
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -41,6 +42,7 @@ class Statistics : Fragment() {
 
         binding.apply {
             showStatistics(total = true)
+
             chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
                 when (checkedIds.firstOrNull()) {
                     R.id.total -> showStatistics(total = true)
@@ -50,7 +52,7 @@ class Statistics : Fragment() {
             reset.setOnClickListener { snowResetStatisticsDialog() }
 
             viewLifecycleOwner.lifecycleScope.launch {
-                delay(4000L)
+                delay(Delay.MEDIUM * 10)
                 reset.visibility = View.VISIBLE
             }
         }
@@ -65,22 +67,21 @@ class Statistics : Fragment() {
         }
 
         binding.apply {
-            reset.visibility = View.GONE
-            animateInteger(scoreNumber, score, 3000L)
-            animateInteger(linesNumber, lines, 1200L)
-            animateInteger(piecesNumber, pieces, 2000L)
-            animateInteger(fourLinesNumber, fourLines, 800L)
-            animateInteger(tSpinsNumber, tSpins, 1000L)
+            animateInteger(scoreNumber, score, Delay.ANIMATION_SCORE)
+            animateInteger(linesNumber, lines, Delay.ANIMATION_LINES)
+            animateInteger(piecesNumber, pieces, Delay.ANIMATION_PIECES)
+            animateInteger(fourLinesNumber, fourLines, Delay.ANIMATION_FOUR_LINES)
+            animateInteger(tSpinsNumber, tSpins, Delay.ANIMATION_T_SPINS)
         }
     }
 
     private fun animateInteger(view: TextView, newInt: Int, duration: Long) {
         val animator = ValueAnimator.ofInt(0, newInt)
-        animator.duration = duration
         animator.addUpdateListener { valueAnimator ->
             val updatedInt = valueAnimator.animatedValue as Int
             view.text = updatedInt.toString()
         }
+        animator.duration = duration
         animator.start()
     }
 

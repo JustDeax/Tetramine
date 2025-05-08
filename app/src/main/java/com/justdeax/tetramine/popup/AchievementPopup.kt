@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.justdeax.tetramine.databinding.PopupAchievementBinding
+import com.justdeax.tetramine.util.constant.Delay
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -39,9 +40,9 @@ class AchievementPopup(
                 popup.showAtLocation(anchorView, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
                 repeat(text.length) { i ->
                     binding.textView.text = text.substring(0, i + 1)
-                    delay(25)
+                    delay(Delay.TYPING_LETTER)
                 }
-                delay(1500)
+                delay(Delay.ACHIEVEMENT_VISIBLE)
                 popup.dismiss()
             } finally {
                 popup.dismiss()
