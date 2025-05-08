@@ -51,6 +51,7 @@ class GuidePopup(
         job = lifecycleScope.launch {
             try {
                 if (fullGuide) {
+                    delay(250)
                     gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_1, ok = true)
@@ -85,10 +86,9 @@ class GuidePopup(
                 val rotateStart = rotateCount()
                 showGuide({ rotateCount() > rotateStart }, R.string.guide_4)
 
-                context.isFirstLaunch = false
-
                 if (fullGuide) {
                     gameStop()
+                    context.isFirstLaunch = false
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.guide_5, ok = true)
                     gameResume()
@@ -100,7 +100,8 @@ class GuidePopup(
     }
 
     private suspend fun showGuide(conditions: () -> Boolean, textRes: Int, ok: Boolean = false) {
-        popup.showAtLocation(anchorView, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
+        if (anchorView.isAttachedToWindow)
+            popup.showAtLocation(anchorView, Gravity.END or Gravity.CENTER_VERTICAL, 0, 0)
         binding.textView.text = if (ok)
             context.getString(textRes) + "\n( OK )"
         else

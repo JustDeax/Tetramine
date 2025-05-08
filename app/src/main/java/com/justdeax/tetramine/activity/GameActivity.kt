@@ -104,9 +104,10 @@ class GameActivity : AppCompatActivity() {
                 launch {
                     game.level.collectLatest { newLevel ->
                         binding.pause.text =
-                            if (newLevel == TetramineGameViewModel.levels.lastIndex) " Σ "
+                            if (newLevel == TetramineGameViewModel.levels.lastIndex) "Σ"
                             else newLevel.toString()
-                        if (newLevel == 10) achievementPopup.show("< 10 LEVEL")
+                        if (newLevel == 10)
+                            achievementPopup.show("10 LEVEL")
                     }
                 }
             }
@@ -143,28 +144,22 @@ class GameActivity : AppCompatActivity() {
         if (!::dialogGame.isInitialized || !::dialogGameBinding.isInitialized)
             initGameDialog()
 
+        saveStatistics()
         dialogGameBinding.apply {
             if (game.isGameOver) {
                 preview.visibility = View.GONE
                 gameOver.visibility = View.VISIBLE
                 resume.text = getString(R.string.view_game)
-                dialogGame.setOnDismissListener {
-                    saveStatistics()
-                }
+                dialogGame.setOnDismissListener {}
             } else {
                 preview.visibility = View.VISIBLE
                 gameOver.visibility = View.GONE
                 resume.text = getString(R.string.resume)
-                dialogGame.setOnDismissListener {
-                    saveStatistics()
-                    game.resumeGame()
-                }
+                dialogGame.setOnDismissListener { game.resumeGame() }
                 preview.update(
                     Tetromino.TETROMINO_SHAPES[getTetrominoType(game.currentPiece.shape) - 1]
                 )
             }
-
-            saveStatistics()
             statistics.text = getStatistics(game.lines, game.score, game.level.value)
             dialogGame.show()
         }
@@ -199,7 +194,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showGuide(fullGuide: Boolean = false) {
-        if (game.isGameOver)
+        if (game.isGameOver || game.score > 200)
             game.startGame()
         guidePopup.show(
             { game.currentPiece.col },
@@ -268,11 +263,12 @@ class GameActivity : AppCompatActivity() {
 
                             val colTouched = touchX / width * cols
 
-                            if (colTouched < centerCol)
+                            if (colTouched < centerCol) {
                                 game.rotateLeft()
-                            else
-                                game.rotateRight()
-                        } else {game.rotateRight()}
+                                return@setOnTouchListener true
+                            }
+                        }
+                        game.rotateRight()
                     }
 
                     touchX = 0f
@@ -317,9 +313,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        saveStatistics()
         if (!isFinishing && !isDestroyed)
             showGameDialog()
+        else
+            saveStatistics()
         super.onPause()
     }
 }

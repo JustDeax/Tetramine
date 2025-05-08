@@ -10,8 +10,10 @@ fun getStatistics(linesCount: Int, scoreValue: Int): String {
 }
 
 fun getStatistics(linesCount: Int, scoreValue: Int, levelNumber: Int): String {
-    val level =
-        if (levelNumber == TetramineGameViewModel.levels.lastIndex) " Σ 20 "
+    val level = String.format("%-6s",
+        if (levelNumber == TetramineGameViewModel.levels.lastIndex) "Σ(20)"
         else String.format(Locale.getDefault(), "%02d", levelNumber)
-    return getStatistics(linesCount, scoreValue) + "\nLevel:" + String.format("%-6s", level)
+    )
+    val linesAndScore = getStatistics(linesCount, scoreValue)
+    return "$linesAndScore\nLevel:$level"
 }
