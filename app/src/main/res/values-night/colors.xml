@@ -1,0 +1,13 @@
+<resources>
+    <color name="invisible">#00FFFFFF</color>
+    <color name="empty">#000000</color>
+    <color name="cyan">#12C7C7</color>
+    <color name="yellow">#E5C217</color>
+    <color name="purple">#92245C</color>
+    <color name="orange">#D26A00</color>
+    <color name="blue">#1457C2</color>
+    <color name="green">#1F8616</color>
+    <color name="red">#DB0C0C</color>
+    <color name="ghost">#E4A0A0A0</color>
+
+</resources>

@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Tetramine</string>
+    <string name="version">Version:</string>
+    <string name="not_available">nicht verfügbar</string>
+
+    <string name="play">Spielen</string>
+    <string name="resume">Spiel fortsetzen</string>
+    <string name="statistics">Statistiken</string>
+    <string name="settings">Einstellungen &amp; Aussehen</string>
+    <string name="about">Über</string>
+
+    <string name="view_game">Spiel ansehen</string>
+    <string name="exit">Beenden</string>
+    <string name="restart">Neustart</string>
+    <string name="guide">Steuerungshilfe</string>
+    <string name="guide_1">
+"""Nach links und rechts bewegen
+Wische nach links oder rechts, um die Figur zu bewegen."""
+</string>
+    <string name="guide_2">
+"""Nach unten bewegen
+Wische nach unten – die Figur fällt schneller"""
+</string>
+    <string name="guide_3">
+"""Harter Fall
+Wische schnell gerade nach unten – die Figur fällt sofort nach unten"""
+</string>
+    <string name="guide_4">
+"""Figur drehen
+Tippe ohne Bewegung auf den Bildschirm, um die Figur zu drehen"""
+</string>
+    <string name="guide_5">
+"""Viel Spaß beim Spielen!
+Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
+</string>
+
+    <string name="choose_mode">Modus wählen</string>
+    <string name="classic_mode">Klassischer Modus</string>
+    <string name="classic_mode_desc">Klassische Spielversion</string>
+    <string name="practice_mode">Übungsmodus</string>
+    <string name="practice_mode_desc">Üben in festem Tempo oder einfach entspannen</string>
+    <string name="sprint_mode">Sprint 40 Linien</string>
+    <string name="sprint_mode_desc">Wie schnell räumst du 40 Linien?</string>
+    <string name="modern_mode">Modern mit Einfrieren</string>
+    <string name="modern_mode_desc">Modernes Spiel mit zufälliger Geschwindigkeit, Einfrierungen und Explosionen</string>
+
+    <string name="page_total">Gesamt</string>
+    <string name="page_best">Bester</string>
+    <string name="score">Punkte</string>
+    <string name="lines">Linien</string>
+    <string name="pieces">Figuren</string>
+    <string name="four_lines">4 Linien</string>
+    <string name="t_spins">T-Spins</string>
+    <string name="reset">Statistiken zurücksetzen</string>
+    <string name="reset_desc">Sind Sie sicher, dass Sie alle Statistiken zurücksetzen möchten?</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="zero">0</string>
+
+    <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>
+    <string name="about_2">
+"""Klassisches Arcade-Puzzle-Spiel: Staple fallende Tetrominos – Figuren aus 4 Blöcken – und bilde vollständige Linien, um Punkte zu sammeln
+
+Die Originalmechanik bleibt erhalten, mit flüssiger Steuerung und modernem, minimalistischem Design"""
+</string>
+    <string name="author">Autor:</string>
+    <string name="project">Projekt:</string>
+
+</resources>

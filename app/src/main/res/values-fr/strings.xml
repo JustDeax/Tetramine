@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Tetramine</string>
+    <string name="version">Version :</string>
+    <string name="not_available">non disponible</string>
+
+    <string name="play">Jouer</string>
+    <string name="resume">Reprendre la partie</string>
+    <string name="statistics">Statistiques</string>
+    <string name="settings">Paramètres &amp; Apparence</string>
+    <string name="about">À propos</string>
+
+    <string name="view_game">Voir la partie</string>
+    <string name="exit">Quitter</string>
+    <string name="restart">Recommencer</string>
+    <string name="guide">Guide de contrôle</string>
+    <string name="guide_1">
+"""Déplacer à gauche/droite
+Glissez à gauche ou à droite pour déplacer la pièce dans ce sens"""
+</string>
+    <string name="guide_2">
+"""Descente rapide
+Glissez vers le bas pour que la pièce tombe plus vite"""
+</string>
+    <string name="guide_3">
+"""Chute directe
+Faites un glissement net vers le bas pour faire chuter la pièce d’un coup"""
+</string>
+    <string name="guide_4">
+"""Faire pivoter
+Touchez simplement l’écran sans bouger pour faire tourner la pièce"""
+</string>
+    <string name="guide_5">
+"""Bonne partie!
+Regardez aussi les thèmes, la sensibilité, les modes et les stats"""
+</string>
+
+    <string name="choose_mode">Choisir un mode</string>
+    <string name="classic_mode">Mode Classique</string>
+    <string name="classic_mode_desc">Version classique du jeu</string>
+    <string name="practice_mode">Mode Entraînement</string>
+    <string name="practice_mode_desc">Entraînez-vous à un tempo donné ou détendez-vous</string>
+    <string name="sprint_mode">Sprint 40 Lignes</string>
+    <string name="sprint_mode_desc">À quelle vitesse effacez-vous 40 lignes</string>
+    <string name="modern_mode">Moderne avec gel</string>
+    <string name="modern_mode_desc">Jeu moderne avec vitesse aléatoire, gels et explosions</string>
+
+    <string name="page_total">Total</string>
+    <string name="page_best">Meilleur</string>
+    <string name="score">Score</string>
+    <string name="lines">Lignes</string>
+    <string name="pieces">Pièces</string>
+    <string name="four_lines">4 Lignes</string>
+    <string name="t_spins">T-Spins</string>
+    <string name="reset">Réinitialiser les statistiques</string>
+    <string name="reset_desc">Êtes-vous sûr de vouloir réinitialiser toutes les statistiques ?</string>
+    <string name="confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
+    <string name="zero">0</string>
+
+    <string name="about_1">Ceci est la version mobile moderne de Tetris</string>
+    <string name="about_2">
+"""Jeu de puzzle d'arcade classique où vous devez empiler des tétriminos — pièces de 4 blocs, créer des lignes solides et jouer pour le score
+
+Les mécaniques originales sont conservées ici, avec des contrôles fluides, mais avec un design moderne et minimaliste"""
+</string>
+    <string name="author">Auteur :</string>
+    <string name="project">Projet :</string>
+
+</resources>
