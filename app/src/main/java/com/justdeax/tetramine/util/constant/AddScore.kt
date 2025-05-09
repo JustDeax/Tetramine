@@ -10,5 +10,5 @@ object AddScore {
     const val TETRAMINE = 800
     const val T_SPIN_SINGLE = 800
     const val T_SPIN_DOUBLE = 1200
-    const val PERFECT_CLEAR = 1400
+    const val PERFECT_CLEAR = 1800
 }

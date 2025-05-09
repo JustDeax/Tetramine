@@ -142,32 +142,28 @@ class Tetramine(
         }
         board = Array(cleared) { IntArray(cols) } + newBoard
         lines += cleared
-        comboCount++
+        comboCount += 1
 
-        val lvl = level()
         val basePoints = when {
-            isTSpin && cleared == 1 -> { tSpins++; AddScore.T_SPIN_SINGLE * lvl }
-            isTSpin && cleared == 2 -> { tSpins++; AddScore.T_SPIN_DOUBLE * lvl }
-
-            cleared == 1 -> AddScore.SINGLE * lvl
-            cleared == 2 -> AddScore.DOUBLE * lvl
-            cleared == 3 -> AddScore.TRIPLE * lvl
-            cleared == 4 -> { fourLines++; AddScore.TETRAMINE * lvl }
-
+            isTSpin && cleared == 1 -> { AddScore.T_SPIN_SINGLE; tSpins++ }
+            isTSpin && cleared == 2 -> { AddScore.T_SPIN_DOUBLE; tSpins++ }
+            cleared == 1 -> { AddScore.SINGLE }
+            cleared == 2 -> { AddScore.DOUBLE }
+            cleared == 3 -> { AddScore.TRIPLE }
+            cleared == 4 -> { AddScore.TETRAMINE; fourLines++ }
             else -> 0
         }
 
         val isPerfectClear = board.last().all { it == 0 }
-        val extraPoints = comboCount * AddScore.COMBO * lvl +
-            if (isPerfectClear) AddScore.PERFECT_CLEAR * lvl else 0
+        val extraPoints = comboCount * AddScore.COMBO + if (isPerfectClear) AddScore.PERFECT_CLEAR else 0
 
         val isNewBackToBack = isTSpin || cleared == 4
         val b2bPoints = if (isNewBackToBack && isBackToBack) basePoints / 2 else 0
         isBackToBack = isNewBackToBack
 
-        score += basePoints + extraPoints + b2bPoints
+        score += (basePoints + extraPoints + b2bPoints) * level()
 
-        if (lvl <= 10)
+        if (level() <= 10)
             showAchievement(
                 buildString {
                     if (b2bPoints > 0) appendLine(Text.B2B)
