@@ -83,5 +83,5 @@ The top of the screen will show the best actions (Gives the most points).
 - 4 cleared lines
 - T Spin Double
 - Perfect Clearance
-- Combo x3, 5, 7
+- Combo x3, x5, x7
 to keep them out of the way, they'll stop appearing above level 10.

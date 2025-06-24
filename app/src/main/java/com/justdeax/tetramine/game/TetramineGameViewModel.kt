@@ -123,7 +123,7 @@ class TetramineGameViewModel(
     companion object {
         data class Level(val speed: Long, val lines: Int)
 
-        infix fun Long.to(that: Int) = Level(this, that)
+        private infix fun Long.to(that: Int) = Level(this, that)
 
         val levels = arrayOf(
             800L to 0,   // 0
@@ -150,27 +150,3 @@ class TetramineGameViewModel(
         )
     }
 }
-
-//        val levels = arrayOf(
-//            800L to 0,   // 0
-//            750L to 1,   // 1
-//            700L to 2,   // 2
-//            650L to 3,   // 3
-//            600L to 4,   // 4
-//            550L to 5,   // 5
-//            500L to 6,   // 6
-//            450L to 7,   // 7
-//            400L to 8,   // 8
-//            350L to 9,   // 9
-//            320L to 10,  // 10
-//            300L to 11,  // 11
-//            280L to 12,  // 12
-//            260L to 13,  // 13
-//            240L to 14,  // 14
-//            220L to 15,  // 15
-//            200L to 16,  // 16
-//            180L to 17,  // 17
-//            160L to 18,  // 18
-//            140L to 19,  // 19
-//            120L to 20,  // 20
-//        )

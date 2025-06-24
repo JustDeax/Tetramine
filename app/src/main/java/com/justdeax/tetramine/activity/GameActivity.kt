@@ -1,6 +1,5 @@
 package com.justdeax.tetramine.activity
 
-import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.MotionEvent
@@ -72,6 +71,9 @@ class GameActivity : AppCompatActivity() {
     private var boardColor = intArrayOf()
     private var previewColor = intArrayOf()
 
+    private var hardDropCount = 0
+    private var rotateCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (resources.configuration.smallestScreenWidthDp < 600)
@@ -107,7 +109,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setupGame() {
-        resetGameData()
+        if (game.currentPiece == Tetromino(arrayOf(intArrayOf())))
+            resetGameData()
         when (intent.getStringExtra(GameType.TYPE)) {
             GameType.PRACTICE -> {
                 game.isLevelStatic = true
@@ -211,8 +214,36 @@ class GameActivity : AppCompatActivity() {
         )
     }
 
-    var hardDropCount = 0
-    var rotateCount = 0
+    private fun saveStatistics() {
+        if (game.isLevelStatic) return
+
+        val score = game.score
+        val lines = game.lines
+        val pieces = game.pieces
+        val fourLines = game.fourLines
+        val tSpins = game.tSpins
+
+        if (score > bestScore) bestScore = score
+        if (lines > bestLines) bestLines = lines
+        if (pieces > bestPieces) bestPieces = pieces
+        if (fourLines > best4Lines) best4Lines = fourLines
+        if (tSpins > bestTSpins) bestTSpins = tSpins
+
+        totalScore += score - gameDataScore
+        gameDataScore = score
+
+        totalLines += lines - gameDataLines
+        gameDataLines = lines
+
+        totalPieces += pieces - gameDataPieces
+        gameDataPieces = pieces
+
+        total4Lines += fourLines - gameData4Lines
+        gameData4Lines = fourLines
+
+        totalTSpins += tSpins - gameDataTSpins
+        gameDataTSpins = tSpins
+    }
 
     private fun View.setControls(xSensitivity: Float, ySensitivity: Float, useRotateLeft: Boolean) {
         var touchX = 0f
@@ -221,7 +252,6 @@ class GameActivity : AppCompatActivity() {
         var yMotion = 0
         var motionTime = 0L
 
-        @SuppressLint("ClickableViewAccessibility")
         setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -280,37 +310,6 @@ class GameActivity : AppCompatActivity() {
             }
             true
         }
-    }
-
-    private fun saveStatistics() {
-        if (game.isLevelStatic) return
-
-        val score = game.score
-        val lines = game.lines
-        val pieces = game.pieces
-        val fourLines = game.fourLines
-        val tSpins = game.tSpins
-
-        if (score > bestScore) bestScore = score
-        if (lines > bestLines) bestLines = lines
-        if (pieces > bestPieces) bestPieces = pieces
-        if (fourLines > best4Lines) best4Lines = fourLines
-        if (tSpins > bestTSpins) bestTSpins = tSpins
-
-        totalScore += score - gameDataScore
-        gameDataScore = score
-
-        totalLines += lines - gameDataLines
-        gameDataLines = lines
-
-        totalPieces += pieces - gameDataPieces
-        gameDataPieces = pieces
-
-        total4Lines += fourLines - gameData4Lines
-        gameData4Lines = fourLines
-
-        totalTSpins += tSpins - gameDataTSpins
-        gameDataTSpins = tSpins
     }
 
     override fun onPause() {

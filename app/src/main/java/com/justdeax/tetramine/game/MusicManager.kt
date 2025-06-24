@@ -1,14 +1,15 @@
 package com.justdeax.tetramine.game
 
 import android.content.Context
-import android.media.MediaPlayer
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import kotlinx.coroutines.*
 
 class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private val appContext = context.applicationContext
 
-    private var currentPlayer: MediaPlayer? = null
-    private var nextPlayer: MediaPlayer? = null
+    private var currentPlayer: ExoPlayer? = null
+    private var nextPlayer: ExoPlayer? = null
 
     private var currentResId = 0
     private var isManualSwitch = false
@@ -24,54 +25,51 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
 
     private fun start(resId: Int) {
         currentPlayer?.release()
-        currentPlayer = MediaPlayer.create(appContext, resId).apply {
-            isLooping = false
-            setVolume(1f, 1f)
-            setOnCompletionListener {
-                if (!isManualSwitch)
-                    startLoop(currentResId)
-            }
-            start()
+        currentPlayer = ExoPlayer.Builder(appContext).build().apply {
+            val mediaItem = MediaItem.fromUri("android.resource://${appContext.packageName}/$resId")
+            setMediaItem(mediaItem)
+            prepare()
+            play()
         }
-
         loopJob?.cancel()
         loopJob = scope.launch {
-            val duration = currentPlayer?.duration ?: return@launch
-            delay((duration - crossfadeDuration).coerceAtLeast(0))
+            delayUntilEnd(currentPlayer)
             if (!isManualSwitch)
                 beginCrossfade(currentResId)
         }
     }
 
+    private suspend fun delayUntilEnd(player: ExoPlayer?) {
+        val durationMs = player?.duration?.takeIf { it > 0 } ?: 0
+        delay((durationMs - crossfadeDuration).coerceAtLeast(0))
+    }
+
     private fun beginCrossfade(newResId: Int) {
         loopJob?.cancel()
         nextPlayer?.release()
-        nextPlayer = MediaPlayer.create(appContext, newResId).apply {
-            isLooping = false
-            setVolume(0f, 0f)
-            start()
+        nextPlayer = ExoPlayer.Builder(appContext).build().apply {
+            val mediaItem = MediaItem.fromUri("android.resource://${appContext.packageName}/$newResId")
+            setMediaItem(mediaItem)
+            prepare()
+            volume = 0f
+            play()
         }
-
         scope.launch {
             val steps = 30
             val delayStep = crossfadeDuration / steps
 
             for (i in 0..steps) {
                 val progress = i.toFloat() / steps
-                val volumeOut = 1f - progress
-                val volumeIn = progress - 0f
-                currentPlayer?.setVolume(volumeOut, volumeOut)
-                nextPlayer?.setVolume(volumeIn, volumeIn)
+                currentPlayer?.volume = 1f - progress
+                nextPlayer?.volume = progress
                 delay(delayStep)
             }
-
             currentPlayer?.release()
             currentPlayer = nextPlayer
             nextPlayer = null
             isManualSwitch = false
 
-            val duration = currentPlayer?.duration ?: return@launch
-            delay((duration - crossfadeDuration).coerceAtLeast(0))
+            delayUntilEnd(currentPlayer)
             if (!isManualSwitch)
                 beginCrossfade(currentResId)
         }
@@ -98,7 +96,7 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
     }
 
     fun resume() {
-        currentPlayer?.start()
-        nextPlayer?.start()
+        currentPlayer?.play()
+        nextPlayer?.play()
     }
 }
