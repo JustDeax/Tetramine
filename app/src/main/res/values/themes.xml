@@ -75,6 +75,7 @@
     <style name="DialogGameOutlineButton" parent="DialogGameButton">
         <item name="android:background">@color/invisible</item>
         <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:tint">?attr/colorPrimary</item>
         <item name="android:padding">8dp</item>
     </style>
 
@@ -92,6 +93,37 @@
         <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:minLines">2</item>
         <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="SettingsText" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="SettingsButton" parent="SettingsText">
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="ChipGroup" parent="Widget.Material3.ChipGroup">
+        <item name="chipSpacingHorizontal">0dp</item>
+        <item name="selectionRequired">true</item>
+        <item name="singleLine">true</item>
+        <item name="singleSelection">true</item>
+    </style>
+
+    <style name="Chip" parent="Widget.MaterialComponents.Chip.Choice" />
+
+    <style name="LeftChip" parent="Chip">
+        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.Material3.Corner.Left</item>
+    </style>
+
+    <style name="RightChip" parent="Chip">
+        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.Material3.Corner.Right</item>
     </style>
 
 </resources>

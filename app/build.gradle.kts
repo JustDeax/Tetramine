@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.justdeax.tetramine"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.justdeax.tetramine"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 1100
-        versionName = "1.0 BETA"
+        targetSdk = 36
+        versionCode = 1102
+        versionName = "1.0 BETA 2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,11 +31,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         viewBinding = true
+    }
+}
+
+kotlin {
+    jvmToolchain(11)
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 }
 

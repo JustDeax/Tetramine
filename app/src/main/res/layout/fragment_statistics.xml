@@ -18,10 +18,7 @@
             android:layout_gravity="center"
             android:paddingTop="8dp"
             app:checkedChip="@id/total"
-            app:chipSpacingHorizontal="0dp"
-            app:selectionRequired="true"
-            app:singleLine="true"
-            app:singleSelection="true">
+            style="@style/ChipGroup">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/total"
@@ -29,8 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/page_total"
                 android:textSize="24sp"
-                app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Left"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                style="@style/LeftChip" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/best"
@@ -38,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/page_best"
                 android:textSize="24sp"
-                app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Right"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                style="@style/RightChip" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -159,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            android:text="@string/reset"
+            android:text="@string/reset_stats"
             android:visibility="gone"
             app:icon="@drawable/round_restart_alt_24"
             style="@style/PauseButton" />

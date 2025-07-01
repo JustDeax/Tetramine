@@ -42,12 +42,37 @@
         android:text="@string/resume"
         style="@style/DialogGameButton" />
 
-    <Button
-        android:id="@+id/guide"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/guide"
-        style="@style/DialogGameButton" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/guide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/guide"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            style="@style/DialogGameOutlineButton" />
+
+        <ImageButton
+            android:id="@+id/music"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="music"
+            android:src="@drawable/round_music_note_24"
+            style="@style/DialogGameOutlineButton" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

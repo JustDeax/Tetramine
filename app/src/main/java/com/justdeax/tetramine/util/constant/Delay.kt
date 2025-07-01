@@ -13,4 +13,5 @@ object Delay {
     const val SHORT = 250L
     const val MINI = 100L
     const val MEDIUM = 500L
+    const val LONG = 3000L
 }

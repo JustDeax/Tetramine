@@ -1,16 +1,17 @@
 package com.justdeax.tetramine.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.activity.GameActivity
 import com.justdeax.tetramine.databinding.FragmentChooseModeBinding
 import com.justdeax.tetramine.util.constant.GameType
-import com.justdeax.tetramine.util.notAvailable
 
 class ChooseMode : Fragment() {
     private var _binding: FragmentChooseModeBinding? = null
@@ -48,6 +49,14 @@ class ChooseMode : Fragment() {
         val game = Intent(requireActivity(), GameActivity::class.java)
         game.putExtra(GameType.TYPE, type)
         startActivity(game)
+    }
+
+    private fun notAvailable(context: Context, mode: String) {
+        Toast.makeText(
+            context,
+            mode + " " + context.getString(R.string.not_available),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onDestroyView() {

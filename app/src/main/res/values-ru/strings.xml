@@ -2,6 +2,8 @@
     <string name="app_name">Tetramine</string>
     <string name="version">Версия:</string>
     <string name="not_available">недоступно</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отмена</string>
 
     <string name="play">Играть</string>
     <string name="resume">Продолжить игру</string>
@@ -51,11 +53,8 @@
     <string name="pieces">Фигуры</string>
     <string name="four_lines">4 линии</string>
     <string name="t_spins">Т-спины</string>
-    <string name="reset">Сбросить статистику</string>
-    <string name="reset_desc">Вы уверены, что хотите сбросить всю статистику?</string>
-    <string name="confirm">Подтвердить</string>
-    <string name="cancel">Отмена</string>
     <string name="zero">0</string>
+    <string name="reset_stats">Сбросить статистику</string>
 
     <string name="about_1">Это современная мобильная версия Тетриса</string>
     <string name="about_2">

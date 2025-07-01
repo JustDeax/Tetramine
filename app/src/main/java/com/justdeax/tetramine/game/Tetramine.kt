@@ -8,7 +8,7 @@ class Tetramine(
     private val rows: Int,
     private val cols: Int,
     private val showAchievement: (String) -> Unit,
-    private val level: () -> Int,
+    private val getLevel: () -> Int,
 ) {
     private var board = Array(rows) { IntArray(cols) }
     private var bag = makeBag()
@@ -20,29 +20,11 @@ class Tetramine(
     var isGameOver = false
     var score = 0
     var lines = 0
-
     var pieces = 0
     var fourLines = 0
     var tSpins = 0
 
     init { spawnPiece() }
-
-    fun resetGame() {
-        board = Array(rows) { IntArray(cols) }
-        bag = makeBag()
-        comboCount = -1
-        lastMoveRotation = false
-        isBackToBack = false
-        currentPiece = emptyPiece()
-        previousPiece = nextPiece()
-        isGameOver = false
-        lines = 0
-        score = 0
-        pieces = 0
-        fourLines = 0
-        tSpins = 0
-        spawnPiece()
-    }
 
     fun getBoardWithPiece(): Array<IntArray> {
         val board = board.map { it.clone() }.toTypedArray()
@@ -161,9 +143,9 @@ class Tetramine(
         val b2bPoints = if (isNewBackToBack && isBackToBack) basePoints / 2 else 0
         isBackToBack = isNewBackToBack
 
-        score += (basePoints + extraPoints + b2bPoints) * level()
+        score += (basePoints + extraPoints + b2bPoints) * getLevel()
 
-        if (level() <= 10)
+        if (getLevel() <= 10)
             showAchievement(
                 buildString {
                     if (b2bPoints > 0) appendLine(Text.B2B)
@@ -192,7 +174,6 @@ class Tetramine(
             row + 1 to col - 1,
             row + 1 to col + 1
         )
-
         val blocked = corners.count { (r, c) ->
             r !in 0 until rows || c !in 0 until cols || board[r][c] != 0
         }

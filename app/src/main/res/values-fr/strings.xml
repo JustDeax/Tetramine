@@ -2,6 +2,8 @@
     <string name="app_name">Tetramine</string>
     <string name="version">Version :</string>
     <string name="not_available">non disponible</string>
+    <string name="confirm">Confirmer</string>
+    <string name="cancel">Annuler</string>
 
     <string name="play">Jouer</string>
     <string name="resume">Reprendre la partie</string>
@@ -51,11 +53,8 @@ Regardez aussi les thèmes, la sensibilité, les modes et les stats"""
     <string name="pieces">Pièces</string>
     <string name="four_lines">4 Lignes</string>
     <string name="t_spins">T-Spins</string>
-    <string name="reset">Réinitialiser les statistiques</string>
-    <string name="reset_desc">Êtes-vous sûr de vouloir réinitialiser toutes les statistiques ?</string>
-    <string name="confirm">Confirmer</string>
-    <string name="cancel">Annuler</string>
     <string name="zero">0</string>
+    <string name="reset_stats">Réinitialiser les statistiques</string>
 
     <string name="about_1">Ceci est la version mobile moderne de Tetris</string>
     <string name="about_2">

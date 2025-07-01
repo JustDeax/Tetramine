@@ -17,6 +17,7 @@ object PreferenceManager {
     private const val KEY_X_SENSITIVITY = "XS"
     private const val KEY_Y_SENSITIVITY = "YS"
     private const val KEY_USE_ROTATE_LEFT = "URL"
+    private const val KEY_MUSIC = "M"
 
     private const val KEY_BEST_SCORE = "BS"
     private const val KEY_BEST_LINES = "BL"
@@ -29,12 +30,6 @@ object PreferenceManager {
     private const val KEY_TOTAL_PIECES = "TP"
     private const val KEY_TOTAL_4_LINES = "T4L"
     private const val KEY_TOTAL_T_SPINS = "TTS"
-
-    private const val KEY_GAME_DATA_SCORE = "GS"
-    private const val KEY_GAME_DATA_LINES = "GL"
-    private const val KEY_GAME_DATA_PIECES = "GP"
-    private const val KEY_GAME_DATA_4_LINES = "G4L"
-    private const val KEY_GAME_DATA_T_SPINS = "GTS"
 
     val Activity.versionName: String
         get() = " " + packageManager.getPackageInfo(packageName, 0).versionName!!
@@ -70,6 +65,10 @@ object PreferenceManager {
     var Context.useRotateLeft: Boolean
         get() = preferences.getBoolean(KEY_USE_ROTATE_LEFT, false)
         set(value) = preferences.set { putBoolean(KEY_USE_ROTATE_LEFT, value) }
+
+    var Context.music: Boolean
+        get() = preferences.getBoolean(KEY_MUSIC, true)
+        set(value) = preferences.set { putBoolean(KEY_MUSIC, value) }
 
     var Context.bestScore: Int
         get() = preferences.getInt(KEY_BEST_SCORE, ZERO)
@@ -111,26 +110,6 @@ object PreferenceManager {
         get() = preferences.getInt(KEY_TOTAL_T_SPINS, ZERO)
         set(value) = preferences.set { putInt(KEY_TOTAL_T_SPINS, value) }
 
-    var Context.gameDataScore: Int
-        get() = preferences.getInt(KEY_GAME_DATA_SCORE, ZERO)
-        set(value) = preferences.set { putInt(KEY_GAME_DATA_SCORE, value) }
-
-    var Context.gameDataLines: Int
-        get() = preferences.getInt(KEY_GAME_DATA_LINES, ZERO)
-        set(value) = preferences.set { putInt(KEY_GAME_DATA_LINES, value) }
-
-    var Context.gameDataPieces: Int
-        get() = preferences.getInt(KEY_GAME_DATA_PIECES, ZERO)
-        set(value) = preferences.set { putInt(KEY_GAME_DATA_PIECES, value) }
-
-    var Context.gameData4Lines: Int
-        get() = preferences.getInt(KEY_GAME_DATA_4_LINES, ZERO)
-        set(value) = preferences.set { putInt(KEY_GAME_DATA_4_LINES, value) }
-
-    var Context.gameDataTSpins: Int
-        get() = preferences.getInt(KEY_GAME_DATA_T_SPINS, ZERO)
-        set(value) = preferences.set { putInt(KEY_GAME_DATA_T_SPINS, value) }
-
     fun Context.resetStats() {
         preferences.set {
             putInt(KEY_BEST_SCORE, ZERO)
@@ -143,16 +122,6 @@ object PreferenceManager {
             putInt(KEY_TOTAL_PIECES, ZERO)
             putInt(KEY_TOTAL_4_LINES, ZERO)
             putInt(KEY_TOTAL_T_SPINS, ZERO)
-        }
-    }
-
-    fun Context.resetGameData() {
-        preferences.set {
-            putInt(KEY_GAME_DATA_SCORE, ZERO)
-            putInt(KEY_GAME_DATA_LINES, ZERO)
-            putInt(KEY_GAME_DATA_PIECES, ZERO)
-            putInt(KEY_GAME_DATA_4_LINES, ZERO)
-            putInt(KEY_GAME_DATA_T_SPINS, ZERO)
         }
     }
 

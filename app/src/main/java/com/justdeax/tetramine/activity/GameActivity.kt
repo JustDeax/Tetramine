@@ -8,28 +8,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.justdeax.tetramine.PreferenceManager.best4Lines
-import com.justdeax.tetramine.PreferenceManager.bestLines
-import com.justdeax.tetramine.PreferenceManager.bestPieces
-import com.justdeax.tetramine.PreferenceManager.bestScore
-import com.justdeax.tetramine.PreferenceManager.bestTSpins
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
-import com.justdeax.tetramine.PreferenceManager.gameData4Lines
-import com.justdeax.tetramine.PreferenceManager.gameDataLines
-import com.justdeax.tetramine.PreferenceManager.gameDataPieces
-import com.justdeax.tetramine.PreferenceManager.gameDataScore
-import com.justdeax.tetramine.PreferenceManager.gameDataTSpins
-import com.justdeax.tetramine.PreferenceManager.resetGameData
-import com.justdeax.tetramine.PreferenceManager.total4Lines
-import com.justdeax.tetramine.PreferenceManager.totalLines
-import com.justdeax.tetramine.PreferenceManager.totalPieces
-import com.justdeax.tetramine.PreferenceManager.totalScore
-import com.justdeax.tetramine.PreferenceManager.totalTSpins
 import com.justdeax.tetramine.PreferenceManager.useRotateLeft
 import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
@@ -58,7 +43,7 @@ class GameActivity : AppCompatActivity() {
     private val rows = 20
     private val cols = 10
     private val game: TetramineGameViewModel by viewModels {
-        TetramineGameFactory(rows, cols) { text -> achievementPopup.show(text) }
+        TetramineGameFactory(application, rows, cols) { text -> achievementPopup.show(text) }
     }
     private val guidePopup: GuidePopup by lazy {
         GuidePopup(binding.root, lifecycleScope, this, layoutInflater)
@@ -109,8 +94,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setupGame() {
-        if (game.currentPiece == Tetromino(arrayOf(intArrayOf())))
-            resetGameData()
         when (intent.getStringExtra(GameType.TYPE)) {
             GameType.PRACTICE -> {
                 game.isLevelStatic = true
@@ -151,7 +134,6 @@ class GameActivity : AppCompatActivity() {
         if (!::dialogGame.isInitialized || !::dialogGameBinding.isInitialized)
             initGameDialog()
 
-        saveStatistics()
         dialogGameBinding.apply {
             if (game.isGameOver) {
                 preview.visibility = View.GONE
@@ -167,6 +149,12 @@ class GameActivity : AppCompatActivity() {
                     Tetromino.TETROMINO_SHAPES[getTetrominoType(game.currentPiece.shape) - 1]
                 )
             }
+            music.setImageDrawable(
+                AppCompatResources.getDrawable(this@GameActivity,
+                    if (game.musicEnabled) R.drawable.round_music_note_24
+                    else R.drawable.round_music_off_24
+                )
+            )
             statistics.text = getStatistics(game.lines, game.score, game.level.value)
             dialogGame.show()
         }
@@ -187,7 +175,16 @@ class GameActivity : AppCompatActivity() {
                 dialogGame.dismiss()
                 showGuide()
             }
+            music.setOnClickListener {
+                music.setImageDrawable(
+                    AppCompatResources.getDrawable(this@GameActivity,
+                        if (game.musicToggled) R.drawable.round_music_note_24
+                        else R.drawable.round_music_off_24
+                    )
+                )
+            }
             exit.setOnClickListener {
+                dialogGame.setOnDismissListener {  }
                 dialogGame.dismiss()
                 finish()
             }
@@ -212,37 +209,6 @@ class GameActivity : AppCompatActivity() {
             { game.resumeGame() },
             fullGuide
         )
-    }
-
-    private fun saveStatistics() {
-        if (game.isLevelStatic) return
-
-        val score = game.score
-        val lines = game.lines
-        val pieces = game.pieces
-        val fourLines = game.fourLines
-        val tSpins = game.tSpins
-
-        if (score > bestScore) bestScore = score
-        if (lines > bestLines) bestLines = lines
-        if (pieces > bestPieces) bestPieces = pieces
-        if (fourLines > best4Lines) best4Lines = fourLines
-        if (tSpins > bestTSpins) bestTSpins = tSpins
-
-        totalScore += score - gameDataScore
-        gameDataScore = score
-
-        totalLines += lines - gameDataLines
-        gameDataLines = lines
-
-        totalPieces += pieces - gameDataPieces
-        gameDataPieces = pieces
-
-        total4Lines += fourLines - gameData4Lines
-        gameData4Lines = fourLines
-
-        totalTSpins += tSpins - gameDataTSpins
-        gameDataTSpins = tSpins
     }
 
     private fun View.setControls(xSensitivity: Float, ySensitivity: Float, useRotateLeft: Boolean) {
@@ -315,8 +281,6 @@ class GameActivity : AppCompatActivity() {
     override fun onPause() {
         if (!isFinishing && !isDestroyed)
             showGameDialog()
-        else
-            saveStatistics()
         super.onPause()
     }
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.PreferenceManager.best4Lines
 import com.justdeax.tetramine.PreferenceManager.bestLines
 import com.justdeax.tetramine.PreferenceManager.bestPieces
@@ -23,6 +22,7 @@ import com.justdeax.tetramine.PreferenceManager.totalTSpins
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentStatisticsBinding
 import com.justdeax.tetramine.util.constant.Delay
+import com.justdeax.tetramine.util.showResetDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -41,24 +41,34 @@ class Statistics : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            showStatistics(total = true)
+            getStatistics(total = true)
 
             chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
                 when (checkedIds.firstOrNull()) {
-                    R.id.total -> showStatistics(total = true)
-                    R.id.best -> showStatistics(total = false)
+                    R.id.total -> getStatistics(total = true)
+                    R.id.best -> getStatistics(total = false)
                 }
             }
-            reset.setOnClickListener { snowResetStatisticsDialog() }
+            reset.setOnClickListener {
+                requireActivity().apply {
+                    showResetDialog(R.string.reset_stats) {
+                        resetStats()
+                        when (binding.chipGroup.checkedChipId) {
+                            R.id.total -> getStatistics(total = true)
+                            R.id.best -> getStatistics(total = false)
+                        }
+                    }
+                }
+            }
 
             viewLifecycleOwner.lifecycleScope.launch {
-                delay(Delay.MEDIUM * 10)
+                delay(Delay.MEDIUM * 2)
                 reset.visibility = View.VISIBLE
             }
         }
     }
 
-    private fun showStatistics(total: Boolean) {
+    private fun getStatistics(total: Boolean) {
         val (score, lines, pieces, fourLines, tSpins) = with(requireActivity()) {
             if (total)
                 listOf(totalScore, totalLines, totalPieces, total4Lines, totalTSpins)
@@ -83,22 +93,6 @@ class Statistics : Fragment() {
         }
         animator.duration = duration
         animator.start()
-    }
-
-    private fun snowResetStatisticsDialog() {
-        val dialog = MaterialAlertDialogBuilder(requireActivity())
-            .setTitle(R.string.reset)
-            .setMessage(R.string.reset_desc)
-            .setPositiveButton(R.string.confirm) { _, _ ->
-                requireActivity().resetStats()
-                when (binding.chipGroup.checkedChipId) {
-                    R.id.total -> showStatistics(total = true)
-                    R.id.best -> showStatistics(total = false)
-                }
-            }
-            .setNegativeButton(R.string.cancel) { _, _ -> }
-            .create()
-        dialog.show()
     }
 
     override fun onDestroyView() {
