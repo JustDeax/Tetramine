@@ -157,7 +157,7 @@
             android:text="@string/reset_stats"
             android:visibility="gone"
             app:icon="@drawable/round_restart_alt_24"
-            style="@style/PauseButton" />
+            style="@style/MainButton" />
 
     </LinearLayout>
 

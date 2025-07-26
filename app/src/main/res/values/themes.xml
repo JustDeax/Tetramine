@@ -5,7 +5,7 @@
     <style name="Theme.Static" parent="Theme.Material3.DayNight.NoActionBar" />
     <style name="Theme.Tetramine" parent="Theme.Static" />
 
-    <style name="CardMain" parent="Widget.MaterialComponents.CardView">
+    <style name="MainMenuCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_margin">8dp</item>
         <item name="contentPadding">20dp</item>
         <item name="strokeWidth">0.35dp</item>
@@ -13,7 +13,7 @@
         <item name="cardCornerRadius">28dp</item>
     </style>
 
-    <style name="CardButton" parent="Widget.MaterialComponents.CardView">
+    <style name="ButtonCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_margin">14dp</item>
         <item name="cardBackgroundColor">?attr/colorPrimaryContainer</item>
         <item name="cardCornerRadius">21dp</item>
@@ -52,11 +52,10 @@
         <item name="android:layout_gravity">start|center_vertical</item>
     </style>
 
-    <style name="PauseButton" parent="Widget.Material3.Button">
+    <style name="MainButton" parent="Widget.Material3.Button">
         <item name="android:minWidth">0dp</item>
         <item name="android:paddingLeft">18dp</item>
         <item name="android:paddingRight">18dp</item>
-        <item name="android:text">@string/zero</item>
         <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
@@ -101,12 +100,13 @@
         <item name="android:layout_marginBottom">6dp</item>
     </style>
 
-    <style name="SettingsButton" parent="SettingsText">
+    <style name="SettingsButton" parent="MainButton">
         <item name="android:layout_marginStart">6dp</item>
         <item name="android:layout_marginEnd">6dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textAppearance">@style/SettingsText</item>
     </style>
 
     <style name="ChipGroup" parent="Widget.Material3.ChipGroup">

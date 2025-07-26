@@ -6,7 +6,6 @@ object Text {
     const val T_SPIN_DOUBLE = "T SPIN DOUBLE"
     const val PERFECT_CLEAR = "PERFECT CLEAR"
     const val COMBO_X = "COMBO X"
-    const val TEN_LEVEL = "10 LEVEL"
     const val LINES = "Lines:"
     const val SCORE = "Score:"
     const val LEVEL = "Level:"

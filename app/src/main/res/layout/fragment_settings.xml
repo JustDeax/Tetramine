@@ -13,42 +13,52 @@
         android:paddingEnd="8dp"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/theme"
-            style="@style/SettingsText" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/theme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            style="@style/ChipGroup">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/theme"
+                style="@style/SettingsText" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dark"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/theme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dark"
-                android:textSize="20sp"
-                style="@style/LeftChip" />
+                android:layout_gravity="start"
+                style="@style/ChipGroup">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/light"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/light"
-                android:textSize="20sp"
-                style="@style/RightChip" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dark"
+                    android:textSize="20sp"
+                    style="@style/LeftChip" />
 
-        </com.google.android.material.chip.ChipGroup>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/light"
+                    android:textSize="20sp"
+                    style="@style/RightChip" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/dynamic_colors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dynamic_colors"
+            android:maxWidth="320dp"
             style="@style/SettingsText" />
 
         <View
@@ -58,21 +68,37 @@
             android:layout_marginBottom="8dp"
             android:background="?android:attr/listDivider" />
 
-        <TextView
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/show_ghost_piece"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/empty_cell_opacity"
+            android:text="@string/show_ghost_piece"
             style="@style/SettingsText" />
 
-        <com.google.android.material.slider.Slider
-            android:id="@+id/empty_cell_opacity"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/empty_cell_opacity"
-            android:valueFrom="0"
-            android:valueTo="100"
-            android:stepSize="20"
-            app:labelBehavior="floating" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/empty_cell_opacity"
+                style="@style/SettingsText" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/empty_cell_opacity"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/empty_cell_opacity"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:stepSize="0.5"
+                app:labelBehavior="floating" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -86,9 +112,9 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/cell_corner_radius"
             android:valueFrom="0"
-            android:valueTo="99"
-            android:stepSize="33"
-            app:labelBehavior="gone" />
+            android:valueTo="1"
+            android:stepSize="0.1"
+            app:labelBehavior="floating" />
 
         <TextView
             android:layout_width="match_parent"
@@ -102,7 +128,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/cell_spacing"
             android:valueFrom="0"
-            android:valueTo="2"
+            android:valueTo="5"
             android:stepSize="1"
             app:labelBehavior="floating" />
 
@@ -114,24 +140,10 @@
             android:background="?android:attr/listDivider" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/sound"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sound"
-            style="@style/SettingsText" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/music"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/music"
-            style="@style/SettingsText" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/vibration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vibration"
             style="@style/SettingsText" />
 
         <View
@@ -154,14 +166,14 @@
             android:paddingEnd="8dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/x"
                 style="@style/SettingsButton" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/y"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,7 +185,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sensitivity"
+            android:text="@string/hard_drop"
             style="@style/SettingsText" />
 
         <LinearLayout
@@ -181,16 +193,16 @@
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/max_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/max_time"
                 style="@style/SettingsButton" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/min_soft_drops"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -199,13 +211,6 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/listDivider" />
-
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/bi_direction_rotation"
             android:layout_width="match_parent"
@@ -213,12 +218,15 @@
             android:text="@string/bi_direction_rotation"
             style="@style/SettingsText" />
 
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/show_ghost_piece"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/show_ghost_piece"
-            style="@style/SettingsText" />
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:text="@string/reset_settings"
+            app:icon="@drawable/round_restart_alt_24"
+            style="@style/MainButton" />
 
     </LinearLayout>
 

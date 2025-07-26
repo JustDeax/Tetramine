@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            style="@style/CardButton">
+            style="@style/ButtonCard">
 
             <TextView
                 android:id="@+id/version_text"
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            style="@style/CardButton">
+            style="@style/ButtonCard">
 
             <TextView
                 android:id="@+id/author_text"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            style="@style/CardButton">
+            style="@style/ButtonCard">
 
             <TextView
                 android:id="@+id/project_text"

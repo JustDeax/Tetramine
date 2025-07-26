@@ -8,6 +8,7 @@ import com.justdeax.tetramine.PreferenceManager.bestLines
 import com.justdeax.tetramine.PreferenceManager.bestPieces
 import com.justdeax.tetramine.PreferenceManager.bestScore
 import com.justdeax.tetramine.PreferenceManager.bestTSpins
+import com.justdeax.tetramine.PreferenceManager.isShowGhostPiece
 import com.justdeax.tetramine.PreferenceManager.total4Lines
 import com.justdeax.tetramine.PreferenceManager.totalLines
 import com.justdeax.tetramine.PreferenceManager.totalPieces
@@ -29,7 +30,7 @@ class TetramineGameViewModel(
     private val cols: Int,
     private val showAchievement: (String) -> Unit
 ) : AndroidViewModel(application) {
-    private var tetramine = Tetramine(rows, cols, showAchievement) { level.value + 1 }
+    private var tetramine = makeGame()
     private var dropSpeed = levels[0].speed
     private var gameJob: Job? = null
     private val music = MusicManager(application, Delay.LONG)
@@ -48,10 +49,6 @@ class TetramineGameViewModel(
     val isGameOver get() = tetramine.isGameOver
     val score get() = tetramine.score
     val lines get() = tetramine.lines
-
-    private val pieces get() = tetramine.pieces
-    private val fourLines get() = tetramine.fourLines
-    private val tSpins get() = tetramine.tSpins
 
     fun startGame() {
         resetGame()
@@ -87,31 +84,15 @@ class TetramineGameViewModel(
         music.pause()
     }
 
-    private fun resetGame() {
+    fun resetGame() {
         stopGame()
         saveGame()
-        tetramine = Tetramine(rows, cols, showAchievement) { level.value + 1 }
+        tetramine = makeGame()
         _board.value = tetramine.getBoardWithPiece()
         music.release()
 
         if (!isLevelStatic)
             changeLevel(0)
-    }
-
-    private fun saveGame() {
-        with(application) {
-            if (score > bestScore) bestScore = score
-            if (lines > bestLines) bestLines = lines
-            if (pieces > bestPieces) bestPieces = pieces
-            if (fourLines > best4Lines) best4Lines = fourLines
-            if (tSpins > bestTSpins) bestTSpins = tSpins
-
-            totalScore += score
-            totalLines += lines
-            totalPieces += pieces
-            total4Lines += fourLines
-            totalTSpins += tSpins
-        }
     }
 
     fun changeLevel(level: Int) {
@@ -136,6 +117,28 @@ class TetramineGameViewModel(
         if (!tetramine.isGameOver) {
             action()
             _board.value = tetramine.getBoardWithPiece()
+        }
+    }
+
+    private fun makeGame() = Tetramine(rows, cols, showAchievement, application.isShowGhostPiece) { level.value + 1 }
+
+    private fun saveGame() {
+        val pieces = tetramine.pieces
+        val fourLines = tetramine.fourLines
+        val tSpins = tetramine.tSpins
+
+        with(application) {
+            if (score > bestScore) bestScore = score
+            if (lines > bestLines) bestLines = lines
+            if (pieces > bestPieces) bestPieces = pieces
+            if (fourLines > best4Lines) best4Lines = fourLines
+            if (tSpins > bestTSpins) bestTSpins = tSpins
+
+            totalScore += score
+            totalLines += lines
+            totalPieces += pieces
+            total4Lines += fourLines
+            totalTSpins += tSpins
         }
     }
 

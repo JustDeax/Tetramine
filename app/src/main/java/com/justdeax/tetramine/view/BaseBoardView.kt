@@ -43,18 +43,21 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val cellSize = (width / cols.toFloat()) - cellSpacing
+        val cellStep = cellSize + cellSpacing
+        val cornerRadius = cellSize * cellCornerRadius / 2
+
         for (row in 0 until rows) {
             for (col in 0 until cols) {
                 val value = board[row][col]
                 if (value in colors.indices) {
-                    val left = col * (cellSize + cellSpacing)
-                    val top = row * (cellSize + cellSpacing)
+                    val left = col * cellStep
+                    val top = row * cellStep
                     val right = left + cellSize
                     val bottom = top + cellSize
 
                     paint.color = colors[value]
                     rect.set(left, top, right, bottom)
-                    canvas.drawRoundRect(rect, cellCornerRadius, cellCornerRadius, paint)
+                    canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
                 }
             }
         }
@@ -68,7 +71,7 @@ abstract class BaseBoardView(context: Context, attrs: AttributeSet? = null) : Vi
     fun setStyle(colors: IntArray, cellSpacing: Float, cellCornerRadius: Float) {
         this.colors = colors
         this.cellSpacing = context.dpToPx(cellSpacing)
-        this.cellCornerRadius = context.dpToPx(cellCornerRadius)
+        this.cellCornerRadius = cellCornerRadius
         invalidate()
     }
 }

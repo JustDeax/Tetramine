@@ -22,7 +22,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:icon="@drawable/round_pause_24"
-            style="@style/PauseButton" />
+            tools:text="@string/zero"
+            style="@style/MainButton" />
 
         <TextView
             android:id="@+id/statistics"
@@ -48,7 +49,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        style="@style/CardMain">
+        style="@style/MainMenuCard">
 
         <com.justdeax.tetramine.view.BoardView
             android:id="@+id/board"

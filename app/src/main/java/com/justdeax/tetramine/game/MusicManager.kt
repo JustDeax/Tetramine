@@ -3,7 +3,7 @@ package com.justdeax.tetramine.game
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
-import com.justdeax.tetramine.PreferenceManager.music
+import com.justdeax.tetramine.PreferenceManager.isMusicEnable
 import kotlinx.coroutines.*
 
 class MusicManager(context: Context, private val crossfadeDuration: Long) {
@@ -18,11 +18,11 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var loopJob: Job? = null
 
-    var enabled = appContext.music
+    var enabled = appContext.isMusicEnable
 
     fun toggle(): Boolean {
-        appContext.music = !enabled
-        enabled = appContext.music
+        appContext.isMusicEnable = !enabled
+        enabled = appContext.isMusicEnable
 
         return enabled
     }

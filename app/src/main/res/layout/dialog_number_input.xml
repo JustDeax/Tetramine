@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.Material3.TextInputLayout.FilledBox"
+<com.google.android.material.textfield.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textInputLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/enter_a_value"
-    android:padding="24dp">
+    android:padding="24dp"
+    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editDecimalInput"

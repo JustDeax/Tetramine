@@ -21,7 +21,7 @@ Classic arcade puzzle game where you have to stack falling tetromino — 4-block
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 
 ```
-This is a semi-open (90% open) source project at the moment
+This is a semi-open (90%+ open) source project at the moment
 - My position: I'm not ready to post the whole code of this game at the moment.
 - You can also send bugs, wishes, improvements through “issues”.
 ```
@@ -37,11 +37,11 @@ This is a semi-open (90% open) source project at the moment
 - [ ] Powerful action notification [What is](#powerful-action-notification)
 - [ ] Dynamic Theme support
 - [ ] Detailed statistics
+- [ ] Full customization of controls and appearance
 
 ### TODO
-- [ ] Full customization of controls and appearance
 - [ ] Multiple game modes
-- [ ] Rotate both ways
+- [ ] Save game
 
 ### Cool Rotation System
 When a piece can't rotate in place, it tries to shift sideways to complete the rotation.

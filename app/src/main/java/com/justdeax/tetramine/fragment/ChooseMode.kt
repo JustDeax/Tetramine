@@ -35,7 +35,7 @@ class ChooseMode : Fragment() {
                 startGame(GameType.PRACTICE)
             }
             sprint.setOnClickListener {
-                startGame(GameType.SPRINT)
+                //startGame(GameType.SPRINT)
                 notAvailable(requireContext(), getString(R.string.sprint_mode))
             }
             modern.setOnClickListener {
@@ -54,7 +54,7 @@ class ChooseMode : Fragment() {
     private fun notAvailable(context: Context, mode: String) {
         Toast.makeText(
             context,
-            mode + " " + context.getString(R.string.not_available),
+            "$mode not available",
             Toast.LENGTH_SHORT
         ).show()
     }

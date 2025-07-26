@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Tetramine</string>
     <string name="version">Version :</string>
-    <string name="not_available">non disponible</string>
     <string name="confirm">Confirmer</string>
     <string name="cancel">Annuler</string>
 
@@ -55,6 +54,26 @@ Regardez aussi les thèmes, la sensibilité, les modes et les stats"""
     <string name="t_spins">T-Spins</string>
     <string name="zero">0</string>
     <string name="reset_stats">Réinitialiser les statistiques</string>
+
+    <string name="theme">Thème</string>
+    <string name="dark">Sombre</string>
+    <string name="light">Clair</string>
+    <string name="dynamic_colors">Couleurs dynamiques</string>
+    <string name="empty_cell_opacity">Opacité des cases vides</string>
+    <string name="cell_corner_radius">Rayon des coins des cases</string>
+    <string name="cell_spacing">Espacement des cases</string>
+    <string name="music">Musique</string>
+    <string name="sensitivity">Sensibilité des gestes</string>
+    <string name="x">X : %1$s</string>
+    <string name="y">Y : %1$s</string>
+    <string name="hard_drop">Déclenchement du drop rapide</string>
+    <string name="max_time">Temps max : %1$s ms</string>
+    <string name="min_soft_drops">Soft drops min : %1$s</string>
+    <string name="bi_direction_rotation">Rotation bidirectionnelle</string>
+    <string name="show_ghost_piece">Afficher la pièce fantôme</string>
+    <string name="set_value">Définir la valeur</string>
+    <string name="enter_a_value">Entrez une valeur (%1$s – %2$s)</string>
+    <string name="reset_settings">Réinitialiser les paramètres</string>
 
     <string name="about_1">Ceci est la version mobile moderne de Tetris</string>
     <string name="about_2">

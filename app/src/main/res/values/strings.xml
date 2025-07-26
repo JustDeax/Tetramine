@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Tetramine</string>
     <string name="version">Version:</string>
-    <string name="not_available">not available</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
 
@@ -63,18 +62,17 @@ Also check theme settings, control sensitivity change, modes and stats"""
     <string name="empty_cell_opacity">Empty cell opacity</string>
     <string name="cell_corner_radius">Cell corner radius</string>
     <string name="cell_spacing">Cell spacing</string>
-    <string name="sound">Sound</string>
     <string name="music">Music</string>
-    <string name="vibration">Vibration</string>
     <string name="sensitivity">Gestures sensitivity</string>
-    <string name="x">X: </string>
-    <string name="y">Y: </string>
+    <string name="x">X: %1$s</string>
+    <string name="y">Y: %1$s</string>
     <string name="hard_drop">Hard drop triggers</string>
-    <string name="max_time">Max time: </string>
-    <string name="min_soft_drops">Min soft drops: </string>
+    <string name="max_time">Max time: %1$s ms</string>
+    <string name="min_soft_drops">Min soft drops: %1$s</string>
     <string name="bi_direction_rotation">2-direction rotation</string>
     <string name="show_ghost_piece">Show ghost piece</string>
-    <string name="enter_a_value">Enter a value (0.1 - 2.0)</string>
+    <string name="set_value">Set value</string>
+    <string name="enter_a_value">Enter a value (%1$s – %2$s)</string>
     <string name="reset_settings">Reset Settings</string>
 
     <string name="about_1">This is the mobile modern version of tetris</string>

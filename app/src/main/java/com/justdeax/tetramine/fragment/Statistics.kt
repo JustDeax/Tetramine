@@ -40,15 +40,9 @@ class Statistics : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            getStatistics(total = true)
+        getStatistics(total = true)
 
-            chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
-                when (checkedIds.firstOrNull()) {
-                    R.id.total -> getStatistics(total = true)
-                    R.id.best -> getStatistics(total = false)
-                }
-            }
+        binding.apply {
             reset.setOnClickListener {
                 requireActivity().apply {
                     showResetDialog(R.string.reset_stats) {
@@ -60,8 +54,13 @@ class Statistics : Fragment() {
                     }
                 }
             }
-
-            viewLifecycleOwner.lifecycleScope.launch {
+            chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+                when (checkedIds.firstOrNull()) {
+                    R.id.total -> getStatistics(total = true)
+                    R.id.best -> getStatistics(total = false)
+                }
+            }
+            lifecycleScope.launch {
                 delay(Delay.MEDIUM * 2)
                 reset.visibility = View.VISIBLE
             }

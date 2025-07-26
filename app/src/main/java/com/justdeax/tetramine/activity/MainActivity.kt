@@ -11,9 +11,9 @@ import androidx.navigation.findNavController
 import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityMainBinding
-import com.justdeax.tetramine.util.constant.GameType
 import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.constant.Delay
+import com.justdeax.tetramine.util.constant.GameType
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

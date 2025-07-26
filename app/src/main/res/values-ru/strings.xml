@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Tetramine</string>
     <string name="version">Версия:</string>
-    <string name="not_available">недоступно</string>
     <string name="confirm">Подтвердить</string>
     <string name="cancel">Отмена</string>
 
@@ -55,6 +54,26 @@
     <string name="t_spins">Т-спины</string>
     <string name="zero">0</string>
     <string name="reset_stats">Сбросить статистику</string>
+
+    <string name="theme">Тема</string>
+    <string name="dark">Тёмная</string>
+    <string name="light">Светлая</string>
+    <string name="dynamic_colors">Динамические цвета</string>
+    <string name="empty_cell_opacity">Прозрачность пустых ячеек</string>
+    <string name="cell_corner_radius">Радиус скругления ячеек</string>
+    <string name="cell_spacing">Расстояние между ячейками</string>
+    <string name="music">Музыка</string>
+    <string name="sensitivity">Чувствительность жестов</string>
+    <string name="x">X: %1$s</string>
+    <string name="y">Y: %1$s</string>
+    <string name="hard_drop">Срабатывание жёсткого падения</string>
+    <string name="max_time">Макс. время: %1$s мс</string>
+    <string name="min_soft_drops">Мин. мягких падений: %1$s</string>
+    <string name="bi_direction_rotation">Поворот в 2 стороны</string>
+    <string name="show_ghost_piece">Показывать тень фигуры</string>
+    <string name="set_value">Установить значение</string>
+    <string name="enter_a_value">Введите значение (%1$s – %2$s)</string>
+    <string name="reset_settings">Сбросить настройки</string>
 
     <string name="about_1">Это современная мобильная версия Тетриса</string>
     <string name="about_2">

@@ -8,6 +8,7 @@ class Tetramine(
     private val rows: Int,
     private val cols: Int,
     private val showAchievement: (String) -> Unit,
+    isShowGhostPiece: Boolean,
     private val getLevel: () -> Int,
 ) {
     private var board = Array(rows) { IntArray(cols) }
@@ -23,15 +24,10 @@ class Tetramine(
     var pieces = 0
     var fourLines = 0
     var tSpins = 0
+    val getBoardWithPiece =
+        if (isShowGhostPiece) { -> buildBoard(ghostPiece()) } else { -> buildBoard() }
 
     init { spawnPiece() }
-
-    fun getBoardWithPiece(): Array<IntArray> {
-        val board = board.map { it.clone() }.toTypedArray()
-        applyPieceToBoard(board, ghostPiece())
-        applyPieceToBoard(board, currentPiece)
-        return board
-    }
 
     fun dropPiece() {
         if (!movePiece(1, 0))
@@ -55,6 +51,14 @@ class Tetramine(
     fun moveRight() = movePiece(0, 1)
     fun rotateLeft() = rotatePiece(isRightRotated = false)
     fun rotateRight() = rotatePiece(isRightRotated = true)
+
+    private fun buildBoard(vararg pieces: Tetromino): Array<IntArray> {
+        val boardCopy = board.map { it.clone() }.toTypedArray()
+        applyPieceToBoard(boardCopy, currentPiece)
+        for (piece in pieces)
+            applyPieceToBoard(boardCopy, piece)
+        return boardCopy
+    }
 
     private fun baseDrop() {
         applyPieceToBoard(board, currentPiece)

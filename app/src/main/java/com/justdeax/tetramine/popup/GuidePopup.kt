@@ -46,7 +46,7 @@ class GuidePopup(
         job?.cancel()
         popup.dismiss()
 
-        var skipRequested = false
+        var skipRequested: Boolean
         binding.root.setOnClickListener { skipRequested = true }
 
         job = lifecycleScope.launch {

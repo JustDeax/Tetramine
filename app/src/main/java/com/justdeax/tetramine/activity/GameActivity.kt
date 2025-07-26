@@ -9,13 +9,17 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
-import com.justdeax.tetramine.PreferenceManager.useRotateLeft
+import com.justdeax.tetramine.PreferenceManager.emptyCellOpacity
+import com.justdeax.tetramine.PreferenceManager.is2DirectionRotation
+import com.justdeax.tetramine.PreferenceManager.maxTimeHDT
+import com.justdeax.tetramine.PreferenceManager.minSoftDropsHDT
 import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
@@ -72,7 +76,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        boardColor = intArrayOf(getColor(R.color.empty))
+        boardColor = intArrayOf(
+            if (emptyCellOpacity == 1f)
+                getColor(R.color.empty)
+            else
+                ColorUtils.setAlphaComponent(
+                    getColor(R.color.empty),
+                    (255 * emptyCellOpacity).toInt()
+                )
+        )
         previewColor = intArrayOf(getColor(R.color.invisible))
         colors = intArrayOf(
             getColor(R.color.cyan), //I
@@ -88,7 +100,7 @@ class GameActivity : AppCompatActivity() {
             main.applySystemInsets()
             board.setStyle(boardColor + colors, cellSpacing, cellCornerRadius)
             preview.setStyle(previewColor + colors, cellSpacing, cellCornerRadius)
-            board.setControls(xSensitivity, ySensitivity, useRotateLeft)
+            board.setControls(xSensitivity, ySensitivity, is2DirectionRotation, maxTimeHDT, minSoftDropsHDT)
             pause.setOnClickListener { showGameDialog() }
         }
     }
@@ -119,8 +131,6 @@ class GameActivity : AppCompatActivity() {
                         binding.pause.text =
                             if (newLevel == TetramineGameViewModel.levels.lastIndex) Text.SIGMA
                             else newLevel.toString()
-                        if (newLevel == 10)
-                            achievementPopup.show(Text.TEN_LEVEL)
                     }
                 }
             }
@@ -211,7 +221,13 @@ class GameActivity : AppCompatActivity() {
         )
     }
 
-    private fun View.setControls(xSensitivity: Float, ySensitivity: Float, useRotateLeft: Boolean) {
+    private fun View.setControls(
+        xSensitivity: Float,
+        ySensitivity: Float,
+        is2DirectionRotation: Boolean,
+        maxTimeHDT: Int,
+        minSoftDropsHDT: Int,
+    ) {
         var touchX = 0f
         var touchY = 0f
         var xMotion = 0
@@ -249,13 +265,13 @@ class GameActivity : AppCompatActivity() {
                 }
                 MotionEvent.ACTION_UP -> {
                     val diffTime = System.currentTimeMillis() - motionTime
-                    if (xMotion == 0 && yMotion > 2 && diffTime < 150L && game.currentPiece.row > 3) {
+                    if (xMotion == 0 && yMotion >= minSoftDropsHDT && diffTime < maxTimeHDT && game.currentPiece.row > rows * 0.15) {
                         game.hardDrop()
                         hardDropCount++
                     } else if (xMotion == 0 && yMotion == 0) {
                         rotateCount++
 
-                        if (useRotateLeft) {
+                        if (is2DirectionRotation) {
                             val pieceCol = game.currentPiece.col
                             val pieceWidth = game.currentPiece.shape[0].size
                             val centerCol =
