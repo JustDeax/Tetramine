@@ -109,7 +109,8 @@ class GameActivity : AppCompatActivity() {
     private fun setupGame() {
         when (intent.getStringExtra(GameType.TYPE)) {
             GameType.PRACTICE -> {
-                game.chooseStaticLevel(5)
+                game.isLevelStatic = true
+                game.changeLevel(intent.getIntExtra(GameType.LEVEL, 0))
             }
             GameType.GUIDE -> {
                 binding.main.post { showGuide(fullGuide = true) }

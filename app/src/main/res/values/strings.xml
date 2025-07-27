@@ -73,6 +73,7 @@ Also check theme settings, control sensitivity change, modes and stats"""
     <string name="show_ghost_piece">Show ghost piece</string>
     <string name="set_value">Set value</string>
     <string name="enter_a_value">Enter a value (%1$s – %2$s)</string>
+    <string name="enter_a_level">Enter a level (%1$s – %2$s)</string>
     <string name="reset_settings">Reset Settings</string>
 
     <string name="about_1">This is the mobile modern version of tetris</string>

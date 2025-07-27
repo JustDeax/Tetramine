@@ -129,7 +129,12 @@ class Settings : Fragment() {
 
     private fun Button.setOnChangeListener(min: Number, max: Number, isFloat: Boolean, textId: Int, onResult: (Number) -> Unit) {
         setOnClickListener {
-            requireActivity().showNumberInputDialog(min, max, isFloat) { result ->
+            requireActivity().showNumberInputDialog(
+                min,
+                max,
+                isFloat,
+                R.string.enter_a_value
+            ) { result ->
                 onResult(result)
                 text = getString(textId, result.toString())
             }

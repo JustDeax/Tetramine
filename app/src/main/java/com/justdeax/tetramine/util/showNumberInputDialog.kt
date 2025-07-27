@@ -5,13 +5,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.justdeax.tetramine.databinding.DialogNumberInputBinding
 import com.justdeax.tetramine.R
+import com.justdeax.tetramine.databinding.DialogNumberInputBinding
 
 fun Context.showNumberInputDialog(
     min: Number,
     max: Number,
     isFloat: Boolean,
+    textId: Int,
     onResult: (Number) -> Unit
 ) {
     val binding = DialogNumberInputBinding.inflate(LayoutInflater.from(this))
@@ -28,8 +29,12 @@ fun Context.showNumberInputDialog(
     dialog.setOnShowListener {
         val minVal = min.toDouble()
         val maxVal = max.toDouble()
+        val text = if (isFloat)
+            getString(textId, min.toFloat().toString(), max.toFloat().toString())
+        else
+            getString(textId, min.toInt().toString(), max.toInt().toString())
 
-        inputLayout.hint = formatString(min, max, isFloat)
+        inputLayout.hint = text
         editText.inputType = if (isFloat)
             android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
         else
@@ -46,7 +51,7 @@ fun Context.showNumberInputDialog(
             val value = inputStr?.toDoubleOrNull()
 
             if (value == null || value < minVal || value > maxVal) {
-                inputLayout.error = formatString(min, max, isFloat)
+                inputLayout.error = text
             } else {
                 inputLayout.error = null
                 dialog.dismiss()
@@ -55,11 +60,4 @@ fun Context.showNumberInputDialog(
         }
     }
     dialog.show()
-}
-
-private fun Context.formatString(min: Number, max: Number, isFloat: Boolean): String {
-    return if (isFloat)
-        getString(R.string.enter_a_value, min.toFloat().toString(), max.toFloat().toString())
-    else
-        getString(R.string.enter_a_value, min.toInt().toString(), max.toInt().toString())
 }

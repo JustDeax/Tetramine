@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.activity.GameActivity
 import com.justdeax.tetramine.databinding.FragmentChooseModeBinding
+import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.util.constant.GameType
+import com.justdeax.tetramine.util.showNumberInputDialog
 
 class ChooseMode : Fragment() {
     private var _binding: FragmentChooseModeBinding? = null
@@ -27,28 +29,34 @@ class ChooseMode : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val game = Intent(requireActivity(), GameActivity::class.java)
+
         binding.apply {
             classic.setOnClickListener {
-                startGame(GameType.CLASSIC)
+                game.putExtra(GameType.TYPE, GameType.CLASSIC)
+                startActivity(game)
             }
             practice.setOnClickListener {
-                startGame(GameType.PRACTICE)
+                game.putExtra(GameType.TYPE, GameType.PRACTICE)
+                requireActivity().showNumberInputDialog(
+                    0,
+                    TetramineGameViewModel.levels.lastIndex,
+                    false,
+                    R.string.enter_a_level
+                ) { result ->
+                    game.putExtra(GameType.LEVEL, result.toInt())
+                    startActivity(game)
+                }
             }
             sprint.setOnClickListener {
-                //startGame(GameType.SPRINT)
+                game.putExtra(GameType.TYPE, GameType.SPRINT)
                 notAvailable(requireContext(), getString(R.string.sprint_mode))
             }
             modern.setOnClickListener {
-                //startGame(GameType.MODERN)
+                game.putExtra(GameType.TYPE, GameType.MODERN)
                 notAvailable(requireContext(), getString(R.string.modern_mode))
             }
         }
-    }
-
-    private fun startGame(type: String) {
-        val game = Intent(requireActivity(), GameActivity::class.java)
-        game.putExtra(GameType.TYPE, type)
-        startActivity(game)
     }
 
     private fun notAvailable(context: Context, mode: String) {

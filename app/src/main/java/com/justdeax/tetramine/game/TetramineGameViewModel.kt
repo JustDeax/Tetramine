@@ -99,9 +99,10 @@ class TetramineGameViewModel(
             changeLevel(0)
     }
 
-    fun chooseStaticLevel(level: Int) {
-        isLevelStatic = true
-        changeLevel(level)
+    fun changeLevel(level: Int) {
+        require(level in levels.indices)
+        _level.value = level
+        dropSpeed = levels[level].speed
     }
 
     fun moveLeft() = gameAction { tetramine.moveLeft() }
@@ -117,12 +118,6 @@ class TetramineGameViewModel(
     fun softDrop() = gameAction { tetramine.softDrop() }
 
     private fun makeGame() = Tetramine(rows, cols, showAchievement, application.isShowGhostPiece) { level.value + 1 }
-
-    private fun changeLevel(level: Int) {
-        require(level in levels.indices)
-        _level.value = level
-        dropSpeed = levels[level].speed
-    }
 
     private fun saveGame() {
         val pieces = tetramine.pieces
