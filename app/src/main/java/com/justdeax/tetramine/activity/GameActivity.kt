@@ -18,6 +18,7 @@ import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
 import com.justdeax.tetramine.PreferenceManager.cellSpacing
 import com.justdeax.tetramine.PreferenceManager.emptyCellOpacity
 import com.justdeax.tetramine.PreferenceManager.is2DirectionRotation
+import com.justdeax.tetramine.PreferenceManager.isMusicEnable
 import com.justdeax.tetramine.PreferenceManager.maxTimeHDT
 import com.justdeax.tetramine.PreferenceManager.minSoftDropsHDT
 import com.justdeax.tetramine.PreferenceManager.xSensitivity
@@ -108,8 +109,7 @@ class GameActivity : AppCompatActivity() {
     private fun setupGame() {
         when (intent.getStringExtra(GameType.TYPE)) {
             GameType.PRACTICE -> {
-                game.isLevelStatic = true
-                game.changeLevel(5)
+                game.chooseStaticLevel(5)
             }
             GameType.GUIDE -> {
                 binding.main.post { showGuide(fullGuide = true) }
@@ -161,7 +161,7 @@ class GameActivity : AppCompatActivity() {
             }
             music.setImageDrawable(
                 AppCompatResources.getDrawable(this@GameActivity,
-                    if (game.musicEnabled) R.drawable.round_music_note_24
+                    if (isMusicEnable) R.drawable.round_music_note_24
                     else R.drawable.round_music_off_24
                 )
             )
@@ -186,9 +186,10 @@ class GameActivity : AppCompatActivity() {
                 showGuide()
             }
             music.setOnClickListener {
+                isMusicEnable = !isMusicEnable
                 music.setImageDrawable(
                     AppCompatResources.getDrawable(this@GameActivity,
-                        if (game.musicToggled) R.drawable.round_music_note_24
+                        if (isMusicEnable) R.drawable.round_music_note_24
                         else R.drawable.round_music_off_24
                     )
                 )

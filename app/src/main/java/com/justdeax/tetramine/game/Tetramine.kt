@@ -54,9 +54,9 @@ class Tetramine(
 
     private fun buildBoard(vararg pieces: Tetromino): Array<IntArray> {
         val boardCopy = board.map { it.clone() }.toTypedArray()
-        applyPieceToBoard(boardCopy, currentPiece)
         for (piece in pieces)
             applyPieceToBoard(boardCopy, piece)
+        applyPieceToBoard(boardCopy, currentPiece)
         return boardCopy
     }
 

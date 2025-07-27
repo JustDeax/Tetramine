@@ -8,6 +8,8 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.google.android.material.color.DynamicColors
+import com.justdeax.tetramine.PreferenceManager.isDynamicColors
 import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityMainBinding
@@ -20,7 +22,15 @@ class MainActivity : AppCompatActivity() {
     private var screenHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (isDynamicColors) {
+            DynamicColors.applyToActivitiesIfAvailable(application)
+            setTheme(R.style.Theme_Dynamic)
+        } else {
+            setTheme(R.style.Theme_Static)
+        }
+
         super.onCreate(savedInstanceState)
+
         if (resources.configuration.smallestScreenWidthDp < 600)
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,9 +44,12 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             main.applySystemInsets()
             main.post {
+                screenHeight = main.height
                 if (isNewInstance) {
-                    screenHeight = main.height
                     animateHeightChange(logoLayout, screenHeight / 3)
+                } else {
+                    logoLayout.layoutParams.height = screenHeight / 3
+                    logoLayout.requestLayout()
                 }
             }
         }

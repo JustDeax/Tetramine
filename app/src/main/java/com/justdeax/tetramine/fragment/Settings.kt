@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.justdeax.tetramine.PreferenceManager.cellCornerRadius
@@ -61,9 +62,16 @@ class Settings : Fragment() {
         with(requireActivity()) {
             binding.theme.setOnCheckedStateChangeListener { _, checkedIds ->
                 isNightThemeMode = checkedIds.firstOrNull() == R.id.dark
+                AppCompatDelegate.setDefaultNightMode(
+                    if (isNightThemeMode)
+                        AppCompatDelegate.MODE_NIGHT_YES
+                    else
+                        AppCompatDelegate.MODE_NIGHT_NO
+                )
             }
             binding.dynamicColors.setOnCheckedChangeListener { _, isChecked ->
                 isDynamicColors = isChecked
+                activity?.recreate()
             }
             binding.showGhostPiece.setOnCheckedChangeListener { _, isChecked ->
                 isShowGhostPiece = isChecked

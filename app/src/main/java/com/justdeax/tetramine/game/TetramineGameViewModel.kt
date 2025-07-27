@@ -14,7 +14,6 @@ import com.justdeax.tetramine.PreferenceManager.totalLines
 import com.justdeax.tetramine.PreferenceManager.totalPieces
 import com.justdeax.tetramine.PreferenceManager.totalScore
 import com.justdeax.tetramine.PreferenceManager.totalTSpins
-import com.justdeax.tetramine.R
 import com.justdeax.tetramine.util.constant.Delay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,8 +33,6 @@ class TetramineGameViewModel(
     private var dropSpeed = levels[0].speed
     private var gameJob: Job? = null
     private val music = MusicManager(application, Delay.LONG)
-    val musicEnabled get() = music.enabled
-    val musicToggled get() = music.toggle()
     var isLevelStatic = false
 
     private val _board = MutableStateFlow(tetramine.getBoardWithPiece())
@@ -56,26 +53,33 @@ class TetramineGameViewModel(
     }
 
     fun resumeGame() {
-        if (!tetramine.isGameOver && gameJob == null)
+        if (!tetramine.isGameOver && gameJob == null) {
             gameJob = viewModelScope.launch(Dispatchers.Default) {
                 while (!tetramine.isGameOver) {
                     delay(dropSpeed)
-                    withContext(Dispatchers.Main) {
-                        tetramine.dropPiece()
-                        _board.value = tetramine.getBoardWithPiece()
-                        if (!isLevelStatic) {
-                            val nextLevel = levels.getOrNull(level.value + 1)
-                            if (nextLevel != null && lines >= nextLevel.lines)
-                                changeLevel(level.value + 1)
-                        }
-                    }
+                    gameTick()
                 }
                 withContext(Dispatchers.Main) {
                     stopGame()
                     saveGame()
                 }
             }
-        music.play(R.raw.tetris_remix)
+            music.play(level.value)
+        }
+    }
+
+    private suspend fun gameTick() {
+        withContext(Dispatchers.Main) {
+            tetramine.dropPiece()
+            _board.value = tetramine.getBoardWithPiece()
+            if (!isLevelStatic) {
+                val nextLevel = levels.getOrNull(level.value + 1)
+                if (nextLevel != null && lines >= nextLevel.lines) {
+                    changeLevel(level.value + 1)
+                    music.play(level.value)
+                }
+            }
+        }
     }
 
     fun stopGame() {
@@ -95,10 +99,9 @@ class TetramineGameViewModel(
             changeLevel(0)
     }
 
-    fun changeLevel(level: Int) {
-        require(level in levels.indices)
-        _level.value = level
-        dropSpeed = levels[level].speed
+    fun chooseStaticLevel(level: Int) {
+        isLevelStatic = true
+        changeLevel(level)
     }
 
     fun moveLeft() = gameAction { tetramine.moveLeft() }
@@ -113,14 +116,13 @@ class TetramineGameViewModel(
 
     fun softDrop() = gameAction { tetramine.softDrop() }
 
-    private fun gameAction(action: () -> Unit) {
-        if (!tetramine.isGameOver) {
-            action()
-            _board.value = tetramine.getBoardWithPiece()
-        }
-    }
-
     private fun makeGame() = Tetramine(rows, cols, showAchievement, application.isShowGhostPiece) { level.value + 1 }
+
+    private fun changeLevel(level: Int) {
+        require(level in levels.indices)
+        _level.value = level
+        dropSpeed = levels[level].speed
+    }
 
     private fun saveGame() {
         val pieces = tetramine.pieces
@@ -139,6 +141,13 @@ class TetramineGameViewModel(
             totalPieces += pieces
             total4Lines += fourLines
             totalTSpins += tSpins
+        }
+    }
+
+    private fun gameAction(action: () -> Unit) {
+        if (!tetramine.isGameOver) {
+            action()
+            _board.value = tetramine.getBoardWithPiece()
         }
     }
 

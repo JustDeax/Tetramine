@@ -4,7 +4,14 @@ import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import com.justdeax.tetramine.PreferenceManager.isMusicEnable
-import kotlinx.coroutines.*
+import com.justdeax.tetramine.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private val appContext = context.applicationContext
@@ -18,21 +25,21 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var loopJob: Job? = null
 
-    var enabled = appContext.isMusicEnable
+    fun play(level: Int) {
+        if (!appContext.isMusicEnable) return
 
-    fun toggle(): Boolean {
-        appContext.isMusicEnable = !enabled
-        enabled = appContext.isMusicEnable
+        val resId = when (level) {
+            in 0..9 -> R.raw.tetris_remix
+            in 10..19 -> R.raw.tetris_remix_t_spin
+            20 -> R.raw.tetris_death_mode
+            else -> 0
+        }
 
-        return enabled
-    }
-
-    fun play(resId: Int = 0) {
-        if (!enabled) return
         when {
             currentPlayer == null -> start(resId)
-            currentPlayer?.isPlaying == false -> resume()
-            currentResId != resId && resId != 0 -> beginCrossfade(resId)
+            currentResId == resId && currentPlayer?.isPlaying == true -> return
+            currentResId != resId -> beginCrossfade(resId)
+            else -> resume()
         }
     }
 
@@ -95,7 +102,16 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
         player?.let {
             while (!it.isPlaying || it.duration <= 0)
                 delay(100)
-            delay((it.duration - crossfadeDuration).coerceAtLeast(0))
+
+            val crossfadeStart = it.duration - crossfadeDuration
+            var remaining = crossfadeStart.coerceAtLeast(0)
+            val step = 200L
+
+            while (remaining > 0) {
+                delay(step)
+                if (it.isPlaying)
+                    remaining -= step
+            }
         }
     }
 
