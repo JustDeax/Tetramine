@@ -73,6 +73,7 @@
     <string name="show_ghost_piece">Показывать тень фигуры</string>
     <string name="set_value">Установить значение</string>
     <string name="enter_a_value">Введите значение (%1$s – %2$s)</string>
+    <string name="enter_a_level">Введите уровень (%1$s – %2$s)</string>
     <string name="reset_settings">Сбросить настройки</string>
 
     <string name="about_1">Это современная мобильная версия Тетриса</string>

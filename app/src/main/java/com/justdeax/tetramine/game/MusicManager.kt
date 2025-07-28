@@ -20,7 +20,7 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private var nextPlayer: ExoPlayer? = null
 
     private var currentResId: Int = 0
-    private val maxVolume = 0.7f
+    private val maxVolume = 0.5f
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     private var loopJob: Job? = null

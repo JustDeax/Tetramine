@@ -152,12 +152,11 @@
             android:id="@+id/reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="32dp"
             android:text="@string/reset_stats"
             android:visibility="gone"
             app:icon="@drawable/round_restart_alt_24"
-            style="@style/MainButton" />
+            style="@style/ResetButton" />
 
     </LinearLayout>
 

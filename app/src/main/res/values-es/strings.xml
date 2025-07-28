@@ -73,6 +73,7 @@ Revisa también temas, sensibilidad, modos y estadísticas"""
     <string name="show_ghost_piece">Mostrar figura fantasma</string>
     <string name="set_value">Establecer valor</string>
     <string name="enter_a_value">Ingresa un valor (%1$s – %2$s)</string>
+    <string name="enter_a_level">Ingresa un nivel (%1$s – %2$s)</string>
     <string name="reset_settings">Restablecer configuración</string>
 
     <string name="about_1">Esta es la versión móvil moderna de Tetris</string>

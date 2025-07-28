@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.activity.GameActivity
 import com.justdeax.tetramine.databinding.FragmentChooseModeBinding
-import com.justdeax.tetramine.game.TetramineGameViewModel
-import com.justdeax.tetramine.util.constant.GameType
-import com.justdeax.tetramine.util.showNumberInputDialog
+import com.justdeax.tetramine.util.constant.GameMode
 
 class ChooseMode : Fragment() {
     private var _binding: FragmentChooseModeBinding? = null
@@ -29,42 +27,42 @@ class ChooseMode : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val game = Intent(requireActivity(), GameActivity::class.java)
-
         binding.apply {
-            classic.setOnClickListener {
-                game.putExtra(GameType.TYPE, GameType.CLASSIC)
-                startActivity(game)
+            classic.setOnClickAndLongListener {
+                startGame(GameMode.CLASSIC)
             }
-            practice.setOnClickListener {
-                game.putExtra(GameType.TYPE, GameType.PRACTICE)
-                requireActivity().showNumberInputDialog(
-                    0,
-                    TetramineGameViewModel.levels.lastIndex,
-                    false,
-                    R.string.enter_a_level
-                ) { result ->
-                    game.putExtra(GameType.LEVEL, result.toInt())
-                    startActivity(game)
-                }
+            practice.setOnClickAndLongListener {
+                startGame(GameMode.PRACTICE)
             }
-            sprint.setOnClickListener {
-                game.putExtra(GameType.TYPE, GameType.SPRINT)
+            sprint.setOnClickAndLongListener {
                 notAvailable(requireContext(), getString(R.string.sprint_mode))
             }
-            modern.setOnClickListener {
-                game.putExtra(GameType.TYPE, GameType.MODERN)
+            modern.setOnClickAndLongListener {
                 notAvailable(requireContext(), getString(R.string.modern_mode))
             }
         }
     }
 
-    private fun notAvailable(context: Context, mode: String) {
+    private fun View.setOnClickAndLongListener(action: () -> Boolean) {
+        setOnClickListener { action() }
+        setOnLongClickListener { action() }
+    }
+
+    private fun startGame(mode: String): Boolean {
+        val intent = Intent(requireActivity(), GameActivity::class.java).apply {
+            putExtra(GameMode.MODE, mode)
+        }
+        startActivity(intent)
+        return true
+    }
+
+    private fun notAvailable(context: Context, mode: String): Boolean {
         Toast.makeText(
             context,
             "$mode not available",
             Toast.LENGTH_SHORT
         ).show()
+        return true
     }
 
     override fun onDestroyView() {

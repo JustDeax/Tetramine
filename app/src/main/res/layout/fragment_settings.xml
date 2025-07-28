@@ -58,15 +58,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dynamic_colors"
-            android:maxWidth="320dp"
             style="@style/SettingsText" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/listDivider" />
+            style="@style/Divider" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/show_ghost_piece"
@@ -135,9 +132,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/listDivider" />
+            style="@style/Divider" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/music"
@@ -149,9 +144,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/listDivider" />
+            style="@style/Divider" />
 
         <TextView
             android:layout_width="match_parent"
@@ -222,11 +215,10 @@
             android:id="@+id/reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="24dp"
             android:text="@string/reset_settings"
             app:icon="@drawable/round_restart_alt_24"
-            style="@style/MainButton" />
+            style="@style/ResetButton" />
 
     </LinearLayout>
 

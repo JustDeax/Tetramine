@@ -15,7 +15,7 @@ import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.ActivityMainBinding
 import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.constant.Delay
-import com.justdeax.tetramine.util.constant.GameType
+import com.justdeax.tetramine.util.constant.GameMode
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkOnFirstLaunch() {
         if (isFirstLaunch) {
             val game = Intent(this, GameActivity::class.java)
-            game.putExtra(GameType.TYPE, GameType.GUIDE)
+            game.putExtra(GameMode.MODE, GameMode.GUIDE)
             startActivity(game)
         }
     }

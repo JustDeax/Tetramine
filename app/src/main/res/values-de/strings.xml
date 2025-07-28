@@ -73,6 +73,7 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
     <string name="show_ghost_piece">Geisterfigur anzeigen</string>
     <string name="set_value">Wert festlegen</string>
     <string name="enter_a_value">Geben Sie einen Wert ein (%1$s – %2$s)</string>
+    <string name="enter_a_level">Geben Sie ein Level ein (%1$s – %2$s)</string>
     <string name="reset_settings">Einstellungen zurücksetzen</string>
 
     <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>

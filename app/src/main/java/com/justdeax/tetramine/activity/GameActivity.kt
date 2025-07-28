@@ -21,6 +21,7 @@ import com.justdeax.tetramine.PreferenceManager.is2DirectionRotation
 import com.justdeax.tetramine.PreferenceManager.isMusicEnable
 import com.justdeax.tetramine.PreferenceManager.maxTimeHDT
 import com.justdeax.tetramine.PreferenceManager.minSoftDropsHDT
+import com.justdeax.tetramine.PreferenceManager.practiceLevel
 import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
@@ -32,11 +33,12 @@ import com.justdeax.tetramine.game.Tetromino
 import com.justdeax.tetramine.popup.AchievementPopup
 import com.justdeax.tetramine.popup.GuidePopup
 import com.justdeax.tetramine.util.applySystemInsets
-import com.justdeax.tetramine.util.constant.GameType
+import com.justdeax.tetramine.util.constant.GameMode
 import com.justdeax.tetramine.util.constant.Text
 import com.justdeax.tetramine.util.getStatistics
 import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.onBackListener
+import com.justdeax.tetramine.util.showNumberInputDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -107,13 +109,26 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setupGame() {
-        when (intent.getStringExtra(GameType.TYPE)) {
-            GameType.PRACTICE -> {
-                game.isLevelStatic = true
-                game.changeLevel(intent.getIntExtra(GameType.LEVEL, 0))
+        when (intent.getStringExtra(GameMode.MODE)) {
+            GameMode.PRACTICE -> {
+                showNumberInputDialog(
+                    getString(R.string.practice_mode),
+                    R.string.enter_a_level,
+                    0,
+                    TetramineGameViewModel.levels.lastIndex,
+                    false,
+                    practiceLevel
+                ) { result ->
+                    practiceLevel = result.toInt()
+                    game.isLevelStatic = true
+                    game.changeLevel(result.toInt())
+                }
             }
-            GameType.GUIDE -> {
-                binding.main.post { showGuide(fullGuide = true) }
+
+            GameMode.GUIDE -> {
+                binding.main.post {
+                    showGuide(fullGuide = true)
+                }
             }
         }
         lifecycleScope.launch {

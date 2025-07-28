@@ -9,10 +9,12 @@ import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.DialogNumberInputBinding
 
 fun Context.showNumberInputDialog(
+    title: String,
+    hintId: Int,
     min: Number,
     max: Number,
     isFloat: Boolean,
-    textId: Int,
+    default: Number = 0,
     onResult: (Number) -> Unit
 ) {
     val binding = DialogNumberInputBinding.inflate(LayoutInflater.from(this))
@@ -20,7 +22,7 @@ fun Context.showNumberInputDialog(
     val editText = binding.editDecimalInput
 
     val dialog = MaterialAlertDialogBuilder(this)
-        .setTitle(getString(R.string.set_value))
+        .setTitle(title)
         .setView(binding.root)
         .setPositiveButton(getString(R.string.confirm), null)
         .setNegativeButton(getString(R.string.cancel), null)
@@ -29,16 +31,21 @@ fun Context.showNumberInputDialog(
     dialog.setOnShowListener {
         val minVal = min.toDouble()
         val maxVal = max.toDouble()
-        val text = if (isFloat)
-            getString(textId, min.toFloat().toString(), max.toFloat().toString())
+        val hint = if (isFloat)
+            getString(hintId, min.toFloat().toString(), max.toFloat().toString())
         else
-            getString(textId, min.toInt().toString(), max.toInt().toString())
+            getString(hintId, min.toInt().toString(), max.toInt().toString())
 
-        inputLayout.hint = text
+        inputLayout.hint = hint
         editText.inputType = if (isFloat)
             android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
         else
             android.text.InputType.TYPE_CLASS_NUMBER
+
+        if (default != 0) {
+            editText.setText((if (isFloat) default.toFloat() else default.toInt()).toString())
+            editText.setSelection(editText.text?.length ?: 0)
+        }
 
         editText.requestFocus()
         editText.postDelayed({
@@ -47,11 +54,9 @@ fun Context.showNumberInputDialog(
         }, 100)
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val inputStr = editText.text?.toString()?.trim()
-            val value = inputStr?.toDoubleOrNull()
-
+            val value = editText.text?.toString()?.trim()?.toDoubleOrNull()
             if (value == null || value < minVal || value > maxVal) {
-                inputLayout.error = text
+                inputLayout.error = hint
             } else {
                 inputLayout.error = null
                 dialog.dismiss()
