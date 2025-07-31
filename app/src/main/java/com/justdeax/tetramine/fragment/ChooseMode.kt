@@ -8,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.justdeax.tetramine.PreferenceManager.practiceLevel
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.activity.GameActivity
 import com.justdeax.tetramine.databinding.FragmentChooseModeBinding
+import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.util.constant.GameMode
+import com.justdeax.tetramine.window.showNumberInputDialog
 
 class ChooseMode : Fragment() {
     private var _binding: FragmentChooseModeBinding? = null
@@ -32,7 +35,19 @@ class ChooseMode : Fragment() {
                 startGame(GameMode.CLASSIC)
             }
             practice.setOnClickAndLongListener {
-                startGame(GameMode.PRACTICE)
+                with(requireActivity()) {
+                    showNumberInputDialog(
+                        getString(R.string.practice_mode),
+                        R.string.enter_a_level,
+                        0,
+                        TetramineGameViewModel.levels.lastIndex,
+                        false,
+                        practiceLevel
+                    ) { result ->
+                        practiceLevel = result.toInt()
+                        startGame(GameMode.PRACTICE)
+                    }
+                }
             }
             sprint.setOnClickAndLongListener {
                 notAvailable(requireContext(), getString(R.string.sprint_mode))
@@ -43,26 +58,20 @@ class ChooseMode : Fragment() {
         }
     }
 
-    private fun View.setOnClickAndLongListener(action: () -> Boolean) {
+    private fun View.setOnClickAndLongListener(action: () -> Unit) {
         setOnClickListener { action() }
-        setOnLongClickListener { action() }
+        setOnLongClickListener { action(); true }
     }
 
-    private fun startGame(mode: String): Boolean {
+    private fun startGame(mode: String) {
         val intent = Intent(requireActivity(), GameActivity::class.java).apply {
             putExtra(GameMode.MODE, mode)
         }
         startActivity(intent)
-        return true
     }
 
-    private fun notAvailable(context: Context, mode: String): Boolean {
-        Toast.makeText(
-            context,
-            "$mode not available",
-            Toast.LENGTH_SHORT
-        ).show()
-        return true
+    private fun notAvailable(context: Context, mode: String) {
+        Toast.makeText(context, "$mode not available", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

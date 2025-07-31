@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Tetramine</string>
-    <string name="version">Versión:</string>
+    <string name="version">Versión: %1$s</string>
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
+    <string name="app_restart">Para aplicar la configuración, reinicia la aplicación.</string>
 
     <string name="play">Jugar</string>
     <string name="resume">Reanudar juego</string>
@@ -71,7 +72,6 @@ Revisa también temas, sensibilidad, modos y estadísticas"""
     <string name="min_soft_drops">Mín soft drops: %1$s</string>
     <string name="bi_direction_rotation">Rotación en 2 direcciones</string>
     <string name="show_ghost_piece">Mostrar figura fantasma</string>
-    <string name="set_value">Establecer valor</string>
     <string name="enter_a_value">Ingresa un valor (%1$s – %2$s)</string>
     <string name="enter_a_level">Ingresa un nivel (%1$s – %2$s)</string>
     <string name="reset_settings">Restablecer configuración</string>
@@ -82,7 +82,7 @@ Revisa también temas, sensibilidad, modos y estadísticas"""
 
 Las mecánicas originales se mantienen aquí, con controles suaves, pero con un diseño moderno y minimalista"""
 </string>
-    <string name="author">Autor:</string>
-    <string name="project">Proyecto:</string>
+    <string name="author">Autor:\n%1$s</string>
+    <string name="project">Proyecto:\n%1$s</string>
 
 </resources>

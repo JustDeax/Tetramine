@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">Tetramine</string>
-    <string name="version">Version:</string>
+    <string name="version">Version: %1$s</string>
     <string name="confirm">Bestätigen</string>
     <string name="cancel">Abbrechen</string>
+    <string name="app_restart">Zum Anwenden der Einstellungen muss die Anwendung neu gestartet werden.</string>
 
     <string name="play">Spielen</string>
     <string name="resume">Spiel fortsetzen</string>
     <string name="statistics">Statistiken</string>
-    <string name="settings">Einstellungen &amp; Aussehen</string>
+    <string name="settings">Einstellungen &amp; Design</string>
     <string name="about">Über</string>
 
-    <string name="view_game">Spiel ansehen</string>
+    <string name="view_game">Spiel anzeigen</string>
     <string name="exit">Beenden</string>
     <string name="restart">Neustart</string>
     <string name="guide">Steuerungshilfe</string>
@@ -28,10 +29,10 @@ Wische schnell gerade nach unten – die Figur fällt sofort nach unten"""
 </string>
     <string name="guide_4">
 """Figur drehen
-Tippe ohne Bewegung auf den Bildschirm, um die Figur zu drehen"""
+Tippe ohne Bewegung auf den Bildschirm – die Figur dreht sich"""
 </string>
     <string name="guide_5">
-"""Viel Spaß beim Spielen!
+"""Viel Spaß!
 Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
 </string>
 
@@ -39,9 +40,9 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
     <string name="classic_mode">Klassischer Modus</string>
     <string name="classic_mode_desc">Klassische Spielversion</string>
     <string name="practice_mode">Übungsmodus</string>
-    <string name="practice_mode_desc">Üben in festem Tempo oder einfach entspannen</string>
-    <string name="sprint_mode">Sprint 40 Linien</string>
-    <string name="sprint_mode_desc">Wie schnell räumst du 40 Linien?</string>
+    <string name="practice_mode_desc">Übe in deinem Tempo oder entspann dich</string>
+    <string name="sprint_mode">Sprint: 40 Linien</string>
+    <string name="sprint_mode_desc">Wie schnell kannst du 40 Linien räumen?</string>
     <string name="modern_mode">Modern mit Einfrieren</string>
     <string name="modern_mode_desc">Modernes Spiel mit zufälliger Geschwindigkeit, Einfrierungen und Explosionen</string>
 
@@ -71,9 +72,8 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
     <string name="min_soft_drops">Min. Soft-Drops: %1$s</string>
     <string name="bi_direction_rotation">Rotation in beide Richtungen</string>
     <string name="show_ghost_piece">Geisterfigur anzeigen</string>
-    <string name="set_value">Wert festlegen</string>
-    <string name="enter_a_value">Geben Sie einen Wert ein (%1$s – %2$s)</string>
-    <string name="enter_a_level">Geben Sie ein Level ein (%1$s – %2$s)</string>
+    <string name="enter_a_value">Wert eingeben (%1$s – %2$s)</string>
+    <string name="enter_a_level">Level eingeben (%1$s – %2$s)</string>
     <string name="reset_settings">Einstellungen zurücksetzen</string>
 
     <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>
@@ -82,7 +82,7 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
 
 Die Originalmechanik bleibt erhalten, mit flüssiger Steuerung und modernem, minimalistischem Design"""
 </string>
-    <string name="author">Autor:</string>
-    <string name="project">Projekt:</string>
+    <string name="author">Autor:\n%1$s</string>
+    <string name="project">Projekt:\n%1$s</string>
 
 </resources>

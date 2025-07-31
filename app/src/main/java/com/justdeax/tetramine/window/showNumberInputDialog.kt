@@ -1,7 +1,8 @@
-package com.justdeax.tetramine.util
+package com.justdeax.tetramine.window
 
 import android.app.AlertDialog
 import android.content.Context
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,7 +21,6 @@ fun Context.showNumberInputDialog(
     val binding = DialogNumberInputBinding.inflate(LayoutInflater.from(this))
     val inputLayout = binding.textInputLayout
     val editText = binding.editDecimalInput
-
     val dialog = MaterialAlertDialogBuilder(this)
         .setTitle(title)
         .setView(binding.root)
@@ -38,9 +38,9 @@ fun Context.showNumberInputDialog(
 
         inputLayout.hint = hint
         editText.inputType = if (isFloat)
-            android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         else
-            android.text.InputType.TYPE_CLASS_NUMBER
+            InputType.TYPE_CLASS_NUMBER
 
         if (default != 0) {
             editText.setText((if (isFloat) default.toFloat() else default.toInt()).toString())

@@ -22,7 +22,7 @@ import com.justdeax.tetramine.PreferenceManager.totalTSpins
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentStatisticsBinding
 import com.justdeax.tetramine.util.constant.Delay
-import com.justdeax.tetramine.util.showResetDialog
+import com.justdeax.tetramine.window.showResetDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

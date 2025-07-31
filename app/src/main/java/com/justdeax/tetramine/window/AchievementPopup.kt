@@ -1,4 +1,4 @@
-package com.justdeax.tetramine.popup
+package com.justdeax.tetramine.window
 
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -42,7 +42,7 @@ class AchievementPopup(
                     binding.textView.text = text.substring(0, i + 1)
                     delay(Delay.TYPING_LETTER)
                 }
-                delay(Delay.ACHIEVEMENT_VISIBLE)
+                delay(Delay.POPUP_VISIBLE)
                 popup.dismiss()
             } finally {
                 popup.dismiss()

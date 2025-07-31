@@ -2,7 +2,7 @@ package com.justdeax.tetramine.util.constant
 
 object Delay {
     const val TYPING_LETTER = 25L
-    const val ACHIEVEMENT_VISIBLE = 1500L
+    const val POPUP_VISIBLE = 1500L
 
     const val ANIMATION_SCORE = 2200L
     const val ANIMATION_LINES = 1000L

@@ -23,9 +23,11 @@ import com.justdeax.tetramine.PreferenceManager.xSensitivity
 import com.justdeax.tetramine.PreferenceManager.ySensitivity
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentSettingsBinding
-import com.justdeax.tetramine.util.showNumberInputDialog
-import com.justdeax.tetramine.util.showResetDialog
+import com.justdeax.tetramine.window.showNumberInputDialog
+import com.justdeax.tetramine.window.showResetDialog
+import com.justdeax.tetramine.window.showSimpleDialog
 import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
 
 class Settings : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -71,7 +73,10 @@ class Settings : Fragment() {
             }
             binding.dynamicColors.setOnCheckedChangeListener { _, isChecked ->
                 isDynamicColors = isChecked
-                activity?.recreate()
+                showSimpleDialog(R.string.app_restart) {
+                    requireActivity().finishAffinity()
+                    exitProcess(0)
+                }
             }
             binding.showGhostPiece.setOnCheckedChangeListener { _, isChecked ->
                 isShowGhostPiece = isChecked

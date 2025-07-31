@@ -1,14 +1,13 @@
-package com.justdeax.tetramine.util
+package com.justdeax.tetramine.window
 
 import android.content.Context
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.R
 
-fun Context.showResetDialog(titleRes: Int, resetAction: () -> Unit) {
+fun Context.showSimpleDialog(titleRes: Int, action: () -> Unit) {
     val dialog = MaterialAlertDialogBuilder(this)
         .setTitle(titleRes)
-        .setPositiveButton(R.string.confirm) { _, _ -> resetAction() }
-        .setNegativeButton(R.string.cancel) { _, _ -> }
+        .setPositiveButton(R.string.confirm) { _, _ -> action}
         .create()
     dialog.show()
 }

@@ -38,10 +38,7 @@ object PreferenceManager {
     private const val KEY_TOTAL_T_SPINS = "TTS"
 
     val Activity.versionName
-        get() = " " + packageManager.getPackageInfo(
-            packageName,
-            0
-        ).versionName!!
+        get() = packageManager.getPackageInfo(packageName, 0).versionName!!
 
     var Context.isFirstLaunch by booleanPreference(KEY_FIRST_LAUNCH, true)
     var Context.practiceLevel by intPreference(KEY_PRACTICE_LEVEL, 0)
@@ -104,24 +101,22 @@ object PreferenceManager {
         object : ReadWriteProperty<Context, Boolean> {
             override fun getValue(thisRef: Context, property: KProperty<*>) =
                 thisRef.preferences.getBoolean(key, defaultValue)
-
             override fun setValue(thisRef: Context, property: KProperty<*>, value: Boolean) =
                 thisRef.preferences.edit { putBoolean(key, value) }
         }
 
-    fun intPreference(key: String, defaultValue: Int) = object : ReadWriteProperty<Context, Int> {
-        override fun getValue(thisRef: Context, property: KProperty<*>) =
-            thisRef.preferences.getInt(key, defaultValue)
-
-        override fun setValue(thisRef: Context, property: KProperty<*>, value: Int) =
-            thisRef.preferences.edit { putInt(key, value) }
-    }
+    fun intPreference(key: String, defaultValue: Int) =
+        object : ReadWriteProperty<Context, Int> {
+            override fun getValue(thisRef: Context, property: KProperty<*>) =
+                thisRef.preferences.getInt(key, defaultValue)
+            override fun setValue(thisRef: Context, property: KProperty<*>, value: Int) =
+                thisRef.preferences.edit { putInt(key, value) }
+        }
 
     fun floatPreference(key: String, defaultValue: Float) =
         object : ReadWriteProperty<Context, Float> {
             override fun getValue(thisRef: Context, property: KProperty<*>) =
                 thisRef.preferences.getFloat(key, defaultValue)
-
             override fun setValue(thisRef: Context, property: KProperty<*>, value: Float) =
                 thisRef.preferences.edit { putFloat(key, value) }
         }

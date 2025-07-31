@@ -28,7 +28,7 @@ class TetramineGameViewModel(
     private val rows: Int,
     private val cols: Int,
     private val showAchievement: (String) -> Unit
-) : AndroidViewModel(application) {
+) : AndroidViewModel(application), GameController {
     private var tetramine = makeGame()
     private var dropSpeed = levels[0].speed
     private var gameJob: Job? = null
@@ -41,7 +41,7 @@ class TetramineGameViewModel(
     private val _level = MutableStateFlow(0)
     val level = _level.asStateFlow()
 
-    val currentPiece get() = tetramine.currentPiece
+    override val currentPiece get() = tetramine.currentPiece
     val previousPiece get() = tetramine.previousPiece
     val isGameOver get() = tetramine.isGameOver
     val score get() = tetramine.score
@@ -105,21 +105,23 @@ class TetramineGameViewModel(
         dropSpeed = levels[level].speed
     }
 
-    fun moveLeft() = gameAction { tetramine.moveLeft() }
+    override fun moveLeft() = gameAction { tetramine.moveLeft() }
 
-    fun moveRight() = gameAction { tetramine.moveRight() }
+    override fun moveRight() = gameAction { tetramine.moveRight() }
 
-    fun rotateLeft() = gameAction { tetramine.rotateLeft() }
+    override fun rotateLeft() = gameAction { tetramine.rotateLeft() }
 
-    fun rotateRight() = gameAction { tetramine.rotateRight() }
+    override fun rotateRight() = gameAction { tetramine.rotateRight() }
 
-    fun hardDrop() = gameAction { tetramine.hardDrop() }
+    override fun hardDrop() = gameAction { tetramine.hardDrop() }
 
-    fun softDrop() = gameAction { tetramine.softDrop() }
+    override fun softDrop() = gameAction { tetramine.softDrop() }
 
     private fun makeGame() = Tetramine(rows, cols, showAchievement, application.isShowGhostPiece) { level.value + 1 }
 
     private fun saveGame() {
+        if (isLevelStatic) return
+
         val pieces = tetramine.pieces
         val fourLines = tetramine.fourLines
         val tSpins = tetramine.tSpins

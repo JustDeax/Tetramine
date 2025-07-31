@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Tetramine</string>
-    <string name="version">Версия:</string>
+    <string name="version">Версия: %1$s</string>
     <string name="confirm">Подтвердить</string>
     <string name="cancel">Отмена</string>
+    <string name="app_restart">Для применения настроек требуется перезапуск приложения.</string>
 
     <string name="play">Играть</string>
     <string name="resume">Продолжить игру</string>
@@ -20,7 +21,7 @@
 </string>
     <string name="guide_2">
 """Движение вниз
-Проведите пальцем вниз — фигура начнет падать быстрее"""
+Проведите пальцем вниз — фигура начнёт падать быстрее"""
 </string>
     <string name="guide_3">
 """Жёсткое падение
@@ -28,20 +29,20 @@
 </string>
     <string name="guide_4">
 """Поворот фигуры
-Просто нажмите на экран, не двигая палец — фигура повернётся"""
+Просто коснитесь экрана без движения — фигура повернётся"""
 </string>
     <string name="guide_5">
 """Удачной игры!
-Также проверьте настройки темы, смена чувствительности управления, режимы и статистики"""
+Также проверьте настройки темы, смена чувствительности управления, режимы и статистику"""
 </string>
 
     <string name="choose_mode">Выберите режим</string>
-    <string name="classic_mode">Классическая Игра</string>
+    <string name="classic_mode">Классическая игра</string>
     <string name="classic_mode_desc">Классическая версия игры</string>
     <string name="practice_mode">Режим Практики</string>
-    <string name="practice_mode_desc">Отрабатывайте в заданном темпе или просто расслабьтесь</string>
-    <string name="sprint_mode">Спринт 40 линий</string>
-    <string name="sprint_mode_desc">Насколько быстро вы очистите 40 линий</string>
+    <string name="practice_mode_desc">Играйте в заданном темпе или расслабьтесь</string>
+    <string name="sprint_mode">Спринт: 40 линий</string>
+    <string name="sprint_mode_desc">Как быстро вы очистите 40 линий?</string>
     <string name="modern_mode">Современный с заморозкой</string>
     <string name="modern_mode_desc">Современная игра со случайной скоростью, заморозками и взрывами</string>
 
@@ -71,7 +72,6 @@
     <string name="min_soft_drops">Мин. мягких падений: %1$s</string>
     <string name="bi_direction_rotation">Поворот в 2 стороны</string>
     <string name="show_ghost_piece">Показывать тень фигуры</string>
-    <string name="set_value">Установить значение</string>
     <string name="enter_a_value">Введите значение (%1$s – %2$s)</string>
     <string name="enter_a_level">Введите уровень (%1$s – %2$s)</string>
     <string name="reset_settings">Сбросить настройки</string>
@@ -82,7 +82,7 @@
 
 Оригинальная механика сохранена, управление плавное, а дизайн — современный и минималистичный"""
 </string>
-    <string name="author">Автор:</string>
-    <string name="project">Проект:</string>
+    <string name="author">Автор:\n%1$s</string>
+    <string name="project">Проект:\n%1$s</string>
 
 </resources>

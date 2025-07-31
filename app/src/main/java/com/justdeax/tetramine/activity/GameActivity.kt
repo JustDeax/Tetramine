@@ -1,8 +1,8 @@
 package com.justdeax.tetramine.activity
 
 import android.content.pm.ActivityInfo
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -30,18 +30,16 @@ import com.justdeax.tetramine.databinding.DialogGameBinding
 import com.justdeax.tetramine.game.TetramineGameFactory
 import com.justdeax.tetramine.game.TetramineGameViewModel
 import com.justdeax.tetramine.game.Tetromino
-import com.justdeax.tetramine.popup.AchievementPopup
-import com.justdeax.tetramine.popup.GuidePopup
 import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.constant.GameMode
 import com.justdeax.tetramine.util.constant.Text
 import com.justdeax.tetramine.util.getStatistics
 import com.justdeax.tetramine.util.getTetrominoType
 import com.justdeax.tetramine.util.onBackListener
-import com.justdeax.tetramine.util.showNumberInputDialog
+import com.justdeax.tetramine.window.AchievementPopup
+import com.justdeax.tetramine.window.GuidePopup
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
@@ -63,9 +61,6 @@ class GameActivity : AppCompatActivity() {
     private var boardColor = intArrayOf()
     private var previewColor = intArrayOf()
 
-    private var hardDropCount = 0
-    private var rotateCount = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (resources.configuration.smallestScreenWidthDp < 600)
@@ -74,19 +69,19 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
         setupViews()
-        setupGame()
+        setupGame(savedInstanceState == null)
         onBackListener { showGameDialog() }
     }
 
     private fun setupViews() {
         boardColor = intArrayOf(
-            if (emptyCellOpacity == 1f)
-                getColor(R.color.empty)
-            else
-                ColorUtils.setAlphaComponent(
-                    getColor(R.color.empty),
-                    (255 * emptyCellOpacity).toInt()
+            when (emptyCellOpacity) {
+                1f -> getColor(R.color.empty)
+                0f -> getColor(R.color.invisible)
+                else -> ColorUtils.setAlphaComponent(
+                    getColor(R.color.empty), (255 * emptyCellOpacity).toInt()
                 )
+            }
         )
         previewColor = intArrayOf(getColor(R.color.invisible))
         colors = intArrayOf(
@@ -103,50 +98,43 @@ class GameActivity : AppCompatActivity() {
             main.applySystemInsets()
             board.setStyle(boardColor + colors, cellSpacing, cellCornerRadius)
             preview.setStyle(previewColor + colors, cellSpacing, cellCornerRadius)
-            board.setControls(xSensitivity, ySensitivity, is2DirectionRotation, maxTimeHDT, minSoftDropsHDT)
+            board.setControls(
+                game, xSensitivity, ySensitivity, is2DirectionRotation, maxTimeHDT, minSoftDropsHDT
+            )
             pause.setOnClickListener { showGameDialog() }
         }
     }
 
-    private fun setupGame() {
-        when (intent.getStringExtra(GameMode.MODE)) {
-            GameMode.PRACTICE -> {
-                showNumberInputDialog(
-                    getString(R.string.practice_mode),
-                    R.string.enter_a_level,
-                    0,
-                    TetramineGameViewModel.levels.lastIndex,
-                    false,
-                    practiceLevel
-                ) { result ->
-                    practiceLevel = result.toInt()
+    private fun setupGame(isNewInstance: Boolean) {
+        if (isNewInstance) {
+            when (intent.getStringExtra(GameMode.MODE)) {
+                GameMode.PRACTICE -> {
                     game.isLevelStatic = true
-                    game.changeLevel(result.toInt())
+                    game.changeLevel(practiceLevel)
                 }
-            }
-
-            GameMode.GUIDE -> {
-                binding.main.post {
-                    showGuide(fullGuide = true)
-                }
-            }
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    game.board.collectLatest { newBoard ->
-                        binding.board.update(newBoard)
-                        binding.preview.update(game.previousPiece.shape)
-                        binding.statistics.text = getStatistics(game.lines, game.score)
-                        if (game.isGameOver)
-                            showGameDialog()
+                GameMode.GUIDE -> {
+                    binding.main.post {
+                        showGuide(fullGuide = true)
                     }
                 }
-                launch {
-                    game.level.collectLatest { newLevel ->
-                        binding.pause.text =
-                            if (newLevel == TetramineGameViewModel.levels.lastIndex) Text.SIGMA
-                            else newLevel.toString()
+            }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        game.board.collectLatest { newBoard ->
+                            binding.board.update(newBoard)
+                            binding.preview.update(game.previousPiece.shape)
+                            binding.statistics.text = getStatistics(game.lines, game.score)
+                            if (game.isGameOver)
+                                showGameDialog()
+                        }
+                    }
+                    launch {
+                        game.level.collectLatest { newLevel ->
+                            binding.pause.text =
+                                if (newLevel == TetramineGameViewModel.levels.lastIndex) Text.SIGMA
+                                else newLevel.toString()
+                        }
                     }
                 }
             }
@@ -175,15 +163,10 @@ class GameActivity : AppCompatActivity() {
                     Tetromino.TETROMINO_SHAPES[getTetrominoType(game.currentPiece.shape) - 1]
                 )
             }
-            music.setImageDrawable(
-                AppCompatResources.getDrawable(this@GameActivity,
-                    if (isMusicEnable) R.drawable.round_music_note_24
-                    else R.drawable.round_music_off_24
-                )
-            )
+            music.setImageDrawable(getMusicImage())
             statistics.text = getStatistics(game.lines, game.score, game.level.value)
-            dialogGame.show()
         }
+        dialogGame.show()
     }
 
     private fun initGameDialog() {
@@ -199,16 +182,11 @@ class GameActivity : AppCompatActivity() {
             }
             guide.setOnClickListener {
                 dialogGame.dismiss()
-                showGuide()
+                showGuide(fullGuide = false)
             }
             music.setOnClickListener {
                 isMusicEnable = !isMusicEnable
-                music.setImageDrawable(
-                    AppCompatResources.getDrawable(this@GameActivity,
-                        if (isMusicEnable) R.drawable.round_music_note_24
-                        else R.drawable.round_music_off_24
-                    )
-                )
+                music.setImageDrawable(getMusicImage())
             }
             exit.setOnClickListener {
                 dialogGame.setOnDismissListener {  }
@@ -224,91 +202,23 @@ class GameActivity : AppCompatActivity() {
         dialogGame.setOnCancelListener { finish() }
     }
 
-    private fun showGuide(fullGuide: Boolean = false) {
+    private fun getMusicImage(): Drawable? = AppCompatResources.getDrawable(this@GameActivity,
+            if (isMusicEnable) R.drawable.round_music_note_24
+            else R.drawable.round_music_off_24
+        )
+
+    private fun showGuide(fullGuide: Boolean) {
         if (game.isGameOver || game.score < 200)
             game.startGame()
         guidePopup.show(
             { game.currentPiece.col },
             { game.score },
-            { hardDropCount },
-            { rotateCount },
+            { binding.board.hardDropCount },
+            { binding.board.rotateCount },
             { game.stopGame() },
             { game.resumeGame() },
             fullGuide
         )
-    }
-
-    private fun View.setControls(
-        xSensitivity: Float,
-        ySensitivity: Float,
-        is2DirectionRotation: Boolean,
-        maxTimeHDT: Int,
-        minSoftDropsHDT: Int,
-    ) {
-        var touchX = 0f
-        var touchY = 0f
-        var xMotion = 0
-        var yMotion = 0
-        var motionTime = 0L
-
-        setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    touchX = event.x
-                    touchY = event.y
-                    motionTime = System.currentTimeMillis()
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val diffX = event.x - touchX
-                    val diffY = event.y - touchY
-                    val thresholdX = width / cols * xSensitivity
-                    val thresholdY = height / rows * ySensitivity
-
-                    if (abs(diffX) > thresholdX && abs(diffY) < thresholdY) {
-                        if (diffX > 0)
-                            game.moveRight()
-                        else
-                            game.moveLeft()
-                        xMotion++
-                        touchY = event.y
-                        touchX = event.x
-                    } else if (diffY > thresholdY) {
-                        if (game.currentPiece.row > 0) {
-                            game.softDrop()
-                            yMotion++
-                        }
-                        touchY = event.y
-                    }
-                }
-                MotionEvent.ACTION_UP -> {
-                    val diffTime = System.currentTimeMillis() - motionTime
-                    if (xMotion == 0 && yMotion >= minSoftDropsHDT && diffTime < maxTimeHDT && game.currentPiece.row > rows * 0.15) {
-                        game.hardDrop()
-                        hardDropCount++
-                    } else if (xMotion == 0 && yMotion == 0) {
-                        rotateCount++
-
-                        if (is2DirectionRotation) {
-                            val pieceCol = game.currentPiece.col
-                            val pieceWidth = game.currentPiece.shape[0].size
-                            val centerCol =
-                                pieceCol + pieceWidth / 2 - if (pieceCol + pieceWidth == cols) 1 else 0
-
-                            val colTouched = touchX / width * cols
-                            if (colTouched < centerCol)
-                                game.rotateLeft()
-                            else game.rotateRight()
-                        } else { game.rotateRight() }
-                    }
-
-                    touchX = 0f
-                    touchY = 0f
-                    xMotion = 0
-                    yMotion = 0
-                }
-            }
-            true
-        }
     }
 
     override fun onPause() {
