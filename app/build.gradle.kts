@@ -1,29 +1,31 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
     namespace = "com.justdeax.tetramine"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.justdeax.tetramine"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1110
-        versionName = "1.0"
+        targetSdk = 37
+        versionCode = 10100
+        versionName = "1.1"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            optimization {
+                enable = false
+            }
             isMinifyEnabled = true
             isShrinkResources = true
-            isDebuggable = false
-            isCrunchPngs = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "src/main/keepRules/rules.keep"
             )
         }
     }
@@ -34,12 +36,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
-}
-
-kotlin {
-    jvmToolchain(11)
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 }
 

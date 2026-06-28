@@ -1,7 +1,6 @@
 package com.justdeax.tetramine.game
 
 class Tetromino(val shape: Array<IntArray>, var row: Int = 0, var col: Int = 0) {
-
     fun copy() = Tetromino(
         shape.map { row ->
             row.map { cell ->

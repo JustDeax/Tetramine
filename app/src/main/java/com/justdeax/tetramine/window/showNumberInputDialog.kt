@@ -1,10 +1,13 @@
 package com.justdeax.tetramine.window
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.DialogNumberInputBinding
@@ -47,10 +50,10 @@ fun Context.showNumberInputDialog(
             editText.setSelection(editText.text?.length ?: 0)
         }
 
-        editText.requestFocus()
         editText.postDelayed({
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+            val window = (this as? Activity)?.window
+            if (window != null)
+                WindowCompat.getInsetsController(window, editText).show(WindowInsetsCompat.Type.ime())
         }, 100)
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {

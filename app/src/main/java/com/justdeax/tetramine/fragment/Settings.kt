@@ -81,13 +81,13 @@ class Settings : Fragment() {
             binding.showGhostPiece.setOnCheckedChangeListener { _, isChecked ->
                 isShowGhostPiece = isChecked
             }
-            binding.emptyCellOpacity.addOnChangeListener { slider, value, fromUser ->
+            binding.emptyCellOpacity.addOnChangeListener { _, value, fromUser ->
                 if (fromUser) emptyCellOpacity = value
             }
-            binding.cellCornerRadius.addOnChangeListener { slider, value, fromUser ->
+            binding.cellCornerRadius.addOnChangeListener { _, value, fromUser ->
                 if (fromUser) cellCornerRadius = value
             }
-            binding.cellSpacing.addOnChangeListener { slider, value, fromUser ->
+            binding.cellSpacing.addOnChangeListener { _, value, fromUser ->
                 if (fromUser) cellSpacing = value
             }
             binding.music.setOnCheckedChangeListener { _, isChecked ->
@@ -142,7 +142,7 @@ class Settings : Fragment() {
                 isFloat,
             ) { result ->
                 onResult(result)
-                text = getString(textId, result.toString())
+                text = formatString(textId, result)
             }
         }
     }

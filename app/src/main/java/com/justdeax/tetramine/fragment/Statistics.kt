@@ -25,6 +25,7 @@ import com.justdeax.tetramine.util.constant.Delay
 import com.justdeax.tetramine.window.showResetDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class Statistics : Fragment() {
     private var _binding: FragmentStatisticsBinding? = null
@@ -61,7 +62,7 @@ class Statistics : Fragment() {
                 }
             }
             lifecycleScope.launch {
-                delay(Delay.MEDIUM * 2)
+                delay((Delay.MEDIUM * 2).milliseconds)
                 reset.visibility = View.VISIBLE
             }
         }
@@ -76,15 +77,15 @@ class Statistics : Fragment() {
         }
 
         binding.apply {
-            animateInteger(scoreNumber, score, Delay.ANIMATION_SCORE)
-            animateInteger(linesNumber, lines, Delay.ANIMATION_LINES)
-            animateInteger(piecesNumber, pieces, Delay.ANIMATION_PIECES)
-            animateInteger(fourLinesNumber, fourLines, Delay.ANIMATION_FOUR_LINES)
-            animateInteger(tSpinsNumber, tSpins, Delay.ANIMATION_T_SPINS)
+            animateInt(scoreNumber, score, Delay.ANIMATION_SCORE)
+            animateInt(linesNumber, lines, Delay.ANIMATION_LINES)
+            animateInt(piecesNumber, pieces, Delay.ANIMATION_PIECES)
+            animateInt(fourLinesNumber, fourLines, Delay.ANIMATION_FOUR_LINES)
+            animateInt(tSpinsNumber, tSpins, Delay.ANIMATION_T_SPINS)
         }
     }
 
-    private fun animateInteger(view: TextView, newInt: Int, duration: Long) {
+    private fun animateInt(view: TextView, newInt: Int, duration: Long) {
         val animator = ValueAnimator.ofInt(0, newInt)
         animator.addUpdateListener { valueAnimator ->
             val updatedInt = valueAnimator.animatedValue as Int

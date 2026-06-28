@@ -15,11 +15,12 @@ class App : Application() {
             else
                 AppCompatDelegate.MODE_NIGHT_NO
         )
-        if (isDynamicColors) {
-            DynamicColors.applyToActivitiesIfAvailable(this)
-            setTheme(R.style.Theme_Dynamic)
-        } else {
-            setTheme(R.style.Theme_Static)
-        }
+//      setTheme(R.style.Theme_ExtraDark)
+//        if (isDynamicColors) {
+//            DynamicColors.applyToActivitiesIfAvailable(this)
+//            setTheme(R.style.Theme_Dynamic)
+//        } else {
+//            setTheme(R.style.Theme_Static)
+//        }
     }
 }

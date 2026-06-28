@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 
 class TetramineGameViewModel(
     private val application: Application,
@@ -56,7 +57,7 @@ class TetramineGameViewModel(
         if (!tetramine.isGameOver && gameJob == null) {
             gameJob = viewModelScope.launch(Dispatchers.Default) {
                 while (!tetramine.isGameOver) {
-                    delay(dropSpeed)
+                    delay(dropSpeed.milliseconds)
                     gameTick()
                 }
                 withContext(Dispatchers.Main) {
@@ -151,7 +152,6 @@ class TetramineGameViewModel(
     override fun onCleared() {
         saveGame()
         music.release()
-        super.onCleared()
     }
 
     companion object {

@@ -11,6 +11,7 @@ import com.justdeax.tetramine.util.constant.Delay
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class AchievementPopup(
     private val anchorView: View,
@@ -40,9 +41,9 @@ class AchievementPopup(
                 popup.showAtLocation(anchorView, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 0)
                 repeat(text.length) { i ->
                     binding.textView.text = text.substring(0, i + 1)
-                    delay(Delay.TYPING_LETTER)
+                    delay(Delay.TYPING_LETTER.milliseconds)
                 }
-                delay(Delay.POPUP_VISIBLE)
+                delay(Delay.POPUP_VISIBLE.milliseconds)
                 popup.dismiss()
             } finally {
                 popup.dismiss()

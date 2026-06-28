@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:outlineProvider="none"
             android:text="@string/play"
             app:icon="@drawable/round_play_arrow_24" />
 
@@ -25,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
+            android:outlineProvider="none"
             android:text="@string/resume"
             android:enabled="false"
             app:icon="@drawable/round_pause_24" />
@@ -34,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:outlineProvider="none"
             android:text="@string/statistics"
             app:icon="@drawable/round_bar_chart_24" />
 
@@ -42,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:outlineProvider="none"
             android:text="@string/settings"
             app:icon="@drawable/round_settings_24" />
 
@@ -51,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:outlineProvider="none"
             android:text="@string/about"
             app:icon="@drawable/round_star_24" />
 

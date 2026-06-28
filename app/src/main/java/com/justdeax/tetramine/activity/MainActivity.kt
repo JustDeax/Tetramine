@@ -1,12 +1,12 @@
 package com.justdeax.tetramine.activity
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.justdeax.tetramine.PreferenceManager.isFirstLaunch
 import com.justdeax.tetramine.R
@@ -15,12 +15,13 @@ import com.justdeax.tetramine.util.applySystemInsets
 import com.justdeax.tetramine.util.constant.Delay
 import com.justdeax.tetramine.util.constant.GameMode
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private var screenHeight = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        @SuppressLint("SourceLockedOrientationActivity")
         if (resources.configuration.smallestScreenWidthDp < 600)
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = ActivityMainBinding.inflate(layoutInflater)

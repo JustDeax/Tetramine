@@ -15,6 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.time.Duration.Companion.milliseconds
 
 class GuidePopup(
     private val anchorView: View,
@@ -52,7 +53,8 @@ class GuidePopup(
         job = lifecycleScope.launch {
             try {
                 if (fullGuide) {
-                    delay(Delay.SHORT)
+                    delay(Delay.SHORT.milliseconds)
+                    context.isFirstLaunch = false
                     gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_1, ok = true)
@@ -88,7 +90,6 @@ class GuidePopup(
                 showGuide({ rotateCount() > rotateStart }, R.string.guide_4)
 
                 if (fullGuide) {
-                    context.isFirstLaunch = false
                     gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.guide_5, ok = true)
@@ -110,9 +111,9 @@ class GuidePopup(
             context.getString(textRes)
 
         while (!conditions())
-            delay(Delay.MINI)
-        delay(Delay.MINI)
+            delay(Delay.MINI.milliseconds)
+        delay(Delay.MINI.milliseconds)
         popup.dismiss()
-        delay(Delay.MEDIUM)
+        delay(Delay.MEDIUM.milliseconds)
     }
 }

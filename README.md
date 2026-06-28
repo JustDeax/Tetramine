@@ -11,7 +11,7 @@
 
 <div align="center">
     <div style="display: flex; flex-direction: row;">
-        <a href='https://github.com/JustDeax/Tetramine/releases'><img alt='Get it on Github' src='https://i.ibb.co.com/16WW8Rm/get-it-on-github.png' style="width:200px"></a>
+        <a href='https://github.com/JustDeax/Tetramine/releases/latest'><img alt='Get it on Github' src='https://i.ibb.co.com/16WW8Rm/get-it-on-github.png' style="width:200px"></a>
     </div>
 </div>
 
@@ -21,27 +21,22 @@ Classic arcade puzzle game where you have to stack falling tetromino — 4-block
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 
 ```
-This is a semi-open (90%+ open) source project at the moment
-- My position: I'm not ready to post the whole code of this game at the moment.
-- You can also send bugs, wishes, improvements through “issues”.
+This application is now fully open source. The entire history is available in git.
 ```
 
 ### Feature
-- [ ] Modern Material Design 3 And ViewModel
-- [ ] Comfortable control setup
-- [ ] Fair distribution of "7-bag" figures
-- [ ] Hard drop and soft drop
-- [ ] Cool Rotation System [What is](#cool-rotation-system)
-- [ ] Advanced Scoring System [What is](#advanced-scoring-system)
-- [ ] Ghost figure
-- [ ] Powerful action notification [What is](#powerful-action-notification)
-- [ ] Dynamic Theme support
-- [ ] Detailed statistics
-- [ ] Full customization of controls and appearance
-
-### TODO
-- [ ] Multiple game modes
-- [ ] Save game
+- [x] Modern Material Design 3 And ViewModel
+- [x] Comfortable control setup
+- [x] New modes
+- [x] Fair distribution of "7-bag" figures
+- [x] Hard drop and soft drop
+- [x] Cool Rotation System [What is](#cool-rotation-system)
+- [x] Advanced Scoring System [What is](#advanced-scoring-system)
+- [x] Ghost figure
+- [x] Powerful action notification [What is](#powerful-action-notification)
+- [x] Dynamic and AMOLED Theme support
+- [x] Detailed statistics
+- [x] Full customization of controls and appearance
 
 ### Cool Rotation System
 When a piece can't rotate in place, it tries to shift sideways to complete the rotation.
@@ -59,7 +54,7 @@ val kickOffsets = listOf(
             2 to -1
  )
 ```
- 
+
 ### Advanced Scoring System
 Earn more points by clearing multiple lines at once or performing complex moves
 ```

@@ -3,9 +3,33 @@
 
     <style name="Theme.Dynamic" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar" />
     <style name="Theme.Static" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.ExtraDark" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+
+        <item name="colorSurface">@color/black_surface</item>
+        <item name="colorSurfaceVariant">@color/black_surface</item>
+
+        <item name="colorPrimary">@color/black_surface</item>
+        <item name="colorSecondary">@color/black_surface</item>
+        <item name="colorPrimaryContainer">@color/black_surface</item>
+        <item name="colorSecondaryContainer">@color/black_primary</item>
+
+        <item name="colorOnPrimary">@color/black_primary</item>
+        <item name="colorOnPrimaryContainer">@color/black_primary</item>
+        <item name="colorOnSecondary">@color/black_primary</item>
+        <item name="colorOnSecondaryContainer">@color/black_primary</item>
+
+        <item name="colorOnBackground">@color/black_primary</item>
+        <item name="colorOnSurface">@color/black_primary</item>
+        <item name="colorOnSurfaceVariant">@color/black_primary</item>
+
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
     <style name="Theme.Tetramine" parent="Theme.Static" />
 
-    <style name="MainMenuCard" parent="Widget.MaterialComponents.CardView">
+    <style name="MainMenuCard" parent="Widget.Material3.CardView.Elevated">
         <item name="android:layout_margin">8dp</item>
         <item name="contentPadding">20dp</item>
         <item name="strokeWidth">0.35dp</item>
@@ -13,7 +37,7 @@
         <item name="cardCornerRadius">28dp</item>
     </style>
 
-    <style name="ButtonCard" parent="Widget.MaterialComponents.CardView">
+    <style name="ButtonCard" parent="Widget.Material3.CardView.Elevated">
         <item name="android:layout_margin">14dp</item>
         <item name="cardBackgroundColor">?attr/colorPrimaryContainer</item>
         <item name="cardCornerRadius">21dp</item>
@@ -127,14 +151,6 @@
         <item name="singleSelection">true</item>
     </style>
 
-    <style name="Chip" parent="Widget.MaterialComponents.Chip.Choice" />
-
-    <style name="LeftChip" parent="Chip">
-        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.Material3.Corner.Left</item>
-    </style>
-
-    <style name="RightChip" parent="Chip">
-        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.Material3.Corner.Right</item>
-    </style>
+    <style name="Chip" parent="Widget.Material3.Chip.Filter.Elevated" />
 
 </resources>

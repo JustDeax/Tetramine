@@ -12,6 +12,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private val appContext = context.applicationContext
@@ -85,7 +86,7 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
                 val progress = i.toFloat() / steps
                 currentPlayer?.volume = maxVolume * (1f - progress)
                 nextPlayer?.volume = maxVolume * progress
-                delay(delayStep)
+                delay(delayStep.milliseconds)
             }
 
             currentPlayer?.release()
@@ -101,14 +102,14 @@ class MusicManager(context: Context, private val crossfadeDuration: Long) {
     private suspend fun delayUntilCrossfade(player: ExoPlayer?) {
         player?.let {
             while (!it.isPlaying || it.duration <= 0)
-                delay(100)
+                delay(100.milliseconds)
 
             val crossfadeStart = it.duration - crossfadeDuration
             var remaining = crossfadeStart.coerceAtLeast(0)
             val step = 200L
 
             while (remaining > 0) {
-                delay(step)
+                delay(step.milliseconds)
                 if (it.isPlaying)
                     remaining -= step
             }

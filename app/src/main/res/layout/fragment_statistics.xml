@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingTop="8dp"
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="8dp"
             app:checkedChip="@id/total"
             style="@style/ChipGroup">
 
@@ -25,16 +27,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/page_total"
-                android:textSize="24sp"
-                style="@style/LeftChip" />
+                android:textSize="28sp"
+                style="@style/Chip" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/best"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/page_best"
-                android:textSize="24sp"
-                style="@style/RightChip" />
+                android:textSize="28sp"
+                style="@style/Chip" />
 
         </com.google.android.material.chip.ChipGroup>
 
