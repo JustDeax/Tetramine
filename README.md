@@ -43,15 +43,15 @@ When a piece can't rotate in place, it tries to shift sideways to complete the r
 A list of offsets is used to find a valid position.
 ```kotlin
 val kickOffsets = listOf(
-            0 to 0,
-            0 to 1,
-            0 to -1,
-            1 to 0,
-            1 to 1,
-            1 to -1,
-            2 to 0,
-            2 to 1,
-            2 to -1
+    0 to 0,
+    0 to -1,
+    0 to 1,
+    0 to -2,
+    0 to 2,
+    -1 to 0,
+    -1 to -1,
+    -1 to 1,
+    1 to 0
  )
 ```
 
