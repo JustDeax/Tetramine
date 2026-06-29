@@ -1,3 +1,17 @@
 Klassisches Arcade-Puzzle-Spiel: Staple fallende Tetrominos – Figuren aus 4 Blöcken – und bilde vollständige Linien, um Punkte zu sammeln
 
 Die Originalmechanik bleibt erhalten, mit flüssiger Steuerung und modernem, minimalistischem Design
+
+Features:
+★ Modernes Material Design 3 und ViewModel
+★ Komfortable Steuerungseinrichtung
+★ Faire Verteilung der „7-Bag“-Figuren
+★ Hard Drop und Soft Drop
+★ Cooles Rotationssystem [Was ist das?](#cool-rotation-system)
+★ Erweitertes Punktesystem [Was ist das?](#advanced-scoring-system)
+★ Geist-Figur (Ghost)
+★ Vollständige Anpassung von Steuerung und Aussehen
+★ Unterstützung für dynamische Themen und AMOLED-Themen
+★ Detaillierte Statistiken
+★ Leistungsstarke Aktionsbenachrichtigungen [Was ist das?](#powerful-action-notification)
+★ Neuer Modus

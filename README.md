@@ -28,23 +28,23 @@
 Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
 
-```
-This application is now fully open source. The entire history is available in git.
-```
-
 ### Feature
 - [x] Modern Material Design 3 And ViewModel
 - [x] Comfortable control setup
-- [x] New modes
 - [x] Fair distribution of "7-bag" figures
 - [x] Hard drop and soft drop
 - [x] Cool Rotation System [What is](#cool-rotation-system)
 - [x] Advanced Scoring System [What is](#advanced-scoring-system)
 - [x] Ghost figure
-- [x] Powerful action notification [What is](#powerful-action-notification)
+- [x] Full customization of controls and appearance
 - [x] Dynamic and AMOLED Theme support
 - [x] Detailed statistics
-- [x] Full customization of controls and appearance
+- [x] Powerful action notification [What is](#powerful-action-notification)
+- [x] New modes
+
+```
+This application is now fully open source. The entire history is available in git.
+```
 
 ### Cool Rotation System
 When a piece can't rotate in place, it tries to shift sideways to complete the rotation.

@@ -1,3 +1,17 @@
 Juego de rompecabezas arcade clásico donde debes apilar tetrominós que caen — piezas de 4 bloques, crear líneas sólidas y jugar por puntuación
 
 Las mecánicas originales se mantienen aquí, con controles suaves, pero con un diseño moderno y minimalista
+
+Características:
+★ Diseño moderno Material 3 y ViewModel
+★ Configuración cómoda de los controles
+★ Distribución justa de las piezas "7-bag"
+★ Hard drop y soft drop (caída instantánea y suave)
+★ Sistema de rotación genial [¿Qué es?](#cool-rotation-system)
+★ Sistema de puntuación avanzado [¿Qué es?](#advanced-scoring-system)
+★ Pieza fantasma
+★ Personalización completa de los controles y la apariencia
+★ Soporte para temas dinámicos y AMOLED
+★ Estadísticas detalladas
+★ Potentes notificaciones de acción [¿Qué es?](#powerful-action-notification)
+★ Nuevo modo

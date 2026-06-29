@@ -1,3 +1,17 @@
 Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
 
 The original mechanics are retained here, with smooth controls, but with a modern, minimalist design
+
+Feature:
+★ Modern Material Design 3 And ViewModel
+★ Comfortable control setup
+★ Fair distribution of "7-bag" figures
+★ Hard drop and soft drop
+★ Cool Rotation System [What is](#cool-rotation-system)
+★ Advanced Scoring System [What is](#advanced-scoring-system)
+★ Ghost figure
+★ Full customization of controls and appearance
+★ Dynamic and AMOLED Theme support
+★ Detailed statistics
+★ Powerful action notification [What is](#powerful-action-notification)
+★ New mode

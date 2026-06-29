@@ -1,3 +1,17 @@
 Jeu de puzzle d'arcade classique où vous devez empiler des tétriminos — pièces de 4 blocs, créer des lignes solides et jouer pour le score
 
 Les mécaniques originales sont conservées ici, avec des contrôles fluides, mais avec un design moderne et minimaliste
+
+Caractéristiques :
+★ Design moderne Material 3 et ViewModel
+★ Configuration des commandes confortable
+★ Distribution équitable des pièces « 7-bag »
+★ Hard drop et soft drop (chute instantanée et rapide)
+★ Système de rotation cool [Qu'est-ce que c'est ?](#cool-rotation-system)
+★ Système de score avancé [Qu'est-ce que c'est ?](#advanced-scoring-system)
+★ Pièce fantôme (Ghost)
+★ Personnalisation complète des commandes et de l'apparence
+★ Prise en charge des thèmes dynamiques et AMOLED
+★ Statistiques détaillées
+★ Notifications d'action puissantes [Qu'est-ce que c'est ?](#powerful-action-notification)
+★ Nouveau mode
