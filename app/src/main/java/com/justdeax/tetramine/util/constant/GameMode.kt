@@ -7,4 +7,5 @@ object GameMode {
     const val SPRINT = "SPRINT"
     const val MODERN = "MODERN"
     const val GUIDE = "GUIDE"
+    const val RESTORE = "RESTORE"
 }

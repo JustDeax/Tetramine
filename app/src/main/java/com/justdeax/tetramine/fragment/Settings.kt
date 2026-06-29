@@ -13,6 +13,7 @@ import com.justdeax.tetramine.PreferenceManager.cellSpacing
 import com.justdeax.tetramine.PreferenceManager.emptyCellOpacity
 import com.justdeax.tetramine.PreferenceManager.is2DirectionRotation
 import com.justdeax.tetramine.PreferenceManager.isDynamicColors
+import com.justdeax.tetramine.PreferenceManager.isExtraDark
 import com.justdeax.tetramine.PreferenceManager.isMusicEnable
 import com.justdeax.tetramine.PreferenceManager.isNightThemeMode
 import com.justdeax.tetramine.PreferenceManager.isShowGhostPiece
@@ -25,9 +26,7 @@ import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.FragmentSettingsBinding
 import com.justdeax.tetramine.window.showNumberInputDialog
 import com.justdeax.tetramine.window.showResetDialog
-import com.justdeax.tetramine.window.showSimpleDialog
 import kotlinx.coroutines.launch
-import kotlin.system.exitProcess
 
 class Settings : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -63,20 +62,24 @@ class Settings : Fragment() {
     private fun setSettings() {
         with(requireActivity()) {
             binding.theme.setOnCheckedStateChangeListener { _, checkedIds ->
-                isNightThemeMode = checkedIds.firstOrNull() == R.id.dark
+                val checked = checkedIds.firstOrNull()
+                val previouslyIsExtraDark = isExtraDark
+                val extraDark = checked == R.id.extra_dark
+                isNightThemeMode = checked == R.id.dark || extraDark
+                isExtraDark = extraDark
                 AppCompatDelegate.setDefaultNightMode(
                     if (isNightThemeMode)
                         AppCompatDelegate.MODE_NIGHT_YES
                     else
                         AppCompatDelegate.MODE_NIGHT_NO
                 )
+                binding.dynamicColors.isEnabled = !extraDark
+                if (previouslyIsExtraDark != extraDark)
+                    recreate()
             }
             binding.dynamicColors.setOnCheckedChangeListener { _, isChecked ->
                 isDynamicColors = isChecked
-                showSimpleDialog(R.string.app_restart) {
-                    requireActivity().finishAffinity()
-                    exitProcess(0)
-                }
+                recreate()
             }
             binding.showGhostPiece.setOnCheckedChangeListener { _, isChecked ->
                 isShowGhostPiece = isChecked
@@ -113,7 +116,12 @@ class Settings : Fragment() {
 
     private fun getSettings() {
         with(requireActivity()) {
-            binding.theme.check(if (isNightThemeMode) R.id.dark else R.id.light)
+            binding.theme.check(
+                if (isExtraDark) R.id.extra_dark
+                else if (isNightThemeMode) R.id.dark
+                else R.id.light
+            )
+            binding.dynamicColors.isEnabled = !isExtraDark
             binding.dynamicColors.isChecked = isDynamicColors
             binding.showGhostPiece.isChecked = isShowGhostPiece
             binding.emptyCellOpacity.value = emptyCellOpacity
@@ -125,6 +133,10 @@ class Settings : Fragment() {
             binding.maxTime.text = formatString(R.string.max_time, maxTimeHDT)
             binding.minSoftDrops.text = formatString(R.string.min_soft_drops, minSoftDropsHDT)
             binding.biDirectionRotation.isChecked = is2DirectionRotation
+            binding.deleteSavedGame.text = getString(
+                R.string.delete_saved_game_desc,
+                getString(R.string.resume)
+            )
         }
     }
 

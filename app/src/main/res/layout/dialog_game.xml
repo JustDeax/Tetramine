@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            android:contentDescription="music"
+            android:contentDescription="@string/music"
             android:src="@drawable/round_music_note_24"
             style="@style/DialogGameOutlineButton" />
 

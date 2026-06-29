@@ -1,6 +1,7 @@
 package com.justdeax.tetramine.util.constant
 
 object Text {
+    const val GAME_NOT_SAVED = "The game was not saved"
     const val B2B = "BACK TO BACK"
     const val TETRAMINE = "TETRAMINE"
     const val T_SPIN_DOUBLE = "T SPIN DOUBLE"

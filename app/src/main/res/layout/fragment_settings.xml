@@ -13,47 +13,60 @@
         android:paddingEnd="8dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:text="@string/theme"
+            style="@style/SettingsText" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/theme"
-                style="@style/SettingsText" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/theme"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                app:chipSpacingHorizontal="8dp"
-                app:chipSpacingVertical="8dp"
-                style="@style/ChipGroup">
+                android:orientation="horizontal">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/dark"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dark"
-                    android:textSize="20sp"
-                    style="@style/Chip" />
+                    android:layout_gravity="start"
+                    app:chipSpacingHorizontal="8dp"
+                    app:chipSpacingVertical="8dp"
+                    style="@style/ChipGroup">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/light"
-                    android:textSize="20sp"
-                    style="@style/Chip" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dark"
+                        android:textSize="20sp"
+                        style="@style/Chip" />
 
-            </com.google.android.material.chip.ChipGroup>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/extra_dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extra_dark"
+                        android:textSize="20sp"
+                        style="@style/Chip" />
 
-        </LinearLayout>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/light"
+                        android:textSize="20sp"
+                        style="@style/Chip" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/dynamic_colors"
@@ -211,6 +224,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/bi_direction_rotation"
+            style="@style/SettingsText" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_saved_game"
+            android:layout_marginBottom="0dp"
+            style="@style/SettingsText" />
+
+        <TextView
+            android:id="@+id/delete_saved_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_saved_game_desc"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="0dp"
             style="@style/SettingsText" />
 
         <Button

@@ -11,9 +11,12 @@ object PreferenceManager {
     private const val NAME = "preference"
 
     private const val KEY_FIRST_LAUNCH = "FL"
+    private const val KEY_GAME_SNAPSHOT = "GS"
+    private const val KEY_GAME_SNAPSHOT_LEVEL_STATIC = "GSLS"
     private const val KEY_PRACTICE_LEVEL = "PL"
 
     private const val KEY_NIGHT_THEME_MODE = "NTM"
+    private const val KEY_EXTRA_DARK = "ED"
     private const val KEY_DYNAMIC_COLORS = "DC"
     private const val KEY_SHOW_GHOST_PIECE = "SGP"
     private const val KEY_EMPTY_CELL_OPACITY = "ECO"
@@ -41,8 +44,11 @@ object PreferenceManager {
         get() = packageManager.getPackageInfo(packageName, 0).versionName!!
 
     var Context.isFirstLaunch by booleanPreference(KEY_FIRST_LAUNCH, true)
+    var Context.gameSnapshotJson by stringPreference(KEY_GAME_SNAPSHOT, "")
+    var Context.gameSnapshotIsLevelStatic by booleanPreference(KEY_GAME_SNAPSHOT_LEVEL_STATIC, false)
     var Context.practiceLevel by intPreference(KEY_PRACTICE_LEVEL, 0)
     var Context.isNightThemeMode by booleanPreference(KEY_NIGHT_THEME_MODE, true)
+    var Context.isExtraDark by booleanPreference(KEY_EXTRA_DARK, false)
     var Context.isDynamicColors by booleanPreference(KEY_DYNAMIC_COLORS, true)
     var Context.isShowGhostPiece by booleanPreference(KEY_SHOW_GHOST_PIECE, true)
     var Context.emptyCellOpacity by floatPreference(KEY_EMPTY_CELL_OPACITY, 1f)
@@ -119,5 +125,13 @@ object PreferenceManager {
                 thisRef.preferences.getFloat(key, defaultValue)
             override fun setValue(thisRef: Context, property: KProperty<*>, value: Float) =
                 thisRef.preferences.edit { putFloat(key, value) }
+        }
+
+    fun stringPreference(key: String, defaultValue: String) =
+        object : ReadWriteProperty<Context, String> {
+            override fun getValue(thisRef: Context, property: KProperty<*>): String =
+                thisRef.preferences.getString(key, defaultValue) ?: ""
+            override fun setValue(thisRef: Context, property: KProperty<*>, value: String) =
+                thisRef.preferences.edit { putString(key, value) }
         }
 }

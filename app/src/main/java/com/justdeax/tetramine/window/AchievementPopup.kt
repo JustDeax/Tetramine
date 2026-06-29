@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.lifecycle.LifecycleCoroutineScope
+import com.justdeax.tetramine.R
 import com.justdeax.tetramine.databinding.PopupAchievementBinding
 import com.justdeax.tetramine.util.constant.Delay
 import kotlinx.coroutines.Job
@@ -26,7 +27,7 @@ class AchievementPopup(
     ).apply {
         isOutsideTouchable = false
         isFocusable = false
-        animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
+        animationStyle = R.style.CustomAnimationDropDownUp
     }
     private var job: Job? = null
 

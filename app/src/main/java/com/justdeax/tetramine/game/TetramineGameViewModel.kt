@@ -8,6 +8,8 @@ import com.justdeax.tetramine.PreferenceManager.bestLines
 import com.justdeax.tetramine.PreferenceManager.bestPieces
 import com.justdeax.tetramine.PreferenceManager.bestScore
 import com.justdeax.tetramine.PreferenceManager.bestTSpins
+import com.justdeax.tetramine.PreferenceManager.gameSnapshotJson
+import com.justdeax.tetramine.PreferenceManager.gameSnapshotIsLevelStatic
 import com.justdeax.tetramine.PreferenceManager.isShowGhostPiece
 import com.justdeax.tetramine.PreferenceManager.total4Lines
 import com.justdeax.tetramine.PreferenceManager.totalLines
@@ -48,6 +50,24 @@ class TetramineGameViewModel(
     val score get() = tetramine.score
     val lines get() = tetramine.lines
 
+    fun saveGameData() {
+        application.gameSnapshotJson = tetramine.saveTetramineToJson()
+        application.gameSnapshotIsLevelStatic = isLevelStatic
+    }
+
+    fun restoreGameData() {
+        tetramine.restoreTetramineFromJson(application.gameSnapshotJson)
+        isLevelStatic = application.gameSnapshotIsLevelStatic
+        viewModelScope.launch(Dispatchers.Default) {
+            gameTick()
+        }
+    }
+
+    fun clearGameData() {
+        application.gameSnapshotJson = ""
+        application.gameSnapshotIsLevelStatic = false
+    }
+
     fun startGame() {
         resetGame()
         resumeGame()
@@ -62,7 +82,8 @@ class TetramineGameViewModel(
                 }
                 withContext(Dispatchers.Main) {
                     stopGame()
-                    saveGame()
+                    clearGameData()
+                    saveDataToStats()
                 }
             }
             music.play(level.value)
@@ -91,7 +112,8 @@ class TetramineGameViewModel(
 
     fun resetGame() {
         stopGame()
-        saveGame()
+        saveDataToStats()
+        clearGameData()
         tetramine = makeGame()
         _board.value = tetramine.getBoardWithPiece()
         music.release()
@@ -120,7 +142,7 @@ class TetramineGameViewModel(
 
     private fun makeGame() = Tetramine(rows, cols, showAchievement, application.isShowGhostPiece) { level.value + 1 }
 
-    private fun saveGame() {
+    private fun saveDataToStats() {
         if (isLevelStatic) return
 
         val pieces = tetramine.pieces
@@ -150,7 +172,6 @@ class TetramineGameViewModel(
     }
 
     override fun onCleared() {
-        saveGame()
         music.release()
     }
 

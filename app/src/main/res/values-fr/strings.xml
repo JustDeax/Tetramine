@@ -58,6 +58,7 @@ Regardez aussi les thèmes, la sensibilité, les modes et les stats"""
 
     <string name="theme">Thème</string>
     <string name="dark">Sombre</string>
+    <string name="extra_dark">Amoled</string>
     <string name="light">Clair</string>
     <string name="dynamic_colors">Couleurs dynamiques</string>
     <string name="empty_cell_opacity">Opacité des cases vides</string>
@@ -74,6 +75,8 @@ Regardez aussi les thèmes, la sensibilité, les modes et les stats"""
     <string name="show_ghost_piece">Afficher la pièce fantôme</string>
     <string name="enter_a_value">Entrez une valeur (%1$s – %2$s)</string>
     <string name="enter_a_level">Entrez un niveau (%1$s – %2$s)</string>
+    <string name="delete_saved_game">Supprimer la partie sauvegardée :</string>
+    <string name="delete_saved_game_desc">" Pour supprimer une partie sauvegardée, maintenez le bouton « %1$s » enfoncé"</string>
     <string name="reset_settings">Réinitialiser les paramètres</string>
 
     <string name="about_1">Ceci est la version mobile moderne de Tetris</string>

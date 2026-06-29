@@ -58,6 +58,7 @@ Revisa también temas, sensibilidad, modos y estadísticas"""
 
     <string name="theme">Tema</string>
     <string name="dark">Oscuro</string>
+    <string name="extra_dark">Amoled</string>
     <string name="light">Claro</string>
     <string name="dynamic_colors">Colores dinámicos</string>
     <string name="empty_cell_opacity">Opacidad de celdas vacías</string>
@@ -74,6 +75,8 @@ Revisa también temas, sensibilidad, modos y estadísticas"""
     <string name="show_ghost_piece">Mostrar figura fantasma</string>
     <string name="enter_a_value">Ingresa un valor (%1$s – %2$s)</string>
     <string name="enter_a_level">Ingresa un nivel (%1$s – %2$s)</string>
+    <string name="delete_saved_game">Eliminar partida guardada:</string>
+    <string name="delete_saved_game_desc">" Para eliminar una partida guardada, mantén pulsado el botón \"%1$s\""</string>
     <string name="reset_settings">Restablecer configuración</string>
 
     <string name="about_1">Esta es la versión móvil moderna de Tetris</string>

@@ -1,5 +1,7 @@
 package com.justdeax.tetramine.game
 
+import com.google.gson.Gson
+import com.justdeax.tetramine.util.GameSnapshot
 import com.justdeax.tetramine.util.constant.AddScore
 import com.justdeax.tetramine.util.constant.Text
 import com.justdeax.tetramine.util.getTetrominoType
@@ -28,6 +30,37 @@ class Tetramine(
         if (isShowGhostPiece) { -> buildBoard(ghostPiece()) } else { -> buildBoard() }
 
     init { spawnPiece() }
+
+    val gson = Gson()
+
+    fun saveTetramineToJson(): String {
+        val gameSnapshot = GameSnapshot(
+            board, bag, comboCount, lastMoveRotation, isBackToBack, currentPiece, previousPiece,
+            isGameOver, score, lines, pieces, fourLines, tSpins
+        )
+        return gson.toJson(gameSnapshot)
+    }
+
+    fun restoreTetramineFromJson(json: String) {
+        if (json == "") {
+            showAchievement(Text.GAME_NOT_SAVED)
+            return
+        }
+        val gameSnapshot = gson.fromJson(json, GameSnapshot::class.java)
+        board = gameSnapshot.board
+        bag = gameSnapshot.bag
+        comboCount = gameSnapshot.comboCount
+        lastMoveRotation = gameSnapshot.lastMoveRotation
+        isBackToBack = gameSnapshot.isBackToBack
+        currentPiece = gameSnapshot.currentPiece
+        previousPiece = gameSnapshot.previousPiece
+        isGameOver = gameSnapshot.isGameOver
+        score = gameSnapshot.score
+        lines = gameSnapshot.lines
+        pieces = gameSnapshot.pieces
+        fourLines = gameSnapshot.fourLines
+        tSpins = gameSnapshot.tSpins
+    }
 
     fun dropPiece() {
         if (!movePiece(1, 0))

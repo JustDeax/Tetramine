@@ -58,6 +58,7 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
 
     <string name="theme">Design</string>
     <string name="dark">Dunkel</string>
+    <string name="extra_dark">Amoled</string>
     <string name="light">Hell</string>
     <string name="dynamic_colors">Dynamische Farben</string>
     <string name="empty_cell_opacity">Transparenz leerer Zellen</string>
@@ -74,6 +75,8 @@ Schau dir auch Designs, Empfindlichkeit, Modi und Statistiken an"""
     <string name="show_ghost_piece">Geisterfigur anzeigen</string>
     <string name="enter_a_value">Wert eingeben (%1$s – %2$s)</string>
     <string name="enter_a_level">Level eingeben (%1$s – %2$s)</string>
+    <string name="delete_saved_game">Gespeichertes Spiel löschen:</string>
+    <string name="delete_saved_game_desc">" Ум ein gespeichertes Spiel zu löschen, halten Sie die Taste „%1$s“ gedrückt"</string>
     <string name="reset_settings">Einstellungen zurücksetzen</string>
 
     <string name="about_1">Dies ist die moderne mobile Version von Tetris</string>

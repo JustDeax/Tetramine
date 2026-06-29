@@ -118,6 +118,10 @@ class GameActivity : BaseActivity() {
                         showGuide(fullGuide = true)
                     }
                 }
+                GameMode.RESTORE -> {
+                    game.restoreGameData()
+                    game.clearGameData()
+                }
             }
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -192,6 +196,7 @@ class GameActivity : BaseActivity() {
             exit.setOnClickListener {
                 dialogGame.setOnDismissListener {  }
                 dialogGame.dismiss()
+                game.saveGameData()
                 finish()
             }
             restart.setOnClickListener {
@@ -225,6 +230,7 @@ class GameActivity : BaseActivity() {
     override fun onPause() {
         if (!isFinishing && !isDestroyed)
             showGameDialog()
+        game.saveGameData()
         super.onPause()
     }
 }

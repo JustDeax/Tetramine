@@ -7,27 +7,30 @@
         <item name="android:windowBackground">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
 
-        <item name="colorSurface">@color/black_surface</item>
-        <item name="colorSurfaceVariant">@color/black_surface</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorSurfaceVariant">@color/black</item>
 
-        <item name="colorPrimary">@color/black_surface</item>
-        <item name="colorSecondary">@color/black_surface</item>
-        <item name="colorPrimaryContainer">@color/black_surface</item>
-        <item name="colorSecondaryContainer">@color/black_primary</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorPrimaryContainer">@color/black</item>
+        <item name="colorSecondaryContainer">@color/black</item>
+        <item name="colorSurfaceContainerLowest">@color/dark1</item>
 
-        <item name="colorOnPrimary">@color/black_primary</item>
-        <item name="colorOnPrimaryContainer">@color/black_primary</item>
-        <item name="colorOnSecondary">@color/black_primary</item>
-        <item name="colorOnSecondaryContainer">@color/black_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondaryContainer">@color/white</item>
 
-        <item name="colorOnBackground">@color/black_primary</item>
-        <item name="colorOnSurface">@color/black_primary</item>
-        <item name="colorOnSurfaceVariant">@color/black_primary</item>
-
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
     </style>
     <style name="Theme.Tetramine" parent="Theme.Static" />
+
+    <style name="CustomAnimationDropDownUp" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/dropdown_enter</item>
+        <item name="android:windowExitAnimation">@anim/dropdown_exit</item>
+    </style>
 
     <style name="MainMenuCard" parent="Widget.Material3.CardView.Elevated">
         <item name="android:layout_margin">8dp</item>

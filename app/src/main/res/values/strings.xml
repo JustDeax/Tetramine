@@ -58,6 +58,7 @@ Also check theme settings, control sensitivity change, modes and stats"""
 
     <string name="theme">Theme</string>
     <string name="dark">Dark</string>
+    <string name="extra_dark">Amoled</string>
     <string name="light">Light</string>
     <string name="dynamic_colors">Dynamic colors</string>
     <string name="empty_cell_opacity">Empty cell opacity</string>
@@ -74,6 +75,8 @@ Also check theme settings, control sensitivity change, modes and stats"""
     <string name="show_ghost_piece">Show ghost piece</string>
     <string name="enter_a_value">Enter a value (%1$s – %2$s)</string>
     <string name="enter_a_level">Enter a level (%1$s – %2$s)</string>
+    <string name="delete_saved_game">Delete saved game:</string>
+    <string name="delete_saved_game_desc">" To delete a saved game, hold down the «%1$s» button"</string>
     <string name="reset_settings">Reset Settings</string>
 
     <string name="about_1">This is the mobile modern version of tetris</string>

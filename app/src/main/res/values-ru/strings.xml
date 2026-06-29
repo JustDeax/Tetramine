@@ -58,6 +58,7 @@
 
     <string name="theme">Тема</string>
     <string name="dark">Тёмная</string>
+    <string name="extra_dark">Amoled</string>
     <string name="light">Светлая</string>
     <string name="dynamic_colors">Динамические цвета</string>
     <string name="empty_cell_opacity">Прозрачность пустых ячеек</string>
@@ -74,6 +75,8 @@
     <string name="show_ghost_piece">Показывать тень фигуры</string>
     <string name="enter_a_value">Введите значение (%1$s – %2$s)</string>
     <string name="enter_a_level">Введите уровень (%1$s – %2$s)</string>
+    <string name="delete_saved_game">Удалить сохраненную игру:</string>
+    <string name="delete_saved_game_desc">" Чтобы удалить сохраненную игру, удерживайте кнопку «%1$s»"</string>
     <string name="reset_settings">Сбросить настройки</string>
 
     <string name="about_1">Это современная мобильная версия Тетриса</string>

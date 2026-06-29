@@ -31,7 +31,7 @@ class GuidePopup(
     ).apply {
         isOutsideTouchable = false
         isFocusable = false
-        animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
+        animationStyle = R.style.CustomAnimationDropDownUp
     }
     private var job: Job? = null
 
