@@ -1,0 +1,4 @@
+1.1
+Game saving added
+AMOLED theme added
+Cool Rotation System updates

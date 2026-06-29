@@ -1,0 +1,3 @@
+Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score
+
+The original mechanics are retained here, with smooth controls, but with a modern, minimalist design

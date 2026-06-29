@@ -1,0 +1,3 @@
+Jeu de puzzle d'arcade classique où vous devez empiler des tétriminos — pièces de 4 blocs, créer des lignes solides et jouer pour le score
+
+Les mécaniques originales sont conservées ici, avec des contrôles fluides, mais avec un design moderne et minimaliste

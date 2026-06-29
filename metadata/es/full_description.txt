@@ -1,0 +1,3 @@
+Juego de rompecabezas arcade clásico donde debes apilar tetrominós que caen — piezas de 4 bloques, crear líneas sólidas y jugar por puntuación
+
+Las mecánicas originales se mantienen aquí, con controles suaves, pero con un diseño moderno y minimalista

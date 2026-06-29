@@ -15,6 +15,14 @@
     </div>
 </div>
 
+<p align="center">
+  <img src="./metadata/en-US/images/phoneScreenshots/1.png" height="300">
+  <img src="./metadata/en-US/images/phoneScreenshots/2.png" height="300">
+  <img src="./metadata/en-US/images/phoneScreenshots/3.png" height="300">
+  <img src="./metadata/en-US/images/phoneScreenshots/4.png" height="300">
+  <img src="./metadata/en-US/images/phoneScreenshots/5.png" height="300">
+</p>
+
 **This is the mobile modern version of tetris**
 
 Classic arcade puzzle game where you have to stack falling tetromino — 4-block pieces, create solid lines out of them and play for the score

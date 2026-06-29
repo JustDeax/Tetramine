@@ -1,0 +1,6 @@
+1.0 Finally release:
+- Added practice mode with select game speed
+- Full control customization and game appearance
+- Added music to the game (3 songs depending on the level)
+- Improved statistics and score system
+- Added 2 way figure rotation (must be enabled in settings)
