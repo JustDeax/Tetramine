@@ -3,7 +3,6 @@
     <string name="version">Versión: %1$s</string>
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
-    <string name="app_restart">Para aplicar la configuración, reinicia la aplicación.</string>
 
     <string name="play">Jugar</string>
     <string name="resume">Reanudar juego</string>
