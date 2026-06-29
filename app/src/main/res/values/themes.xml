@@ -14,7 +14,7 @@
         <item name="colorSecondary">@color/black</item>
         <item name="colorPrimaryContainer">@color/black</item>
         <item name="colorSecondaryContainer">@color/black</item>
-        <item name="colorSurfaceContainerLowest">@color/dark1</item>
+        <item name="colorSurfaceContainerLowest">@color/black</item>
 
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnPrimaryContainer">@color/white</item>
