@@ -40,8 +40,6 @@ class GuidePopup(
         gameScore: () -> Int,
         hardDropCount: () -> Int,
         rotateCount: () -> Int,
-        gameStop: () -> Unit,
-        gameResume: () -> Unit,
         fullGuide: Boolean
     ) {
         job?.cancel()
@@ -54,13 +52,10 @@ class GuidePopup(
             try {
                 if (fullGuide) {
                     delay(Delay.SHORT.milliseconds)
-                    context.isFirstLaunch = false
-                    gameStop()
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_1, ok = true)
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.about_2, ok = true)
-                    gameResume()
                 }
 
                 var movedLeft = false
@@ -90,10 +85,9 @@ class GuidePopup(
                 showGuide({ rotateCount() > rotateStart }, R.string.guide_4)
 
                 if (fullGuide) {
-                    gameStop()
+                    context.isFirstLaunch = false
                     skipRequested = false
                     showGuide({ skipRequested }, R.string.guide_5, ok = true)
-                    gameResume()
                 }
             } finally {
                 popup.dismiss()

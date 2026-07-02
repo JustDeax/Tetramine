@@ -4,7 +4,7 @@
 
     <translate
         android:fromYDelta="0"
-        android:toYDelta="-20%p"
+        android:toYDelta="-10%p"
         android:duration="@android:integer/config_mediumAnimTime" />
 
     <alpha

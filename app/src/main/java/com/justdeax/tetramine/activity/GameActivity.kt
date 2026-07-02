@@ -221,8 +221,6 @@ class GameActivity : BaseActivity() {
             { game.score },
             { binding.board.hardDropCount },
             { binding.board.rotateCount },
-            { game.stopGame() },
-            { game.resumeGame() },
             fullGuide
         )
     }

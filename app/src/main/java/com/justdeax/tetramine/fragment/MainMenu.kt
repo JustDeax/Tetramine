@@ -32,7 +32,6 @@ class MainMenu : Fragment() {
 
         binding.apply {
             version.text = versionText
-            resumeGame.isEnabled = requireActivity().gameSnapshotJson != ""
 
             chooseMode.setOnClickListener {
                 findNavController().navigate(R.id.action_mainMenu_to_chooseGame)
@@ -58,6 +57,11 @@ class MainMenu : Fragment() {
                 findNavController().navigate(R.id.action_mainMenu_to_aboutGame)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.resumeGame.isEnabled = requireActivity().gameSnapshotJson != ""
     }
 
     override fun onDestroyView() {

@@ -34,9 +34,12 @@ class Tetramine(
     val gson = Gson()
 
     fun saveTetramineToJson(): String {
+        if (isGameOver) {
+            return ""
+        }
         val gameSnapshot = GameSnapshot(
             board, bag, comboCount, lastMoveRotation, isBackToBack, currentPiece, previousPiece,
-            isGameOver, score, lines, pieces, fourLines, tSpins
+            false, score, lines, pieces, fourLines, tSpins
         )
         return gson.toJson(gameSnapshot)
     }
