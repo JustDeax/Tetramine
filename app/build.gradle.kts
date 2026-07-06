@@ -2,6 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+configurations.all {
+    exclude(group = "io.opencensus", module = "opencensus-api")
+    exclude(group = "io.opencensus", module = "opencensus-proto")
+}
+
 android {
     namespace = "com.justdeax.tetramine"
     compileSdk = 37
@@ -10,8 +15,8 @@ android {
         applicationId = "com.justdeax.tetramine"
         minSdk = 24
         targetSdk = 37
-        versionCode = 10210
-        versionName = "1.2.1"
+        versionCode = 10220
+        versionName = "1.2.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
