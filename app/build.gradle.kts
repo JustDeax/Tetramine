@@ -7,6 +7,12 @@ configurations.all {
     exclude(group = "io.opencensus", module = "opencensus-proto")
 }
 
+tasks.configureEach {
+    if (name.contains("ArtProfile") || name.contains("BaselineProfile") || name.contains("StartupProfile")) {
+        enabled = false
+    }
+}
+
 androidComponents {
     onVariants { variant ->
         variant.packaging.resources.excludes.add("assets/dexopt/baseline.prof")
@@ -22,8 +28,8 @@ android {
         applicationId = "com.justdeax.tetramine"
         minSdk = 24
         targetSdk = 37
-        versionCode = 10240
-        versionName = "1.2.4"
+        versionCode = 10250
+        versionName = "1.2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
