@@ -7,6 +7,13 @@ configurations.all {
     exclude(group = "io.opencensus", module = "opencensus-proto")
 }
 
+androidComponents {
+    onVariants { variant ->
+        variant.packaging.resources.excludes.add("assets/dexopt/baseline.prof")
+        variant.packaging.resources.excludes.add("assets/dexopt/baseline.profm")
+    }
+}
+
 android {
     namespace = "com.justdeax.tetramine"
     compileSdk = 37
@@ -15,8 +22,8 @@ android {
         applicationId = "com.justdeax.tetramine"
         minSdk = 24
         targetSdk = 37
-        versionCode = 10230
-        versionName = "1.2.3"
+        versionCode = 10240
+        versionName = "1.2.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
